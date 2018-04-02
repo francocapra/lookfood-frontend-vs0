@@ -1,15 +1,19 @@
-#loginBox{
-    width: 50%;
+#loginBox {
+    width: 40%;
     margin: 0 auto;
-    height: 400px;
+    height: 300px;
     background-color: whitesmoke;
-    margin-top: 20%;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    margin-top: 100px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     border-radius: 5px;
+    display: table;
 }
 
-.login-layout{
-    padding: 50 20 20 20;
+.login-layout {
+    width: 80%;
+    margin: 0 auto;
+    display: table !important;
+    margin-top: 40px;
 }
 
 #reviewValue {

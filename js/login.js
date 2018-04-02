@@ -1,6 +1,5 @@
 sap.ui.getCore().attachInit(function () {
     var _layout = new sap.ui.layout.VerticalLayout({
-        width: '90%',
         content: [
             new sap.m.Label({
                 labelFor: 'txtUserId',
