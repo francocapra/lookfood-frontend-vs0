@@ -7,22 +7,39 @@ sap.ui.getCore().attachInit(function () {
         return this;
     };
 
-    sap.ui.core.BusyIndicator.show(0);
+    var _tokenLayout = new sap.ui.layout.VerticalLayout({
+        content: [
+            new sap.m.Text({
+                text: 'Digite o número do token fornecido na hora do pagamento:'
+            }),
+            new sap.m.Input('txtTokenNumber', {
 
-    $.ajax({
-        type: 'GET',
-        url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
-        success: function (response) {
-            // console.log(response);
+            }).addStyleClass('token-input'),
+            new sap.m.Button({
+                text: 'Validar',
+                width: '100%',
+                type: sap.m.ButtonType.Emphasized,
+                press: function () {
+                    sap.ui.core.BusyIndicator.show(0);
 
-            inflateReviews(response);
-            sap.ui.core.BusyIndicator.hide();
-        },
-        error: function (a, b, c) {
-            console.log(a, b, c);
-            sap.ui.core.BusyIndicator.hide();
-        }
-    })
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
+                        success: function (response) {
+                            // console.log(response);
+
+                            sap.ui.core.BusyIndicator.hide();
+                            inflateReviews(response);
+                        },
+                        error: function (a, b, c) {
+                            console.log(a, b, c);
+                            sap.ui.core.BusyIndicator.hide();
+                        }
+                    })
+                }
+            })
+        ]
+    }).addStyleClass('token-layout').placeAt('tokenContainer');
 
 });
 
@@ -32,7 +49,7 @@ function inflateReviews(oData) {
     sap.ui.getCore().setModel(oFoodsModel, 'foodmodel');
 
     var foodList = new sap.m.List({
-        headerText: "Avaliação de Pratos"
+        headerText: "Consumo"
     });
 
     foodList.bindItems({
@@ -172,5 +189,21 @@ function inflateReviews(oData) {
             .data('customerId', '{foodmodel>customerId}')
     })
 
-    foodList.placeAt('container');
+    var _reviewDialog = new sap.m.Dialog({
+        title:'Avaliação de estabelecimento',
+        minWidth:'100%',
+        content: [
+            foodList
+        ],
+        beginButton: new sap.m.Button({
+            text: 'Close',
+            type: 'Emphasized',
+            press: function () {
+                _reviewDialog.close();
+            }
+        }),
+        afterClose: function () {
+            _reviewDialog.destroy();
+        }
+    }).addStyleClass('review-dialog').open();
 }
