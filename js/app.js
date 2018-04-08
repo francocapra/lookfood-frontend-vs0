@@ -10,32 +10,75 @@ sap.ui.getCore().attachInit(function () {
     var _tokenLayout = new sap.ui.layout.VerticalLayout({
         content: [
             new sap.m.Text({
-                text: 'Digite o número do token fornecido na hora do pagamento:'
+                text: 'Para scanear o código fornecido, clique no botão abaixo:'
             }),
             new sap.m.Input('txtTokenNumber', {
 
             }).addStyleClass('token-input'),
             new sap.m.Button({
-                text: 'Validar',
+                text: 'Scanear QR Code',
                 width: '100%',
                 type: sap.m.ButtonType.Emphasized,
-                press: function () {
-                    sap.ui.core.BusyIndicator.show(0);
+                press: function (evt) {
 
-                    $.ajax({
-                        type: 'GET',
-                        url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
-                        success: function (response) {
-                            // console.log(response);
+                    let scanner = null;
+                    let reviewCode = null;
 
-                            sap.ui.core.BusyIndicator.hide();
-                            inflateReviews(response);
+                    var _previewDialog = new sap.m.Dialog({
+                        title: 'Posicione o QR Code em frente o leitor',
+                        content: [
+                            new sap.ui.core.HTML({
+                                content: '<video id="preview" width="400" heigth="400"></video>'
+                            })
+                        ],
+                        beginButton: new sap.m.Button({
+                            text: 'Fechar',
+                            press: function () {
+                                _previewDialog.close();
+                            }
+                        }),
+                        afterOpen: function () {
+                            scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+                            scanner.addListener('scan', function (content) {
+                                reviewCode = content;
+                                _previewDialog.close();
+                            });
+                            Instascan.Camera.getCameras().then(function (cameras) {
+                                if (cameras.length > 0) {
+                                    scanner.start(cameras[0]);
+                                } else {
+                                    console.error('No cameras found.');
+                                }
+                            }).catch(function (e) {
+                                console.error(e);
+                            });
                         },
-                        error: function (a, b, c) {
-                            console.log(a, b, c);
-                            sap.ui.core.BusyIndicator.hide();
+                        beforeClose: function () {
+                            scanner.stop();
+                            scanner = null;
+                        },
+                        afterClose: function () {
+                            _previewDialog.destroy();
+                            console.log(reviewCode);
+                            // sap.ui.core.BusyIndicator.show(0);
+
+                            // $.ajax({
+                            //     type: 'GET',
+                            //     url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
+                            //     success: function (response) {
+                            //         // console.log(response);
+
+                            //         sap.ui.core.BusyIndicator.hide();
+                            //         inflateReviews(response);
+                            //     },
+                            //     error: function (a, b, c) {
+                            //         console.log(a, b, c);
+                            //         sap.ui.core.BusyIndicator.hide();
+                            //     }
+                            // })
                         }
-                    })
+                    }).open();
+
                 }
             })
         ]
@@ -190,8 +233,8 @@ function inflateReviews(oData) {
     })
 
     var _reviewDialog = new sap.m.Dialog({
-        title:'Avaliação de estabelecimento',
-        minWidth:'100%',
+        title: 'Avaliação de estabelecimento',
+        minWidth: '100%',
         content: [
             foodList
         ],
