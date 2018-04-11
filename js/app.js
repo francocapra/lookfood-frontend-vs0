@@ -1,5 +1,7 @@
 sap.ui.getCore().attachInit(function () {
 
+    console.log(JSON.stringify(getSamplePartnerCollection()));
+
     $.fn.removeClassStartingWith = function (filter) {
         $(this).removeClass(function (index, className) {
             return (className.match(new RegExp("\\S*" + filter + "\\S*", 'g')) || []).join(' ')
@@ -28,7 +30,7 @@ sap.ui.getCore().attachInit(function () {
                         title: 'Posicione o QR Code em frente o leitor',
                         content: [
                             new sap.ui.core.HTML({
-                                content: '<video id="preview" width="400" heigth="400"></video>'
+                                content: '<video id="preview" width="200" heigth="200"></video>'
                             })
                         ],
                         beginButton: new sap.m.Button({
@@ -44,13 +46,17 @@ sap.ui.getCore().attachInit(function () {
                                 _previewDialog.close();
                             });
                             Instascan.Camera.getCameras().then(function (cameras) {
+                                alert(cameras[0].name)
                                 if (cameras.length > 0) {
+                                    scanner.activeCameraId = cameras[0].id;
                                     scanner.start(cameras[0]);
                                 } else {
                                     console.error('No cameras found.');
+                                    alert("No cameras foud.")
                                 }
                             }).catch(function (e) {
                                 console.error(e);
+                                alert(e);
                             });
                         },
                         beforeClose: function () {
