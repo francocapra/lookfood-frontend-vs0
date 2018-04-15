@@ -128,6 +128,30 @@ function inflateReviews(oData) {
                     content: [
                         new sap.ui.layout.VerticalLayout({
                             content: [
+                                new sap.m.FlexBox({
+                                    alignItems: 'Center',
+                                    justifyContent: 'Center',
+                                    items: [
+                                        new sap.m.VBox({
+                                            alignItems: 'Start',
+                                            justifyContent: 'Center',
+                                            items: [
+                                                new sap.m.Text({
+                                                    text: 'Chef Responsável'
+                                                }).addStyleClass('personnel-card-labels'),
+                                                new sap.m.Text({
+                                                    text: 'Franco Capra'
+                                                }).addStyleClass('sapUiTinyMargin'),
+                                                new sap.m.Text({
+                                                    text: 'Auxiliar'
+                                                }).addStyleClass('personnel-card-labels'),
+                                                new sap.m.Text({
+                                                    text: 'Guilherme Giani'
+                                                }).addStyleClass('sapUiTinyMargin')
+                                            ]
+                                        }).addStyleClass('personnel-card')
+                                    ]
+                                }),
                                 new sap.m.Text('reviewValue', {
                                     text: '0'
                                 }).addStyleClass('review-value-low'),
@@ -255,12 +279,12 @@ function inflateReviews(oData) {
             title: '{partnermodel>ServiceName}',
             // intro: '{partnermodel>ServiceId}',
             // number: '{partnermodel>foodPrice}',
-            icon: 'sap-icon://employee',
+            icon: 'sap-icon://personnel-view',
             numberUnit: 'R$',
             type: 'Active',
-            attributes:[
+            attributes: [
                 new sap.m.ObjectAttribute({
-                    text:'{partnermodel>ResponsibleName}'
+                    text: '{partnermodel>ResponsibleName}'
                 })
             ],
             tap: function (evt) {
