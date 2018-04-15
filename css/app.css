@@ -24,6 +24,14 @@ html, body {
 
 /*Main Screen*/
 
+#preview{
+    width: 300px;
+}
+.preview-dialog{
+    min-width: 0 !important;
+    width: 300px !important;
+}
+
 /*Before Token Validation*/
 
 @media only screen and (min-width: 320px) {
