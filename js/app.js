@@ -7,11 +7,85 @@ sap.ui.getCore().attachInit(function () {
         return this;
     };
 
+    //Product Carousel
+    var oCarouselModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("sap.ui.demo.mock", "/product-carousel.json"));
+    var oImage = new sap.m.Image({
+        src: '{Image}'
+    }).addStyleClass('image-rounded-border');
+    var oName = new sap.m.Text({
+        text:'{ProductName}'
+    }).addStyleClass('sapUiTinyMargin');
+    var oLayout = new sap.m.VBox({
+        alignItems:'Center',
+        justifyContent:'Center',
+        items:[
+            oImage,
+            oName
+        ]
+    })
+    var oCarousel = new sap.m.Carousel({
+        loop: true,
+        arrowsPlacement: sap.m.CarouselArrowsPlacement.PageIndicator
+    }).setModel(oCarouselModel).bindAggregation("pages", "/ProductCarousel", oLayout);
+
+    //Employee Carousel
+    var oEmpCarouselModel = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("sap.ui.demo.mock", "/employee-carousel.json"));
+    var oEmpImage = new sap.m.Image({
+        src: '{Image}'
+    }).addStyleClass('image-rounded-border');
+    var oEmpName = new sap.m.Text({
+        text:'{EmployeeName}'
+    }).addStyleClass('sapUiTinyMargin');
+    var oEmpLayout = new sap.m.VBox({
+        alignItems:'Center',
+        justifyContent:'Center',
+        items:[
+            oEmpImage,
+            oEmpName
+        ]
+    })
+    var oEmpCarousel = new sap.m.Carousel({
+        loop: true,
+        arrowsPlacement: sap.m.CarouselArrowsPlacement.PageIndicator
+    }).setModel(oEmpCarouselModel).bindAggregation("pages", "/EmployeeCarousel", oEmpLayout);
+
     var _tokenLayout = new sap.ui.layout.VerticalLayout({
         content: [
-            new sap.m.Text({
-                text: 'Para scanear o código fornecido, clique no botão abaixo:'
+            new sap.m.FlexBox({
+                alignItems:'Center',
+                justifyContent:'Center',
+                items:[
+                    new sap.m.Panel({
+                        headerText:'Top 5 Produtos',
+                        width:'400px',
+                        content: [
+                            oCarousel
+                        ]
+                    })
+                ]
             }),
+            new sap.m.FlexBox({
+                alignItems:'Center',
+                justifyContent:'Center',
+                items:[
+                    new sap.m.Panel({
+                        headerText:'Top 5 Profissionais',
+                        width:'400px',
+                        content: [
+                            oEmpCarousel
+                        ]
+                    })
+                ]
+            }),
+            new sap.m.FlexBox({
+                alignItems:'Center',
+                justifyContent:'Center',
+                items:[
+                    new sap.m.Text({
+                        text: 'Para scanear o código fornecido, clique no botão abaixo:'
+                    })
+                ]
+            }).addStyleClass('sapUiSmallMargin'),
             new sap.m.Input('txtTokenNumber', {
 
             }).addStyleClass('token-input'),

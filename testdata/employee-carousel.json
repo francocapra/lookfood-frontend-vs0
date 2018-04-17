@@ -1,0 +1,24 @@
+{
+    "EmployeeCarousel":[
+        {
+            "EmployeeName":"Gostosa 1",
+            "Image":"testdata/imgs/employee1.jpg"
+        },
+        {
+            "EmployeeName":"Gostosa 2",
+            "Image":"testdata/imgs/employee2.jpg"
+        },
+        {
+            "EmployeeName":"Gostosa 3",
+            "Image":"testdata/imgs/employee3.jpg"
+        },
+        {
+            "EmployeeName":"Gostosa 4",
+            "Image":"testdata/imgs/employee4.jpg"
+        },
+        {
+            "EmployeeName":"Gostosa 5",
+            "Image":"testdata/imgs/employee5.jpg"
+        }
+    ]
+}

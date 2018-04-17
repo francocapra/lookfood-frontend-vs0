@@ -5,15 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <script id="sap-ui-bootstrap" src="js/openui5-runtime-1.52.9/resources/sap-ui-core.js" data-sap-ui-theme="sap_bluecrystal"
-        data-sap-ui-libs="sap.m,sap.tnt,sap.ui.layout" data-sap-ui-compatVersion="edge" data-sap-ui-preload="async"></script>
+        data-sap-ui-libs="sap.m,sap.tnt,sap.ui.layout" data-sap-ui-compatVersion="edge" data-sap-ui-preload="async"
+        data-sap-ui-resourceroots='{"sap.ui.demo.mock": "testdata"}'></script>
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <title>LookFood</title>
 </head>
 
 <body class="sapUiBody" id="content">
-    <div id="loginBox">
+    <div id="tokenContainer">
     </div>
-    <script src="js/login.js"></script>
+    <script type="text/javascript" src="js/instascan.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/tdc.js"></script>
 </body>
 
 </html>
