@@ -13,12 +13,12 @@ sap.ui.getCore().attachInit(function () {
         src: '{Image}'
     }).addStyleClass('image-rounded-border');
     var oName = new sap.m.Text({
-        text:'{ProductName}'
+        text: '{ProductName}'
     }).addStyleClass('sapUiTinyMargin');
     var oLayout = new sap.m.VBox({
-        alignItems:'Center',
-        justifyContent:'Center',
-        items:[
+        alignItems: 'Center',
+        justifyContent: 'Center',
+        items: [
             oImage,
             oName
         ]
@@ -34,12 +34,12 @@ sap.ui.getCore().attachInit(function () {
         src: '{Image}'
     }).addStyleClass('image-rounded-border');
     var oEmpName = new sap.m.Text({
-        text:'{EmployeeName}'
+        text: '{EmployeeName}'
     }).addStyleClass('sapUiTinyMargin');
     var oEmpLayout = new sap.m.VBox({
-        alignItems:'Center',
-        justifyContent:'Center',
-        items:[
+        alignItems: 'Center',
+        justifyContent: 'Center',
+        items: [
             oEmpImage,
             oEmpName
         ]
@@ -49,117 +49,105 @@ sap.ui.getCore().attachInit(function () {
         arrowsPlacement: sap.m.CarouselArrowsPlacement.PageIndicator
     }).setModel(oEmpCarouselModel).bindAggregation("pages", "/EmployeeCarousel", oEmpLayout);
 
-    var _tokenLayout = new sap.ui.layout.VerticalLayout({
+    var _tokenLayout = new sap.ui.layout.VerticalLayout('tokenLayout', {
         content: [
-            new sap.m.FlexBox({
-                alignItems:'Center',
-                justifyContent:'Center',
-                items:[
+            new sap.m.VBox({
+                items: [
                     new sap.m.Panel({
-                        headerText:'Top 5 Produtos',
-                        width:'400px',
+                        headerText: 'Top 5 Profissionais',
+                        content: [
+                            oEmpCarousel
+                        ]
+                    }),
+                    new sap.m.Panel({
+                        headerText: 'Top 5 Produtos',
                         content: [
                             oCarousel
                         ]
                     })
                 ]
-            }),
-            new sap.m.FlexBox({
-                alignItems:'Center',
-                justifyContent:'Center',
-                items:[
-                    new sap.m.Panel({
-                        headerText:'Top 5 Profissionais',
-                        width:'400px',
-                        content: [
-                            oEmpCarousel
-                        ]
-                    })
-                ]
-            }),
-            new sap.m.FlexBox({
-                alignItems:'Center',
-                justifyContent:'Center',
-                items:[
+            }).addStyleClass('vbox-carousels'),
+            new sap.m.VBox({
+                alignItems: 'Center',
+                justifyContent: 'Center',
+                items: [
                     new sap.m.Text({
                         text: 'Para scanear o código fornecido, clique no botão abaixo:'
+                    }).addStyleClass('sapUiSmallMargin'),
+                    new sap.m.Input('txtTokenNumber', {
+                    }).addStyleClass('token-input'),
+                    new sap.m.Button({
+                        text: 'Scanear QR Code',
+                        type: sap.m.ButtonType.Emphasized,
+                        press: function (evt) {
+
+                            let scanner = null;
+                            let reviewCode = null;
+
+                            var _previewDialog = new sap.m.Dialog({
+                                title: 'Posicione o código em frente o leitor',
+                                content: [
+                                    new sap.ui.core.HTML({
+                                        content: '<video id="preview"></video>'
+                                    })
+                                ],
+                                beginButton: new sap.m.Button({
+                                    text: 'Fechar',
+                                    press: function () {
+                                        _previewDialog.close();
+                                    }
+                                }),
+                                afterOpen: function () {
+                                    scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+                                    scanner.addListener('scan', function (content) {
+                                        reviewCode = content;
+                                        _previewDialog.close();
+                                    });
+                                    Instascan.Camera.getCameras().then(function (cameras) {
+                                        // alert(cameras[0].name)
+                                        if (cameras.length > 0) {
+                                            scanner.activeCameraId = cameras[0].id;
+                                            scanner.start(cameras[0]);
+                                        } else {
+                                            console.error('No cameras found.');
+                                            alert("No cameras foud.")
+                                        }
+                                    }).catch(function (e) {
+                                        console.error(e);
+                                        alert(e);
+                                    });
+                                },
+                                beforeClose: function () {
+                                    scanner.stop();
+                                    scanner = null;
+                                },
+                                afterClose: function () {
+                                    _previewDialog.destroy();
+                                    console.log(reviewCode);
+                                    inflateReviews(getSamplePartnerCollection());
+                                    // sap.ui.core.BusyIndicator.show(0);
+
+                                    // $.ajax({
+                                    //     type: 'GET',
+                                    //     url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
+                                    //     success: function (response) {
+                                    //         // console.log(response);
+
+                                    //         sap.ui.core.BusyIndicator.hide();
+                                    //         inflateReviews(response);
+                                    //     },
+                                    //     error: function (a, b, c) {
+                                    //         console.log(a, b, c);
+                                    //         sap.ui.core.BusyIndicator.hide();
+                                    //     }
+                                    // })
+                                }
+                            }).addStyleClass('preview-dialog').open();
+
+                        }
                     })
                 ]
-            }).addStyleClass('sapUiSmallMargin'),
-            new sap.m.Input('txtTokenNumber', {
-
-            }).addStyleClass('token-input'),
-            new sap.m.Button({
-                text: 'Scanear QR Code',
-                width: '100%',
-                type: sap.m.ButtonType.Emphasized,
-                press: function (evt) {
-
-                    let scanner = null;
-                    let reviewCode = null;
-
-                    var _previewDialog = new sap.m.Dialog({
-                        title: 'Posicione o código em frente o leitor',
-                        content: [
-                            new sap.ui.core.HTML({
-                                content: '<video id="preview"></video>'
-                            })
-                        ],
-                        beginButton: new sap.m.Button({
-                            text: 'Fechar',
-                            press: function () {
-                                _previewDialog.close();
-                            }
-                        }),
-                        afterOpen: function () {
-                            scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-                            scanner.addListener('scan', function (content) {
-                                reviewCode = content;
-                                _previewDialog.close();
-                            });
-                            Instascan.Camera.getCameras().then(function (cameras) {
-                                // alert(cameras[0].name)
-                                if (cameras.length > 0) {
-                                    scanner.activeCameraId = cameras[0].id;
-                                    scanner.start(cameras[0]);
-                                } else {
-                                    console.error('No cameras found.');
-                                    alert("No cameras foud.")
-                                }
-                            }).catch(function (e) {
-                                console.error(e);
-                                alert(e);
-                            });
-                        },
-                        beforeClose: function () {
-                            scanner.stop();
-                            scanner = null;
-                        },
-                        afterClose: function () {
-                            _previewDialog.destroy();
-                            console.log(reviewCode);
-                            inflateReviews(getSamplePartnerCollection());
-                            // sap.ui.core.BusyIndicator.show(0);
-
-                            // $.ajax({
-                            //     type: 'GET',
-                            //     url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
-                            //     success: function (response) {
-                            //         // console.log(response);
-
-                            //         sap.ui.core.BusyIndicator.hide();
-                            //         inflateReviews(response);
-                            //     },
-                            //     error: function (a, b, c) {
-                            //         console.log(a, b, c);
-                            //         sap.ui.core.BusyIndicator.hide();
-                            //     }
-                            // })
-                        }
-                    }).addStyleClass('preview-dialog').open();
-
-                }
-            })
+            }).addStyleClass('sapUiSmallMargin')
         ]
     }).addStyleClass('token-layout').placeAt('tokenContainer');
 

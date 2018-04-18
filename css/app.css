@@ -24,14 +24,16 @@ html, body {
 
 /*Main Screen*/
 
-#preview{
+#preview {
     width: 300px;
 }
-.preview-dialog{
+
+.preview-dialog {
     min-width: 0 !important;
     width: 300px !important;
 }
-.personnel-card{
+
+.personnel-card {
     width: 200px;
     height: 120px;
     padding: 10px;
@@ -39,18 +41,21 @@ html, body {
     border-radius: 5px;
     margin: 10px;
 }
-.personnel-card-labels{
+
+.personnel-card-labels {
     color: dimgray !important;
     font-size: 12px !important;
 }
-.image-rounded-border{
+
+.image-rounded-border {
     border-radius: 5px;
 }
+
 /*Before Token Validation*/
 
 @media only screen and (min-width: 320px) {
     #tokenContainer {
-        width: 90%;
+        width: 90% !important;
         margin: 0 auto;
         margin-top: 100px;
         background-color: ghostwhite;
@@ -61,20 +66,20 @@ html, body {
     .token-layout {
         display: table !important;
         padding: 40 0 40 0;
-        width: 80%;
+        width: 80% !important;
         margin: 0 auto;
-    }
-    .token-input {
-        margin-top: 30px;
     }
     .review-dialog {
         width: 90% !important;
+    }
+    .vbox-carousels {
+        width: 350px;
     }
 }
 
 @media only screen and (min-width: 768px) {
     #tokenContainer {
-        width: 70%;
+        width: 70% !important;
         margin: 0 auto;
         margin-top: 100px;
         background-color: ghostwhite;
@@ -85,20 +90,20 @@ html, body {
     .token-layout {
         display: table !important;
         padding: 40 0 40 0;
-        width: 80%;
+        width: 80% !important;
         margin: 0 auto;
-    }
-    .token-input {
-        margin-top: 30px;
     }
     .review-dialog {
         width: 60% !important;
+    }
+    .vbox-carousels {
+        width: 700px;
     }
 }
 
 @media only screen and (min-width: 1024px) {
     #tokenContainer {
-        width: 40%;
+        width: 40% !important;
         margin: 0 auto;
         margin-top: 100px;
         background-color: ghostwhite;
@@ -109,14 +114,14 @@ html, body {
     .token-layout {
         display: table !important;
         padding: 40 0 40 0;
-        width: 80%;
+        width: 80% !important;
         margin: 0 auto;
-    }
-    .token-input {
-        margin-top: 30px;
     }
     .review-dialog {
         width: 40% !important;
+    }
+    .vbox-carousels {
+        width: 1000px;
     }
 }
 

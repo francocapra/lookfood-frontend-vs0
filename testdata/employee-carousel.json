@@ -1,23 +1,23 @@
 {
     "EmployeeCarousel":[
         {
-            "EmployeeName":"Gostosa 1",
+            "EmployeeName":"Empregado 1",
             "Image":"testdata/imgs/employee1.jpg"
         },
         {
-            "EmployeeName":"Gostosa 2",
+            "EmployeeName":"Empregado 2",
             "Image":"testdata/imgs/employee2.jpg"
         },
         {
-            "EmployeeName":"Gostosa 3",
+            "EmployeeName":"Empregado 3",
             "Image":"testdata/imgs/employee3.jpg"
         },
         {
-            "EmployeeName":"Gostosa 4",
+            "EmployeeName":"Empregado 4",
             "Image":"testdata/imgs/employee4.jpg"
         },
         {
-            "EmployeeName":"Gostosa 5",
+            "EmployeeName":"Empregado 5",
             "Image":"testdata/imgs/employee5.jpg"
         }
     ]
