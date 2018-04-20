@@ -71,11 +71,6 @@ sap.ui.getCore().attachInit(function () {
                 alignItems: 'Center',
                 justifyContent: 'Center',
                 items: [
-                    new sap.m.Text({
-                        text: 'Para scanear o código fornecido, clique no botão abaixo:'
-                    }).addStyleClass('sapUiSmallMargin'),
-                    new sap.m.Input('txtTokenNumber', {
-                    }).addStyleClass('token-input'),
                     new sap.m.Button({
                         text: 'Scanear QR Code',
                         type: sap.m.ButtonType.Emphasized,
@@ -124,7 +119,7 @@ sap.ui.getCore().attachInit(function () {
                                 afterClose: function () {
                                     _previewDialog.destroy();
                                     console.log(reviewCode);
-                                    inflateReviews(getSamplePartnerCollection());
+                                    inflatePartnerItems();
                                     // sap.ui.core.BusyIndicator.show(0);
 
                                     // $.ajax({
@@ -495,4 +490,57 @@ function inflateReviews(oData) {
             _reviewDialog.destroy();
         }
     }).addStyleClass('review-dialog').open();
+}
+
+function inflatePartnerItems() {
+
+    var oPartnerItemsCollection = new sap.ui.model.json.JSONModel(jQuery.sap.getModulePath("sap.ui.demo.mock", "/partner-items.json"));
+
+    var oProductListItem = new sap.m.CustomListItem({
+        content: [
+            new sap.m.Panel({
+                expandable: true,
+                expanded: false,
+                headerText: '{ProductName}'
+            })
+        ]
+    });
+
+    var oServiceListItem = new sap.m.CustomListItem({
+        content: [
+            new sap.m.Panel({
+                expandable: true,
+                expanded: false,
+                headerText: '{ServiceName}'
+            })
+        ]
+    });
+
+    var productList = new sap.m.List({
+        headerText: "Produtos"
+    }).setModel(oPartnerItemsCollection).bindItems('/PartnerCollection/ProductCollection', oProductListItem);
+
+    var serviceList = new sap.m.List({
+        headerText: "Serviços"
+    }).setModel(oPartnerItemsCollection).bindItems('/PartnerCollection/ServiceCollection', oServiceListItem);
+
+    var oItemsDialog = new sap.m.Dialog({
+        content: [
+            productList,
+            serviceList
+        ],
+        beginButton: new sap.m.Button({
+            text: 'Confirmar'
+        }),
+        endButton: new sap.m.Button({
+            text: 'Fechar',
+            press: function () {
+                oItemsDialog.close();
+            }
+        }),
+        afterClose: function () {
+            oItemsDialog.destroy();
+        }
+    }).open();
+
 }

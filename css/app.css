@@ -57,7 +57,7 @@ html, body {
     #tokenContainer {
         width: 90% !important;
         margin: 0 auto;
-        margin-top: 100px;
+        margin-top: 10px;
         background-color: ghostwhite;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
         border-radius: 5px;
@@ -81,7 +81,7 @@ html, body {
     #tokenContainer {
         width: 70% !important;
         margin: 0 auto;
-        margin-top: 100px;
+        margin-top: 10px;
         background-color: ghostwhite;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
         border-radius: 5px;
@@ -105,7 +105,7 @@ html, body {
     #tokenContainer {
         width: 40% !important;
         margin: 0 auto;
-        margin-top: 100px;
+        margin-top: 10px;
         background-color: ghostwhite;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
         border-radius: 5px;
