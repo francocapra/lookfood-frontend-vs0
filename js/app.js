@@ -144,7 +144,14 @@ sap.ui.getCore().attachInit(function () {
                 ]
             }).addStyleClass('sapUiSmallMargin')
         ]
-    }).addStyleClass('token-layout').placeAt('tokenContainer');
+    }).addStyleClass('token-layout');
+
+    var page = new sap.m.Page({
+        title:'Partner',
+        content:[
+            _tokenLayout
+        ]
+    }).placeAt('tokenContainer');
 
 });
 
