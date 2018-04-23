@@ -7,8 +7,95 @@ sap.ui.getCore().attachInit(function () {
         return this;
     };
 
-    var cockpitPage = new sap.m.Page('cockpit', {
+    lfApp = new sap.m.App({
+    }).placeAt('content');
+
+    lfApp.addPage(getLoginPage());
+    lfApp.addPage(getCockpitPage());
+    lfApp.addPage(getReviewPage());
+
+});
+
+function getLoginPage() {
+
+    var loginPage = new sap.m.Page('p_login',{
+        title: 'Bem vindo ao LookFood',
+        content: [
+            new sap.m.FlexBox({
+                alignItems: 'Start',
+                justifyContent: 'Start',
+                items: [
+                    new sap.m.VBox({
+                        items: [
+                            new sap.m.Label({
+                                labelFor: 'txtUserId',
+                                text: 'Usuário'
+                            }),
+                            new sap.m.Input('txtUserId', {
+
+                            }),
+                            new sap.m.Label({
+                                labelFor: 'txtPassword',
+                                text: 'Senha'
+                            }),
+                            new sap.m.Input('txtPassword', {
+                                type: sap.m.InputType.Password
+                            }),
+                            new sap.m.Button({
+                                text: 'Acessar',
+                                width: '100%',
+                                type: sap.m.ButtonType.Emphasized,
+                                press: function () {
+                                    lfApp.to('p_cockpit');
+                                }
+                            }).addStyleClass('sapUiSmallMarginTop')
+                        ]
+                    }).addStyleClass('sapUiLargeMarginTop sapUiLargeMarginBegin vbox-login')
+                ]
+            })
+        ]
+    }).addStyleClass('page-body')
+
+    return loginPage;
+}
+
+function getCockpitPage() {
+    var cockpitPage = new sap.m.Page('p_cockpit', {
         title: 'Partner Cockpit',
+        headerContent: [
+            new sap.m.Button({
+                text: 'Sair',
+                icon: 'sap-icon://log',
+                press: function () {
+                    var logOffDialog = new sap.m.Dialog({
+                        title: 'Confirmação',
+                        type: 'Message',
+                        content: [
+                            new sap.m.Text({
+                                text: 'Deseja sair da aplicação?'
+                            })
+                        ],
+                        beginButton: new sap.m.Button({
+                            text: 'Sim',
+                            press: function () {
+                                logOffDialog.close();
+                                lfApp.to('p_login');
+                            }
+                        }),
+                        endButton: new sap.m.Button({
+                            text: 'Cancelar',
+                            type: 'Emphasized',
+                            press: function () {
+                                logOffDialog.close();
+                            }
+                        }),
+                        afterClose: function () {
+                            logOffDialog.destroy();
+                        }
+                    }).open();
+                }
+            })
+        ],
         content: [
             new sap.m.HBox({
                 items: [
@@ -34,7 +121,7 @@ sap.ui.getCore().attachInit(function () {
                             ]
                         }),
                         press: function () {
-                            app.to('reviewPage');
+                            lfApp.to('p_review');
                         }
                     }).addStyleClass('sapUiSmallMarginBegin sapUiSmallMarginTop'),
                     new sap.m.GenericTile({
@@ -53,30 +140,26 @@ sap.ui.getCore().attachInit(function () {
         ]
     }).addStyleClass('sapUiContentPadding');
 
-    var reviewPage = new sap.m.Page('reviewPage', {
+    return cockpitPage;
+}
+
+function getReviewPage() {
+    var reviewPage = new sap.m.Page('p_review', {
         showNavButton: true,
         navButtonPress: function () {
-            app.to('cockpit');
+            lfApp.to('p_cockpit');
         },
         content: [
             new sap.m.VBox({
                 items: [
                     new sap.m.Panel({
-                        headerText: 'Top 5 Profissionais',
-                        content: [
-                            new sap.m.FlexBox('TopProfFlexBox', {
-                                alignItems: 'Center',
-                                justifyContent: 'Center'
-                            })
-                        ]
-                    }),
-                    new sap.m.Panel({
-                        headerText: 'Top 5 Produtos',
+                        headerText: 'Destaques',
                         content: [
                             new sap.m.FlexBox({
-                                alignItems: 'Center',
-                                justifyContent: 'Center',
+                                alignItems: 'Start',
+                                justifyContent: 'Start',
                                 items: [
+                                    getTopEmployees(),
                                     getTopProducts()
                                 ]
                             })
@@ -100,7 +183,7 @@ sap.ui.getCore().attachInit(function () {
                                 title: 'Posicione o código em frente o leitor',
                                 content: [
                                     new sap.ui.core.HTML({
-                                        content: '<video id="preview"></video>'
+                                        content: '<video id="preview" width="300" heigth="300"></video>'
                                     })
                                 ],
                                 beginButton: new sap.m.Button({
@@ -163,150 +246,5 @@ sap.ui.getCore().attachInit(function () {
         ]
     }).addStyleClass('sapUiContentPadding');
 
-    var app = new sap.m.App('lfweb', {
-        pages: [
-            cockpitPage,
-            reviewPage
-        ]
-    }).placeAt('content');
-
-    getTopEmployees();
-
-});
-
-async function getTopEmployees() {
-    // TopProfFlexBox
-
-    var oData = await $.getJSON('testdata/top-products-list.json');
-
-    console.log(oData);
-
-    var oTile1 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '1. '
-            })
-        })
-    });
-
-    var oTile2 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '2. '
-            })
-        })
-    });
-
-    var oTile3 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '3. '
-            })
-        })
-    });
-
-    var oTile4 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '4. '
-            })
-        })
-    });
-
-    var oTile5 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '5. '
-            })
-        })
-    });
-
-    var oEmpSlideTile = new sap.m.SlideTile({
-        displayTime: 3000,
-        tiles: [
-            oTile1,
-            oTile2,
-            oTile3,
-            oTile4,
-            oTile5
-        ]
-    });
-
-    sap.ui.getCore().byId('TopProfFlexBox').addItem(oEmpSlideTile);
-}
-
-function getTopProducts() {
-
-    var oTile1 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '1. '
-            })
-        })
-    });
-
-    var oTile2 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '2. '
-            })
-        })
-    });
-
-    var oTile3 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '3. '
-            })
-        })
-    });
-
-    var oTile4 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '4. '
-            })
-        })
-    });
-
-    var oTile5 = new sap.m.GenericTile({
-        backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
-        tileContent: new sap.m.TileContent({
-            content: new sap.m.NewsContent({
-                contentText: '5. '
-            })
-        })
-    });
-
-    var oPrdSlideTile = new sap.m.SlideTile({
-        displayTime: 3000,
-        tiles: [
-            oTile1,
-            oTile2,
-            oTile3,
-            oTile4,
-            oTile5
-        ]
-    });
-
-    return oPrdSlideTile;
+    return reviewPage;
 }
