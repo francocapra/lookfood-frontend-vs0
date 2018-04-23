@@ -13,12 +13,13 @@ sap.ui.getCore().attachInit(function () {
     lfApp.addPage(getLoginPage());
     lfApp.addPage(getCockpitPage());
     lfApp.addPage(getReviewPage());
+    lfApp.addPage(getItemsPage());
 
 });
 
 function getLoginPage() {
 
-    var loginPage = new sap.m.Page('p_login',{
+    var loginPage = new sap.m.Page('p_login', {
         title: 'Bem vindo ao LookFood',
         content: [
             new sap.m.FlexBox({
@@ -61,7 +62,7 @@ function getLoginPage() {
 
 function getCockpitPage() {
     var cockpitPage = new sap.m.Page('p_cockpit', {
-        title: 'Partner Cockpit',
+        title: 'Cockpit',
         headerContent: [
             new sap.m.Button({
                 text: 'Sair',
@@ -108,7 +109,10 @@ function getCockpitPage() {
                                     icon: 'sap-icon://add-document'
                                 })
                             ]
-                        })
+                        }),
+                        press: function () {
+                            lfApp.to('p_items');
+                        }
                     }).addStyleClass('sapUiSmallMarginBegin sapUiSmallMarginTop'),
                     new sap.m.GenericTile({
                         header: 'Iniciar Modo Review',
@@ -149,6 +153,78 @@ function getReviewPage() {
         navButtonPress: function () {
             lfApp.to('p_cockpit');
         },
+        headerContent: [
+            new sap.m.Button({
+                text: 'Iniciar Review',
+                type: sap.m.ButtonType.Accept,
+                press: function (evt) {
+
+                    let scanner = null;
+                    let reviewCode = null;
+
+                    var _previewDialog = new sap.m.Dialog({
+                        title: 'Posicione o código em frente o leitor',
+                        content: [
+                            new sap.ui.core.HTML({
+                                content: '<video id="preview" width="300" heigth="300"></video>'
+                            })
+                        ],
+                        beginButton: new sap.m.Button({
+                            text: 'Fechar',
+                            press: function () {
+                                _previewDialog.close();
+                            }
+                        }),
+                        afterOpen: function () {
+                            scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+                            scanner.addListener('scan', function (content) {
+                                reviewCode = content;
+                                _previewDialog.close();
+                            });
+                            Instascan.Camera.getCameras().then(function (cameras) {
+                                // alert(cameras[0].name)
+                                if (cameras.length > 0) {
+                                    scanner.activeCameraId = cameras[0].id;
+                                    scanner.start(cameras[0]);
+                                } else {
+                                    console.error('No cameras found.');
+                                    alert("No cameras foud.")
+                                }
+                            }).catch(function (e) {
+                                console.error(e);
+                                alert(e);
+                            });
+                        },
+                        beforeClose: function () {
+                            scanner.stop();
+                            scanner = null;
+                        },
+                        afterClose: function () {
+                            _previewDialog.destroy();
+                            console.log(reviewCode);
+                            inflatePartnerItems();
+                            // sap.ui.core.BusyIndicator.show(0);
+
+                            // $.ajax({
+                            //     type: 'GET',
+                            //     url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
+                            //     success: function (response) {
+                            //         // console.log(response);
+
+                            //         sap.ui.core.BusyIndicator.hide();
+                            //         inflateReviews(response);
+                            //     },
+                            //     error: function (a, b, c) {
+                            //         console.log(a, b, c);
+                            //         sap.ui.core.BusyIndicator.hide();
+                            //     }
+                            // })
+                        }
+                    }).addStyleClass('preview-dialog').open();
+
+                }
+            })
+        ],
         content: [
             new sap.m.VBox({
                 items: [
@@ -164,87 +240,38 @@ function getReviewPage() {
                                 ]
                             })
                         ]
+                    }),
+                    new sap.m.List('reviewItemsList', {
+                        headerToolbar: new sap.m.Toolbar({
+                            content: [
+                                new sap.m.Title({
+                                    text: 'Itens Para Review'
+                                })
+                            ]
+                        }),
+                        items: [
+
+                        ]
                     })
                 ]
-            }),
-            new sap.m.VBox({
-                alignItems: 'Center',
-                justifyContent: 'Center',
-                items: [
-                    new sap.m.Button({
-                        text: 'Scanear QR Code',
-                        type: sap.m.ButtonType.Emphasized,
-                        press: function (evt) {
-
-                            let scanner = null;
-                            let reviewCode = null;
-
-                            var _previewDialog = new sap.m.Dialog({
-                                title: 'Posicione o código em frente o leitor',
-                                content: [
-                                    new sap.ui.core.HTML({
-                                        content: '<video id="preview" width="300" heigth="300"></video>'
-                                    })
-                                ],
-                                beginButton: new sap.m.Button({
-                                    text: 'Fechar',
-                                    press: function () {
-                                        _previewDialog.close();
-                                    }
-                                }),
-                                afterOpen: function () {
-                                    scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-                                    scanner.addListener('scan', function (content) {
-                                        reviewCode = content;
-                                        _previewDialog.close();
-                                    });
-                                    Instascan.Camera.getCameras().then(function (cameras) {
-                                        // alert(cameras[0].name)
-                                        if (cameras.length > 0) {
-                                            scanner.activeCameraId = cameras[0].id;
-                                            scanner.start(cameras[0]);
-                                        } else {
-                                            console.error('No cameras found.');
-                                            alert("No cameras foud.")
-                                        }
-                                    }).catch(function (e) {
-                                        console.error(e);
-                                        alert(e);
-                                    });
-                                },
-                                beforeClose: function () {
-                                    scanner.stop();
-                                    scanner = null;
-                                },
-                                afterClose: function () {
-                                    _previewDialog.destroy();
-                                    console.log(reviewCode);
-                                    inflatePartnerItems();
-                                    // sap.ui.core.BusyIndicator.show(0);
-
-                                    // $.ajax({
-                                    //     type: 'GET',
-                                    //     url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
-                                    //     success: function (response) {
-                                    //         // console.log(response);
-
-                                    //         sap.ui.core.BusyIndicator.hide();
-                                    //         inflateReviews(response);
-                                    //     },
-                                    //     error: function (a, b, c) {
-                                    //         console.log(a, b, c);
-                                    //         sap.ui.core.BusyIndicator.hide();
-                                    //     }
-                                    // })
-                                }
-                            }).addStyleClass('preview-dialog').open();
-
-                        }
-                    })
-                ]
-            }).addStyleClass('sapUiSmallMargin')
+            })
         ]
     }).addStyleClass('sapUiContentPadding');
 
     return reviewPage;
+}
+
+function getItemsPage() {
+    var itemsPage = new sap.m.Page('p_items', {
+        title: 'Meus Itens',
+        showNavButton: true,
+        navButtonPress: function () {
+            lfApp.to('p_cockpit');
+        },
+        content: [
+
+        ]
+    })
+
+    return itemsPage;
 }
