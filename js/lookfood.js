@@ -7,24 +7,39 @@ sap.ui.getCore().attachInit(function () {
         return this;
     };
 
-    lfApp = new sap.m.App({
-    }).placeAt('content');
+    lfApp = new sap.m.App().placeAt('content');
 
-    lfApp.addPage(getLoginPage());
-    lfApp.addPage(getCockpitPage());
-    lfApp.addPage(getReviewPage());
-    lfApp.addPage(getItemsPage());
+    //Main Pages
+    lfApp.addPage(getPageLogin());
+    lfApp.addPage(getPageCockpit());
+    lfApp.addPage(getPageReview());
+    lfApp.addPage(getPageItemMgmt());
+    lfApp.addPage(getPageProfessionalMgmt());
+
+    //Child Pages
+    lfApp.addPage(getPageNewItem());
+    lfApp.addPage(getPageNewProfessional());
+
+    var model = new sap.ui.model.json.JSONModel();
+    model.loadData(jQuery.sap.getModulePath('gourmeo.tdc', '/partner-top-list.json'));
+    model.attachRequestCompleted(function () {
+        var modelData = model.getData();
+
+        var box = sap.ui.getCore().byId('partnerTopItems');
+
+        box.addItem(getTopEmployees(modelData.TopEmployees));
+    });
 
 });
 
-function getLoginPage() {
+function getPageLogin() {
 
-    var loginPage = new sap.m.Page('p_login', {
+    var pageLogin = new sap.m.Page('p_login', {
         title: 'Bem vindo ao LookFood',
         content: [
             new sap.m.FlexBox({
-                alignItems: 'Start',
-                justifyContent: 'Start',
+                alignItems: 'Center',
+                justifyContent: 'Center',
                 items: [
                     new sap.m.VBox({
                         items: [
@@ -33,14 +48,15 @@ function getLoginPage() {
                                 text: 'Usuário'
                             }),
                             new sap.m.Input('txtUserId', {
-
+                                placeholder: 'Usuário'
                             }),
                             new sap.m.Label({
                                 labelFor: 'txtPassword',
                                 text: 'Senha'
                             }),
                             new sap.m.Input('txtPassword', {
-                                type: sap.m.InputType.Password
+                                type: sap.m.InputType.Password,
+                                placeholder: 'Senha'
                             }),
                             new sap.m.Button({
                                 text: 'Acessar',
@@ -49,20 +65,32 @@ function getLoginPage() {
                                 press: function () {
                                     lfApp.to('p_cockpit');
                                 }
+                            }).addStyleClass('sapUiSmallMarginTop'),
+                            new sap.m.HBox({
+                                alignItems: 'Center',
+                                justifyContent: 'Center',
+                                items: [
+                                    new sap.m.Text({
+                                        text: 'Não possui acesso?'
+                                    }),
+                                    new sap.m.Link({
+                                        text: 'Clique aqui'
+                                    }).addStyleClass('sapUiTinyMarginBegin')
+                                ]
                             }).addStyleClass('sapUiSmallMarginTop')
                         ]
-                    }).addStyleClass('sapUiLargeMarginTop sapUiLargeMarginBegin vbox-login')
+                    }).addStyleClass('sapUiLargeMarginTop vbox-login')
                 ]
             })
         ]
     }).addStyleClass('page-body')
 
-    return loginPage;
+    return pageLogin;
 }
 
-function getCockpitPage() {
-    var cockpitPage = new sap.m.Page('p_cockpit', {
-        title: 'Cockpit',
+function getPageCockpit() {
+    var pageCockpit = new sap.m.Page('p_cockpit', {
+        title: 'Cockpit Do Usuário',
         headerContent: [
             new sap.m.Button({
                 text: 'Sair',
@@ -101,19 +129,46 @@ function getCockpitPage() {
             new sap.m.HBox({
                 items: [
                     new sap.m.GenericTile({
-                        header: 'Gerenciar Items de Review',
+                        header: 'Gerenciar Produtos Para Review',
+                        tileContent: [
+                            new sap.m.TileContent({
+                                content: [
+                                    new sap.m.ImageContent({
+                                        src: 'sap-icon://employee'
+                                    })
+                                ]
+                            })
+                        ],
+                        press: function () {
+                            lfApp.to('p_items_mgmt');
+                        }
+                    }).addStyleClass('sapUiSmallMarginEnd'),
+                    new sap.m.GenericTile({
+                        header: 'Gerenciar Profissionais Para Review',
+                        tileContent: [
+                            new sap.m.TileContent({
+                                content: [
+                                    new sap.m.ImageContent({
+                                        src: 'sap-icon://product'
+                                    })
+                                ]
+                            })
+                        ],
+                        press: function () {
+                            lfApp.to('p_prof_mgmt');
+                        }
+                    }).addStyleClass('sapUiSmallMarginEnd'),
+                    new sap.m.GenericTile({
+                        header: 'Estatísticas',
+                        subheader: 'Relatórios e Análises',
                         tileContent: new sap.m.TileContent({
                             content: [
-                                new sap.m.NumericContent({
-                                    value: 0,
-                                    icon: 'sap-icon://add-document'
+                                new sap.m.ImageContent({
+                                    src: 'sap-icon://area-chart'
                                 })
                             ]
-                        }),
-                        press: function () {
-                            lfApp.to('p_items');
-                        }
-                    }).addStyleClass('sapUiSmallMarginBegin sapUiSmallMarginTop'),
+                        })
+                    }).addStyleClass('sapUiSmallMarginEnd'),
                     new sap.m.GenericTile({
                         header: 'Iniciar Modo Review',
                         tileContent: new sap.m.TileContent({
@@ -127,31 +182,20 @@ function getCockpitPage() {
                         press: function () {
                             lfApp.to('p_review');
                         }
-                    }).addStyleClass('sapUiSmallMarginBegin sapUiSmallMarginTop'),
-                    new sap.m.GenericTile({
-                        header: 'Estatísticas',
-                        subheader: 'Relatórios e Análises',
-                        tileContent: new sap.m.TileContent({
-                            content: [
-                                new sap.m.ImageContent({
-                                    src: 'sap-icon://area-chart'
-                                })
-                            ]
-                        })
-                    }).addStyleClass('sapUiSmallMarginBegin sapUiSmallMarginTop')
+                    }).addStyleClass('sapUiSmallMarginEnd')
                 ]
             })
         ]
     }).addStyleClass('sapUiContentPadding');
 
-    return cockpitPage;
+    return pageCockpit;
 }
 
-function getReviewPage() {
-    var reviewPage = new sap.m.Page('p_review', {
+function getPageReview() {
+    var pageReview = new sap.m.Page('p_review', {
         showNavButton: true,
         navButtonPress: function () {
-            lfApp.to('p_cockpit');
+            lfApp.back();
         },
         headerContent: [
             new sap.m.Button({
@@ -202,23 +246,7 @@ function getReviewPage() {
                         afterClose: function () {
                             _previewDialog.destroy();
                             console.log(reviewCode);
-                            inflatePartnerItems();
-                            // sap.ui.core.BusyIndicator.show(0);
 
-                            // $.ajax({
-                            //     type: 'GET',
-                            //     url: 'http://' + location.hostname + ':8081/LookFood/rest/ReviewServices/GetCustomerReviews/LFC0000001',
-                            //     success: function (response) {
-                            //         // console.log(response);
-
-                            //         sap.ui.core.BusyIndicator.hide();
-                            //         inflateReviews(response);
-                            //     },
-                            //     error: function (a, b, c) {
-                            //         console.log(a, b, c);
-                            //         sap.ui.core.BusyIndicator.hide();
-                            //     }
-                            // })
                         }
                     }).addStyleClass('preview-dialog').open();
 
@@ -231,13 +259,9 @@ function getReviewPage() {
                     new sap.m.Panel({
                         headerText: 'Destaques',
                         content: [
-                            new sap.m.FlexBox({
+                            new sap.m.FlexBox('partnerTopItems', {
                                 alignItems: 'Start',
-                                justifyContent: 'Start',
-                                items: [
-                                    getTopEmployees(),
-                                    getTopProducts()
-                                ]
+                                justifyContent: 'Start'
                             })
                         ]
                     }),
@@ -258,20 +282,157 @@ function getReviewPage() {
         ]
     }).addStyleClass('sapUiContentPadding');
 
-    return reviewPage;
+    return pageReview;
 }
 
-function getItemsPage() {
-    var itemsPage = new sap.m.Page('p_items', {
-        title: 'Meus Itens',
+function getPageItemMgmt() {
+
+    var pageItemsMgmt = new sap.m.Page('p_items_mgmt', {
+        title: 'Gerenciamento De Itens',
         showNavButton: true,
         navButtonPress: function () {
-            lfApp.to('p_cockpit');
+            lfApp.back();
         },
+        headerContent: [
+            new sap.m.Button({
+                icon: 'sap-icon://add',
+                press: function () {
+                    lfApp.to('p_new_item');
+                }
+            })
+        ],
         content: [
-
+            new sap.m.Table({
+                columns: [
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Item'
+                        })
+                    }),
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Descrição'
+                        })
+                    }),
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Responsável'
+                        })
+                    }),
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Auxiliar'
+                        })
+                    }),
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Avaliação Atual'
+                        })
+                    })
+                ]
+            }).setNoDataText('Nenhum Item Cadastrado')
         ]
     })
 
-    return itemsPage;
+    return pageItemsMgmt;
+}
+
+function getPageProfessionalMgmt() {
+    var pageProfMgmt = new sap.m.Page('p_prof_mgmt', {
+        title: 'Gerenciamento De Profissionais',
+        showNavButton: true,
+        navButtonPress: function () {
+            lfApp.back();
+        },
+        headerContent: [
+            new sap.m.Button({
+                icon: 'sap-icon://add',
+                press: function () {
+                    lfApp.to('p_new_prof');
+                }
+            })
+        ],
+        content: [
+            new sap.m.Table({
+                columns: [
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Nome'
+                        })
+                    }),
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Sobrenome'
+                        })
+                    }),
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Função'
+                        })
+                    }),
+                    new sap.m.Column({
+                        header: new sap.m.Text({
+                            text: 'Avaliação Atual'
+                        })
+                    })
+                ]
+            }).setNoDataText('Nenhum Profissional Cadastrado')
+        ]
+    })
+
+    return pageProfMgmt;
+}
+
+function getPageNewItem() {
+    var pageNewItem = new sap.m.Page('p_new_item', {
+        title: 'Adicionar Novo Item',
+        showNavButton: true,
+        navButtonPress: function () {
+            lfApp.back();
+        },
+        content: [
+
+        ],
+        footer: new sap.m.Toolbar({
+            content: [
+                new sap.m.ToolbarSpacer(),
+                new sap.m.Button({
+                    text: 'Salvar',
+                    type: 'Emphasized'
+                }),
+                new sap.m.Button({
+                    text: 'Cancelar'
+                })
+            ]
+        })
+    })
+
+    return pageNewItem;
+}
+
+function getPageNewProfessional() {
+    var pageNewProf = new sap.m.Page('p_new_prof', {
+        title: 'Adicionar Novo Profissional',
+        showNavButton: true,
+        navButtonPress: function () {
+            lfApp.back();
+        },
+        content: [
+
+        ],
+        footer: new sap.m.Toolbar({
+            content: [
+                new sap.m.ToolbarSpacer(),
+                new sap.m.Button({
+                    text: 'Salvar',
+                    type: 'Emphasized'
+                }),
+                new sap.m.Button({
+                    text: 'Cancelar'
+                })
+            ]
+        })
+    })
+
+    return pageNewProf;
 }

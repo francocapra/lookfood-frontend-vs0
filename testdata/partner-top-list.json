@@ -33,23 +33,28 @@
     ],
     "TopEmployees": [
         {
-            "EmployeeName": "Empregado 1",
+            "ProfessionalName": "Empregado 1",
+            "ReviewAverage": 9.1,
             "Image": "testdata/imgs/employee1.jpg"
         },
         {
-            "EmployeeName": "Empregado 2",
+            "ProfessionalName": "Empregado 2",
+            "ReviewAverage": 8.4,
             "Image": "testdata/imgs/employee2.jpg"
         },
         {
-            "EmployeeName": "Empregado 3",
+            "ProfessionalName": "Empregado 3",
+            "ReviewAverage": 8.3,
             "Image": "testdata/imgs/employee3.jpg"
         },
         {
-            "EmployeeName": "Empregado 4",
+            "ProfessionalName": "Empregado 4",
+            "ReviewAverage": 8.2,
             "Image": "testdata/imgs/employee4.jpg"
         },
         {
-            "EmployeeName": "Empregado 5",
+            "ProfessionalName": "Empregado 5",
+            "ReviewAverage": 7.5,
             "Image": "testdata/imgs/employee5.jpg"
         }
     ]

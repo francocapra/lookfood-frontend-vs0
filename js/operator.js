@@ -1,51 +1,51 @@
-function getTopEmployees() {
+function getTopEmployees(oData) {
 
     var oTile1 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
-                contentText: '1. '
+                contentText: oData[0].ProfessionalName,
+                subheader: oData[0].ReviewAverage
             })
         })
     });
 
     var oTile2 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
-                contentText: '2. '
+                contentText: oData[1].ProfessionalName,
+                subheader: oData[1].ReviewAverage
             })
         })
     });
 
     var oTile3 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
-                contentText: '3. '
+                contentText: oData[2].ProfessionalName,
+                subheader: oData[2].ReviewAverage
             })
         })
     });
 
     var oTile4 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
-                contentText: '4. '
+                contentText: oData[3].ProfessionalName,
+                subheader: oData[3].ReviewAverage
             })
         })
     });
 
     var oTile5 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
-                contentText: '5. '
+                contentText: oData[4].ProfessionalName,
+                subheader: oData[4].ReviewAverage
             })
         })
     });
@@ -64,11 +64,10 @@ function getTopEmployees() {
     return oEmpSlideTile;
 }
 
-function getTopProducts() {
+function getTopProducts(oData) {
 
     var oTile1 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
                 contentText: '1. '
@@ -78,7 +77,6 @@ function getTopProducts() {
 
     var oTile2 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
                 contentText: '2. '
@@ -88,7 +86,6 @@ function getTopProducts() {
 
     var oTile3 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
                 contentText: '3. '
@@ -98,7 +95,6 @@ function getTopProducts() {
 
     var oTile4 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
                 contentText: '4. '
@@ -108,7 +104,6 @@ function getTopProducts() {
 
     var oTile5 = new sap.m.GenericTile({
         backgroundImage: 'imgs/review-mode/top-professionals/chefs.png',
-        frameType: 'TwoByOne',
         tileContent: new sap.m.TileContent({
             content: new sap.m.NewsContent({
                 contentText: '5. '
