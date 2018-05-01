@@ -7,6 +7,11 @@ sap.ui.getCore().attachInit(function () {
         return this;
     };
 
+    //localization settings
+    jQuery.sap.require("jquery.sap.resources");
+    sLocale = sap.ui.getCore().getConfiguration().getLanguage();
+    oBundle = jQuery.sap.resources({ url: "res/i18n/i18n.properties", locale: sLocale });
+
     lfApp = new sap.m.App({
         afterNavigate: function (event) {
             if (event.getParameters().toId == 'p_login') {
@@ -41,7 +46,7 @@ sap.ui.getCore().attachInit(function () {
 function getPageLogin() {
 
     var pageLogin = new sap.m.Page('p_login', {
-        title: 'Bem vindo ao LookFood',
+        title: oBundle.getText('loginPageTitle'),
         content: [
             new sap.m.FlexBox({
                 alignItems: 'Center',
@@ -49,23 +54,32 @@ function getPageLogin() {
                 items: [
                     new sap.m.VBox({
                         items: [
+                            new sap.m.FlexBox({
+                                alignItems: 'Center',
+                                justifyContent: 'Center',
+                                items: new sap.m.Image({
+                                    src: 'imgs/brand/gourmeo_logo_web.png',
+                                    width: '200px',
+                                    height: '200px'
+                                })
+                            }),
                             new sap.m.Label({
                                 labelFor: 'txtUserId',
-                                text: 'Usuário'
+                                text: oBundle.getText('loginUserLabel')
                             }),
                             new sap.m.Input('txtUserId', {
-                                placeholder: 'Digite seu usuário ou e-mail'
+                                placeholder: oBundle.getText('userInputPlaceholder')
                             }),
                             new sap.m.Label({
                                 labelFor: 'txtPassword',
-                                text: 'Senha'
+                                text: oBundle.getText('loginUserPassword')
                             }),
                             new sap.m.Input('txtPassword', {
                                 type: sap.m.InputType.Password,
-                                placeholder: 'Digite sua senha'
+                                placeholder: oBundle.getText('passwordInputPlaceholder')
                             }),
                             new sap.m.Button({
-                                text: 'Acessar',
+                                text: oBundle.getText('btnLogin'),
                                 width: '100%',
                                 type: sap.m.ButtonType.Emphasized,
                                 press: function () {
@@ -77,10 +91,10 @@ function getPageLogin() {
                                 justifyContent: 'Center',
                                 items: [
                                     new sap.m.Text({
-                                        text: 'Não possui acesso?'
+                                        text: oBundle.getText('newUserLabel')
                                     }),
                                     new sap.m.Link({
-                                        text: 'Clique aqui'
+                                        text: oBundle.getText('newUserLink')
                                     }).addStyleClass('sapUiTinyMarginBegin')
                                 ]
                             }).addStyleClass('sapUiSmallMarginTop'),
@@ -89,10 +103,10 @@ function getPageLogin() {
                                 justifyContent: 'Center',
                                 items: [
                                     new sap.m.Text({
-                                        text: 'Esqueceu sua senha?'
+                                        text: oBundle.getText('forgotPasswordLabel')
                                     }),
                                     new sap.m.Link({
-                                        text: 'Clique aqui'
+                                        text: oBundle.getText('forgotPasswordLink')
                                     }).addStyleClass('sapUiTinyMarginBegin')
                                 ]
                             }).addStyleClass('sapUiSmallMarginTop')
@@ -177,12 +191,12 @@ function getPageCockpit() {
                         }
                     }).addStyleClass('sapUiSmallMarginEnd'),
                     new sap.m.GenericTile({
-                        header: 'Estatísticas',
-                        subheader: 'Relatórios e Análises',
+                        header: 'Meu Perfil',
+                        subheader: 'Cadastro e Outras Informações',
                         tileContent: new sap.m.TileContent({
                             content: [
                                 new sap.m.ImageContent({
-                                    src: 'sap-icon://area-chart'
+                                    src: 'sap-icon://business-card'
                                 })
                             ]
                         })
