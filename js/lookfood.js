@@ -7,7 +7,13 @@ sap.ui.getCore().attachInit(function () {
         return this;
     };
 
-    lfApp = new sap.m.App().placeAt('content');
+    lfApp = new sap.m.App({
+        afterNavigate: function (event) {
+            if (event.getParameters().toId == 'p_login') {
+                sap.m.MessageToast.show('Sessão encerrada');
+            }
+        }
+    }).placeAt('content');
 
     //Main Pages
     lfApp.addPage(getPageLogin());
@@ -48,7 +54,7 @@ function getPageLogin() {
                                 text: 'Usuário'
                             }),
                             new sap.m.Input('txtUserId', {
-                                placeholder: 'Usuário'
+                                placeholder: 'Digite seu usuário ou e-mail'
                             }),
                             new sap.m.Label({
                                 labelFor: 'txtPassword',
@@ -56,7 +62,7 @@ function getPageLogin() {
                             }),
                             new sap.m.Input('txtPassword', {
                                 type: sap.m.InputType.Password,
-                                placeholder: 'Senha'
+                                placeholder: 'Digite sua senha'
                             }),
                             new sap.m.Button({
                                 text: 'Acessar',
@@ -72,6 +78,18 @@ function getPageLogin() {
                                 items: [
                                     new sap.m.Text({
                                         text: 'Não possui acesso?'
+                                    }),
+                                    new sap.m.Link({
+                                        text: 'Clique aqui'
+                                    }).addStyleClass('sapUiTinyMarginBegin')
+                                ]
+                            }).addStyleClass('sapUiSmallMarginTop'),
+                            new sap.m.HBox({
+                                alignItems: 'Center',
+                                justifyContent: 'Center',
+                                items: [
+                                    new sap.m.Text({
+                                        text: 'Esqueceu sua senha?'
                                     }),
                                     new sap.m.Link({
                                         text: 'Clique aqui'
@@ -129,12 +147,12 @@ function getPageCockpit() {
             new sap.m.HBox({
                 items: [
                     new sap.m.GenericTile({
-                        header: 'Gerenciar Produtos Para Review',
+                        header: 'Gerenciar Itens Para Review',
                         tileContent: [
                             new sap.m.TileContent({
                                 content: [
                                     new sap.m.ImageContent({
-                                        src: 'sap-icon://employee'
+                                        src: 'sap-icon://product'
                                     })
                                 ]
                             })
@@ -149,7 +167,7 @@ function getPageCockpit() {
                             new sap.m.TileContent({
                                 content: [
                                     new sap.m.ImageContent({
-                                        src: 'sap-icon://product'
+                                        src: 'sap-icon://employee'
                                     })
                                 ]
                             })
@@ -197,62 +215,6 @@ function getPageReview() {
         navButtonPress: function () {
             lfApp.back();
         },
-        headerContent: [
-            new sap.m.Button({
-                text: 'Iniciar Review',
-                type: sap.m.ButtonType.Accept,
-                press: function (evt) {
-
-                    let scanner = null;
-                    let reviewCode = null;
-
-                    var _previewDialog = new sap.m.Dialog({
-                        title: 'Posicione o código em frente o leitor',
-                        content: [
-                            new sap.ui.core.HTML({
-                                content: '<video id="preview" width="300" heigth="300"></video>'
-                            })
-                        ],
-                        beginButton: new sap.m.Button({
-                            text: 'Fechar',
-                            press: function () {
-                                _previewDialog.close();
-                            }
-                        }),
-                        afterOpen: function () {
-                            scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-                            scanner.addListener('scan', function (content) {
-                                reviewCode = content;
-                                _previewDialog.close();
-                            });
-                            Instascan.Camera.getCameras().then(function (cameras) {
-                                // alert(cameras[0].name)
-                                if (cameras.length > 0) {
-                                    scanner.activeCameraId = cameras[0].id;
-                                    scanner.start(cameras[0]);
-                                } else {
-                                    console.error('No cameras found.');
-                                    alert("No cameras foud.")
-                                }
-                            }).catch(function (e) {
-                                console.error(e);
-                                alert(e);
-                            });
-                        },
-                        beforeClose: function () {
-                            scanner.stop();
-                            scanner = null;
-                        },
-                        afterClose: function () {
-                            _previewDialog.destroy();
-                            console.log(reviewCode);
-
-                        }
-                    }).addStyleClass('preview-dialog').open();
-
-                }
-            })
-        ],
         content: [
             new sap.m.VBox({
                 items: [
@@ -273,13 +235,70 @@ function getPageReview() {
                                 })
                             ]
                         }),
-                        items: [
-
-                        ]
+                        noDataText: 'Para listar seus itens. Clique em "Iniciar Review"'
                     })
                 ]
             })
-        ]
+        ],
+        footer: new sap.m.Toolbar({
+            content: [
+                new sap.m.ToolbarSpacer(),
+                new sap.m.Button({
+                    text: 'Iniciar Review',
+                    type: 'Emphasized',
+                    press: function (evt) {
+
+                        let scanner = null;
+                        let reviewCode = null;
+
+                        var _previewDialog = new sap.m.Dialog({
+                            title: 'Posicione o código em frente o leitor',
+                            content: [
+                                new sap.ui.core.HTML({
+                                    content: '<video id="preview" width="300" heigth="300"></video>'
+                                })
+                            ],
+                            beginButton: new sap.m.Button({
+                                text: 'Fechar',
+                                press: function () {
+                                    _previewDialog.close();
+                                }
+                            }),
+                            afterOpen: function () {
+                                scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+                                scanner.addListener('scan', function (content) {
+                                    reviewCode = content;
+                                    _previewDialog.close();
+                                });
+                                Instascan.Camera.getCameras().then(function (cameras) {
+                                    // alert(cameras[0].name)
+                                    if (cameras.length > 0) {
+                                        scanner.activeCameraId = cameras[0].id;
+                                        scanner.start(cameras[0]);
+                                    } else {
+                                        console.error('No cameras found.');
+                                        alert("No cameras foud.")
+                                    }
+                                }).catch(function (e) {
+                                    console.error(e);
+                                    alert(e);
+                                });
+                            },
+                            beforeClose: function () {
+                                scanner.stop();
+                                scanner = null;
+                            },
+                            afterClose: function () {
+                                _previewDialog.destroy();
+                                console.log(reviewCode);
+
+                            }
+                        }).addStyleClass('preview-dialog').open();
+
+                    }
+                })
+            ]
+        })
     }).addStyleClass('sapUiContentPadding');
 
     return pageReview;
@@ -299,6 +318,9 @@ function getPageItemMgmt() {
                 press: function () {
                     lfApp.to('p_new_item');
                 }
+            }),
+            new sap.m.Button({
+                icon: 'sap-icon://refresh'
             })
         ],
         content: [
@@ -350,6 +372,9 @@ function getPageProfessionalMgmt() {
                 press: function () {
                     lfApp.to('p_new_prof');
                 }
+            }),
+            new sap.m.Button({
+                icon: 'sap-icon://refresh'
             })
         ],
         content: [
@@ -391,7 +416,42 @@ function getPageNewItem() {
             lfApp.back();
         },
         content: [
-
+            new sap.m.VBox({
+                items: [
+                    new sap.ui.layout.form.SimpleForm({
+                        title: 'Informações Gerais',
+                        editable: true,
+                        layout: 'ResponsiveGridLayout',
+                        labelSpanXL: 3,
+                        labelSpanL: 3,
+                        labelSpanM: 3,
+                        labelSpanS: 12,
+                        adjustLabelSpan: false,
+                        emptySpanXL: 4,
+                        emptySpanL: 4,
+                        emptySpanM: 4,
+                        emptySpanS: 4,
+                        columnsXL: 1,
+                        columnsL: 1,
+                        columnsM: 1,
+                        singleContainerFullSize: false,
+                        content: [
+                            new sap.m.Label({
+                                text: 'Descrição'
+                            }),
+                            new sap.m.Input(),
+                            new sap.m.Label({
+                                text: 'Responsável'
+                            }),
+                            new sap.m.Input(),
+                            new sap.m.Label({
+                                text: 'Auxiliar'
+                            }),
+                            new sap.m.Input()
+                        ]
+                    })
+                ]
+            }).addStyleClass('sapUiSmallMargin')
         ],
         footer: new sap.m.Toolbar({
             content: [
@@ -418,7 +478,42 @@ function getPageNewProfessional() {
             lfApp.back();
         },
         content: [
-
+            new sap.m.VBox({
+                items: [
+                    new sap.ui.layout.form.SimpleForm({
+                        title: 'Informações Gerais',
+                        editable: true,
+                        layout: 'ResponsiveGridLayout',
+                        labelSpanXL: 3,
+                        labelSpanL: 3,
+                        labelSpanM: 3,
+                        labelSpanS: 12,
+                        adjustLabelSpan: false,
+                        emptySpanXL: 4,
+                        emptySpanL: 4,
+                        emptySpanM: 4,
+                        emptySpanS: 4,
+                        columnsXL: 1,
+                        columnsL: 1,
+                        columnsM: 1,
+                        singleContainerFullSize: false,
+                        content: [
+                            new sap.m.Label({
+                                text: 'Nome'
+                            }),
+                            new sap.m.Input(),
+                            new sap.m.Label({
+                                text: 'Sobrenome'
+                            }),
+                            new sap.m.Input(),
+                            new sap.m.Label({
+                                text: 'Função'
+                            }),
+                            new sap.m.Input()
+                        ]
+                    })
+                ]
+            }).addStyleClass('sapUiSmallMargin')
         ],
         footer: new sap.m.Toolbar({
             content: [
