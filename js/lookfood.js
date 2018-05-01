@@ -255,7 +255,7 @@ function getPageReview() {
                             title: 'Posicione o código em frente o leitor',
                             content: [
                                 new sap.ui.core.HTML({
-                                    content: '<video id="preview" width="300" heigth="300"></video>'
+                                    content: '<video id="preview" width="400" heigth="400"></video>'
                                 })
                             ],
                             beginButton: new sap.m.Button({
