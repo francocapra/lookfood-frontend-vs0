@@ -122,29 +122,29 @@ function getPageLogin() {
 
 function getPageCockpit() {
     var pageCockpit = new sap.m.Page('p_cockpit', {
-        title: 'Cockpit Do Usuário',
+        title: oBundle.getText('cockpitPageTitle'),
         headerContent: [
             new sap.m.Button({
-                text: 'Sair',
+                text: oBundle.getText('logoffBtn'),
                 icon: 'sap-icon://log',
                 press: function () {
                     var logOffDialog = new sap.m.Dialog({
-                        title: 'Confirmação',
+                        title: oBundle.getText('logoffDialogTitle'),
                         type: 'Message',
                         content: [
                             new sap.m.Text({
-                                text: 'Deseja sair da aplicação?'
+                                text: oBundle.getText('logoffDialogMessage')
                             })
                         ],
                         beginButton: new sap.m.Button({
-                            text: 'Sim',
+                            text: oBundle.getText('logoffConfirmBtn'),
                             press: function () {
                                 logOffDialog.close();
                                 lfApp.to('p_login');
                             }
                         }),
                         endButton: new sap.m.Button({
-                            text: 'Cancelar',
+                            text: oBundle.getText('logoffCancelBtn'),
                             type: 'Emphasized',
                             press: function () {
                                 logOffDialog.close();
@@ -161,7 +161,7 @@ function getPageCockpit() {
             new sap.m.HBox({
                 items: [
                     new sap.m.GenericTile({
-                        header: 'Gerenciar Itens Para Review',
+                        header: oBundle.getText('tileItemsMgmt'),
                         tileContent: [
                             new sap.m.TileContent({
                                 content: [
@@ -176,7 +176,7 @@ function getPageCockpit() {
                         }
                     }).addStyleClass('sapUiSmallMarginEnd'),
                     new sap.m.GenericTile({
-                        header: 'Gerenciar Profissionais Para Review',
+                        header: oBundle.getText('tileProfessionalMgmt'),
                         tileContent: [
                             new sap.m.TileContent({
                                 content: [
@@ -191,8 +191,8 @@ function getPageCockpit() {
                         }
                     }).addStyleClass('sapUiSmallMarginEnd'),
                     new sap.m.GenericTile({
-                        header: 'Meu Perfil',
-                        subheader: 'Cadastro e Outras Informações',
+                        header: oBundle.getText('tileUserProfile'),
+                        subheader: oBundle.getText('tileUserProfSubheader'),
                         tileContent: new sap.m.TileContent({
                             content: [
                                 new sap.m.ImageContent({
@@ -202,7 +202,7 @@ function getPageCockpit() {
                         })
                     }).addStyleClass('sapUiSmallMarginEnd'),
                     new sap.m.GenericTile({
-                        header: 'Iniciar Modo Review',
+                        header: oBundle.getText('tileReviewMode'),
                         tileContent: new sap.m.TileContent({
                             content: [
                                 new sap.m.NumericContent({
@@ -233,7 +233,7 @@ function getPageReview() {
             new sap.m.VBox({
                 items: [
                     new sap.m.Panel({
-                        headerText: 'Destaques',
+                        headerText: oBundle.getText('highlights'),
                         content: [
                             new sap.m.FlexBox('partnerTopItems', {
                                 alignItems: 'Start',
@@ -245,11 +245,11 @@ function getPageReview() {
                         headerToolbar: new sap.m.Toolbar({
                             content: [
                                 new sap.m.Title({
-                                    text: 'Itens Para Review'
+                                    text: oBundle.getText('reviewListHeader')
                                 })
                             ]
                         }),
-                        noDataText: 'Para listar seus itens. Clique em "Iniciar Review"'
+                        noDataText: oBundle.getText('reviewListNoData')
                     })
                 ]
             })
@@ -258,7 +258,7 @@ function getPageReview() {
             content: [
                 new sap.m.ToolbarSpacer(),
                 new sap.m.Button({
-                    text: 'Iniciar Review',
+                    text: oBundle.getText('startReviewBtn'),
                     type: 'Emphasized',
                     press: function (evt) {
 
@@ -321,7 +321,7 @@ function getPageReview() {
 function getPageItemMgmt() {
 
     var pageItemsMgmt = new sap.m.Page('p_items_mgmt', {
-        title: 'Gerenciamento De Itens',
+        title: oBundle.getText('itemMgmtPageTitle'),
         showNavButton: true,
         navButtonPress: function () {
             lfApp.back();
@@ -342,31 +342,31 @@ function getPageItemMgmt() {
                 columns: [
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Item'
+                            text: oBundle.getText('tableColumnItem')
                         })
                     }),
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Descrição'
+                            text: oBundle.getText('tableColumnDesc')
                         })
                     }),
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Responsável'
+                            text: oBundle.getText('tableColumnResp')
                         })
                     }),
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Auxiliar'
+                            text: oBundle.getText('tableColumnAux')
                         })
                     }),
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Avaliação Atual'
+                            text: oBundle.getText('tableColumnCurReview')
                         })
                     })
                 ]
-            }).setNoDataText('Nenhum Item Cadastrado')
+            }).setNoDataText(oBundle.getText('tableItemsNoData'))
         ]
     })
 
@@ -375,7 +375,7 @@ function getPageItemMgmt() {
 
 function getPageProfessionalMgmt() {
     var pageProfMgmt = new sap.m.Page('p_prof_mgmt', {
-        title: 'Gerenciamento De Profissionais',
+        title: oBundle.getText('profMgmtPageTitle'),
         showNavButton: true,
         navButtonPress: function () {
             lfApp.back();
@@ -396,26 +396,26 @@ function getPageProfessionalMgmt() {
                 columns: [
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Nome'
+                            text: oBundle.getText('tableColumnName')
                         })
                     }),
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Sobrenome'
+                            text: oBundle.getText('tableColumnSurname')
                         })
                     }),
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Função'
+                            text: oBundle.getText('tableColumnRole')
                         })
                     }),
                     new sap.m.Column({
                         header: new sap.m.Text({
-                            text: 'Avaliação Atual'
+                            text: oBundle.getText('tableColumnCurReview')
                         })
                     })
                 ]
-            }).setNoDataText('Nenhum Profissional Cadastrado')
+            }).setNoDataText(oBundle.getText('tableProfNoData'))
         ]
     })
 
@@ -424,7 +424,7 @@ function getPageProfessionalMgmt() {
 
 function getPageNewItem() {
     var pageNewItem = new sap.m.Page('p_new_item', {
-        title: 'Adicionar Novo Item',
+        title: oBundle.getText('newItemPageTitle'),
         showNavButton: true,
         navButtonPress: function () {
             lfApp.back();
@@ -433,7 +433,7 @@ function getPageNewItem() {
             new sap.m.VBox({
                 items: [
                     new sap.ui.layout.form.SimpleForm({
-                        title: 'Informações Gerais',
+                        title: oBundle.getText('newItemFormHeader'),
                         editable: true,
                         layout: 'ResponsiveGridLayout',
                         labelSpanXL: 3,
@@ -451,15 +451,15 @@ function getPageNewItem() {
                         singleContainerFullSize: false,
                         content: [
                             new sap.m.Label({
-                                text: 'Descrição'
+                                text: oBundle.getText('newItemDescription')
                             }),
                             new sap.m.Input(),
                             new sap.m.Label({
-                                text: 'Responsável'
+                                text: oBundle.getText('newItemResponsable')
                             }),
                             new sap.m.Input(),
                             new sap.m.Label({
-                                text: 'Auxiliar'
+                                text: oBundle.getText('newItemAuxiliary')
                             }),
                             new sap.m.Input()
                         ]
@@ -471,11 +471,11 @@ function getPageNewItem() {
             content: [
                 new sap.m.ToolbarSpacer(),
                 new sap.m.Button({
-                    text: 'Salvar',
+                    text: oBundle.getText('btnSave'),
                     type: 'Emphasized'
                 }),
                 new sap.m.Button({
-                    text: 'Cancelar'
+                    text: oBundle.getText('btnCancel')
                 })
             ]
         })
@@ -486,7 +486,7 @@ function getPageNewItem() {
 
 function getPageNewProfessional() {
     var pageNewProf = new sap.m.Page('p_new_prof', {
-        title: 'Adicionar Novo Profissional',
+        title: oBundle.getText('newProfPageTitle'),
         showNavButton: true,
         navButtonPress: function () {
             lfApp.back();
@@ -495,7 +495,7 @@ function getPageNewProfessional() {
             new sap.m.VBox({
                 items: [
                     new sap.ui.layout.form.SimpleForm({
-                        title: 'Informações Gerais',
+                        title: oBundle.getText('newProfFormHeader'),
                         editable: true,
                         layout: 'ResponsiveGridLayout',
                         labelSpanXL: 3,
@@ -513,15 +513,15 @@ function getPageNewProfessional() {
                         singleContainerFullSize: false,
                         content: [
                             new sap.m.Label({
-                                text: 'Nome'
+                                text: oBundle.getText('newProfName')
                             }),
                             new sap.m.Input(),
                             new sap.m.Label({
-                                text: 'Sobrenome'
+                                text: oBundle.getText('newProfSurname')
                             }),
                             new sap.m.Input(),
                             new sap.m.Label({
-                                text: 'Função'
+                                text: oBundle.getText('newProfRole')
                             }),
                             new sap.m.Input()
                         ]
@@ -533,11 +533,11 @@ function getPageNewProfessional() {
             content: [
                 new sap.m.ToolbarSpacer(),
                 new sap.m.Button({
-                    text: 'Salvar',
+                    text: oBundle.getText('btnSave'),
                     type: 'Emphasized'
                 }),
                 new sap.m.Button({
-                    text: 'Cancelar'
+                    text: oBundle.getText('btnCancel')
                 })
             ]
         })
