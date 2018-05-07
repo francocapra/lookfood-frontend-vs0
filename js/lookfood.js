@@ -83,7 +83,23 @@ function getPageLogin() {
                                 width: '100%',
                                 type: sap.m.ButtonType.Emphasized,
                                 press: function () {
-                                    lfApp.to('p_cockpit');
+
+                                    sap.ui.core.BusyIndicator.show(0);
+
+                                    var json = {
+                                        email: sap.ui.getCore().byId('txtUserId').getValue(),
+                                        password: sap.ui.getCore().byId('txtPassword').getValue(),
+                                    }
+
+                                    var user = new UserCredentials(sap.ui.getCore().byId('txtUserId').getValue(), sap.ui.getCore().byId('txtPassword').getValue())
+
+                                    doLogin(json, function (jqXHR) {
+                                        if (jqXHR.status == 200) {
+                                            sap.ui.core.BusyIndicator.hide()
+                                            window.sessionStorage.setItem('Authorization',jqXHR.getResponseHeader('Authorization'))
+                                            lfApp.to('p_cockpit');
+                                        }
+                                    });
                                 }
                             }).addStyleClass('sapUiSmallMarginTop'),
                             new sap.m.HBox({

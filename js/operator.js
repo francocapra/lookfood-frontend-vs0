@@ -124,3 +124,19 @@ function getTopProducts(oData) {
 
     return oPrdSlideTile;
 }
+
+function doLogin(oData, navigate) {
+    $.ajax({
+        type: 'POST',
+        url: 'https://10.2.127.205:8444/login',
+        contentType: 'application/json',
+        data: JSON.stringify(oData),
+        success: function (data,textStatus,jqXHR) {
+            console.log(data,textStatus,jqXHR);
+            navigate(jqXHR);
+        },
+        error: function (a, b, c) {
+            console.log(a, b, c)
+        }
+    })
+}
