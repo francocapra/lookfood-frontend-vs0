@@ -1,3 +1,11 @@
+function showGlobalLoader(){
+    sap.ui.core.BusyIndicator.show(0);
+}
+
+function hideGlobalLoader(){
+    sap.ui.core.BusyIndicator.hide();
+}
+
 function getTopEmployees(oData) {
 
     var oTile1 = new sap.m.GenericTile({
@@ -136,6 +144,21 @@ function doLogin(oData, navigate) {
             navigate(jqXHR);
         },
         error: function (a, b, c) {
+            console.log(a, b, c)
+        }
+    })
+}
+
+function createUser(oData, processResponse){
+    $.ajax({
+        type:'POST',
+        url:'https://app-lookfood.herokuapp.com/partners',
+        contentType:'application/json',
+        data:JSON.stringify(oData),
+        success: function(data,textStatus,jqXHR){
+            processResponse(jqXHR);
+        },
+        error:function(a, b, c){
             console.log(a, b, c)
         }
     })

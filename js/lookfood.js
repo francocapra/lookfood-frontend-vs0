@@ -85,7 +85,7 @@ function getPageLogin() {
                                 type: sap.m.ButtonType.Emphasized,
                                 press: function () {
 
-                                    sap.ui.core.BusyIndicator.show(0);
+                                    showGlobalLoader()
 
                                     var json = {
                                         email: sap.ui.getCore().byId('txtUserId').getValue(),
@@ -96,7 +96,7 @@ function getPageLogin() {
 
                                     doLogin(json, function (jqXHR) {
                                         if (jqXHR.status == 200) {
-                                            sap.ui.core.BusyIndicator.hide()
+                                            hideGlobalLoader()
                                             window.sessionStorage.setItem('Authorization', jqXHR.getResponseHeader('Authorization'))
                                             lfApp.to('p_cockpit');
                                         }
@@ -128,7 +128,7 @@ function getPageLogin() {
                                     }),
                                     new sap.m.Link({
                                         text: oBundle.getText('forgotPasswordLink'),
-                                        press:function(){
+                                        press: function () {
                                             var _d = getDialogForgotPass();
                                             _d.open();
                                         }
@@ -576,125 +576,71 @@ function getDialogNewUser() {
     var newUserDialog = new sap.m.Dialog({
         title: oBundle.getText('newPartnerDiagTitle'),
         content: [
-            new sap.m.HBox({
+            new sap.m.VBox({
+                justifyContent: 'Center',
+                alignItems: 'Center',
                 items: [
-                    new sap.ui.layout.form.SimpleForm({
-                        editable: true,
-                        layout: 'ResponsiveGridLayout',
-                        labelSpanXL: 3,
-                        labelSpanL: 3,
-                        labelSpanM: 3,
-                        labelSpanS: 12,
-                        adjustLabelSpan: false,
-                        emptySpanXL: 4,
-                        emptySpanL: 4,
-                        emptySpanM: 4,
-                        emptySpanS: 4,
-                        columnsXL: 1,
-                        columnsL: 1,
-                        columnsM: 1,
-                        singleContainerFullSize: false,
-                        content: [
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerEmail')
-                            }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerName')
-                            }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerPass')
-                            }),
-                            new sap.m.Input({
+                    new sap.m.HBox({
+                        items: [
+                            new sap.ui.core.Icon({
+                                src: 'sap-icon://email',
+                                size: '2em',
+                                color: '#d52941'
+                            }).addStyleClass('sapUiTinyMargin'),
+                            new sap.m.Input('txtNewUserEmail',{
+                                placeholder: oBundle.getText('newUserIdField')
+                            })
+                        ]
+                    }),
+                    new sap.m.HBox({
+                        items: [
+                            new sap.ui.core.Icon({
+                                src: 'sap-icon://key',
+                                size: '2em',
+                                color: '#d52941'
+                            }).addStyleClass('sapUiTinyMargin'),
+                            new sap.m.Input('txtNewUserPass',{
+                                placeholder: oBundle.getText('newUserPassField'),
                                 type: sap.m.InputType.Password
-                            }),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerDocId')
-                            }),
-                            new sap.m.Input()
+                            })
                         ]
                     }),
-                    new sap.ui.layout.form.SimpleForm({
-                        editable: true,
-                        layout: 'ResponsiveGridLayout',
-                        labelSpanXL: 3,
-                        labelSpanL: 3,
-                        labelSpanM: 3,
-                        labelSpanS: 12,
-                        adjustLabelSpan: false,
-                        emptySpanXL: 4,
-                        emptySpanL: 4,
-                        emptySpanM: 4,
-                        emptySpanS: 4,
-                        columnsXL: 1,
-                        columnsL: 1,
-                        columnsM: 1,
-                        singleContainerFullSize: false,
-                        content: [
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerPhone1')
+                    new sap.m.HBox({
+                        items: [
+                            new sap.ui.core.HTML({
+                                content: '<a href="#"><i class="fab fa-facebook-square"' +
+                                    'style="font-size:2em;color:#3b5998;margin:0px 5px"></i></a>'
                             }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerPhone2')
-                            }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerPhone3')
-                            }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerWebsite')
-                            }),
-                            new sap.m.Input()
+                            new sap.ui.core.HTML({
+                                content: '<a href="#"><i class="fab fa-google-plus"' +
+                                    'style="font-size:2em;color:#d34836;margin:0px 5px"></i></a>'
+                            })
                         ]
-                    }),
-                    new sap.ui.layout.form.SimpleForm({
-                        editable: true,
-                        layout: 'ResponsiveGridLayout',
-                        labelSpanXL: 3,
-                        labelSpanL: 3,
-                        labelSpanM: 3,
-                        labelSpanS: 12,
-                        adjustLabelSpan: false,
-                        emptySpanXL: 4,
-                        emptySpanL: 4,
-                        emptySpanM: 4,
-                        emptySpanS: 4,
-                        columnsXL: 1,
-                        columnsL: 1,
-                        columnsM: 1,
-                        singleContainerFullSize: false,
-                        content: [
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerZipCode')
-                            }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerStreet')
-                            }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerStreetN')
-                            }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerCity')
-                            }),
-                            new sap.m.Input(),
-                            new sap.m.Label({
-                                text: oBundle.getText('newPartnerState')
-                            }),
-                            new sap.m.Input()
-                        ]
-                    })
+                    }).addStyleClass('sapUiTinyMarginTop sapUiTinyMarginBottom')
                 ]
-            })
+            }).addStyleClass('sapUiContentPadding')
         ],
         beginButton: new sap.m.Button({
-            text: oBundle.getText('btnSave'),
-            type: 'Emphasized'
+            text: oBundle.getText('createUserButton'),
+            type: 'Emphasized',
+            press:function(){
+                var n = new UserCredentials(
+                    sap.ui.getCore().byId('txtNewUserEmail').getValue(),
+                    sap.ui.getCore().byId('txtNewUserPass').getValue()
+                )
+
+                console.log(JSON.stringify(n));
+                showGlobalLoader();
+
+                createUser(n, function(jqXHR){
+                    if (jqXHR.status == 200) {
+                        hideGlobalLoader();
+                        sap.m.MessageToast.show(oBundle.getText('userCreationSuccess'))
+                    }
+                    else
+                        hideGlobalLoader();
+                });
+            }
         }),
         endButton: new sap.m.Button({
             text: oBundle.getText('btnCancel'),
@@ -714,9 +660,23 @@ function getDialogForgotPass() {
     var forgotPassDialog = new sap.m.Dialog({
         title: oBundle.getText('forgotPassDialogTitle'),
         content: [
-            new sap.m.Input()
+            new sap.m.HBox({
+                justifyContent: 'Center',
+                alignItems: 'Center',
+                items: [
+                    new sap.ui.core.Icon({
+                        src: 'sap-icon://email',
+                        size: '2em',
+                        color: '#d52941'
+                    }).addStyleClass('sapUiTinyMargin'),
+                    new sap.m.Input({
+                        placeholder: oBundle.getText('forgotPassField')
+                    })
+                ]
+            })
         ],
         beginButton: new sap.m.Button({
+            type: 'Emphasized',
             text: oBundle.getText('btnRecoverPass'),
             press: function () {
 
