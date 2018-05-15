@@ -1,4 +1,4 @@
-<mvc:View controllerName="gourmeo.resources.main.controllers.App" 
+<mvc:View controllerName="gourmeo.resources.main.controllers.App"
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc">
     <App>
@@ -7,7 +7,7 @@
                 <content>
                     <FlexBox alignItems="Center" justifyContent="Center">
                         <items>
-                            <VBox>
+                            <VBox class="vbox-login">
                                 <items>
                                     <FlexBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
                                         <items>
@@ -17,7 +17,7 @@
                                     <Label labelFor="txtUserId" text="{i18n>loginUserLabel}" />
                                     <Input id="txtUserId" placeholder="{i18n>userInputPlaceholder}" />
                                     <Label labelFor="txtPassword" text="{i18n>loginUserPassword}" />
-                                    <Input id="txtPassword" placeholder="{i18n>passwordInputPlaceholder}" />
+                                    <Input id="txtPassword" placeholder="{i18n>passwordInputPlaceholder}" type="Password"/>
                                     <Button text="{i18n>btnLogin}" type="Emphasized" press="onLoginBtnPress" width="100%" class="sapUiSmallMarginTop"/>
                                     <HBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginTop">
                                         <items>

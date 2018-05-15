@@ -4,13 +4,46 @@ sap.ui.define([
 ], function (Controller, MessageToast) {
 	"use strict";
 
+	var idPrefix = "appComponent---appRootView--";
+
+	var showGlobalLoader = function () {
+		sap.ui.core.BusyIndicator.show(0);
+	};
+
+	var hideGlobalLoader = function () {
+		sap.ui.core.BusyIndicator.hide();
+	};
+
 	return Controller.extend("gourmeo.resources.main.controllers.App", {
 
 		onLoginBtnPress: function (event) {
-			console.log(event);
+
+			showGlobalLoader();
+
+			var oData = {
+				email: sap.ui.getCore().byId(idPrefix + 'txtUserId').getValue(),
+				password: sap.ui.getCore().byId(idPrefix + 'txtPassword').getValue(),
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: 'https://app-lookfood.herokuapp.com/login',
+				contentType: 'application/json',
+				data: JSON.stringify(oData),
+				success: function (data, textStatus, jqXHR) {
+					hideGlobalLoader();
+					console.log(data, textStatus, jqXHR);
+					// navigate(jqXHR);
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					hideGlobalLoader();
+					console.log(jqXHR.responseText);
+					// navigate(jqXHR);
+				}
+			})
 		},
 
-		onNewUserLinkPress : function(){
+		onNewUserLinkPress: function () {
 
 			var oBundle = this.getView().getModel('i18n').getResourceBundle();
 
@@ -70,10 +103,10 @@ sap.ui.define([
 							email: sap.ui.getCore().byId('txtNewUserEmail').getValue(),
 							password: sap.ui.getCore().byId('txtNewUserPass').getValue()
 						}
-		
+
 						// console.log(JSON.stringify(n));
 						showGlobalLoader();
-		
+
 						createUser(n, function (jqXHR) {
 							if (jqXHR.status == 200) {
 								hideGlobalLoader();
@@ -98,7 +131,7 @@ sap.ui.define([
 			newUserDialog.open();
 		},
 
-		onForgotPassLinkPress : function(){
+		onForgotPassLinkPress: function () {
 
 			var oBundle = this.getView().getModel('i18n').getResourceBundle();
 
@@ -125,7 +158,7 @@ sap.ui.define([
 					type: 'Emphasized',
 					text: oBundle.getText('btnRecoverPass'),
 					press: function () {
-		
+
 					}
 				}),
 				endButton: new sap.m.Button({

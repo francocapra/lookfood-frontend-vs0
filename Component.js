@@ -7,22 +7,26 @@ sap.ui.define([
 
 	return UIComponent.extend("gourmeo.resources.main.Component", {
 
-		metadata : {
+		constructor: function(sId, mSettings) {
+			UIComponent.call(this, "appComponent", mSettings);
+		},
+
+		metadata: {
 			"rootView": {
 				"viewName": "gourmeo.resources.main.views.App",
 				"type": "XML",
 				"async": true,
-				"id": "app"
+				"id": "appRootView"
 			}
 		},
 
-		init : function () {
+		init: function () {
 			// call the init function of the parent
 			UIComponent.prototype.init.apply(this, arguments);
 
 			// set i18n model
 			var i18nModel = new ResourceModel({
-				bundleName : "gourmeo.resources.main.res.i18n.i18n"
+				bundleName: "gourmeo.resources.main.res.i18n.i18n"
 			});
 			this.setModel(i18nModel, "i18n");
 		}
