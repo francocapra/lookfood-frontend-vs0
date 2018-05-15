@@ -1,8 +1,8 @@
-function showGlobalLoader(){
+function showGlobalLoader() {
     sap.ui.core.BusyIndicator.show(0);
 }
 
-function hideGlobalLoader(){
+function hideGlobalLoader() {
     sap.ui.core.BusyIndicator.hide();
 }
 
@@ -136,30 +136,51 @@ function getTopProducts(oData) {
 function doLogin(oData, navigate) {
     $.ajax({
         type: 'POST',
-        url: 'https://10.2.127.205:8444/login',
+        url: 'https://app-lookfood.herokuapp.com/login',
         contentType: 'application/json',
         data: JSON.stringify(oData),
-        success: function (data,textStatus,jqXHR) {
-            console.log(data,textStatus,jqXHR);
+        success: function (data, textStatus, jqXHR) {
+            // console.log(data, textStatus, jqXHR);
             navigate(jqXHR);
         },
-        error: function (a, b, c) {
-            console.log(a, b, c)
+        error: function (jqXHR, textStatus, errorThrown) {
+            // console.log(jqXHR.responseText);
+            navigate(jqXHR);
         }
     })
 }
 
-function createUser(oData, processResponse){
+function getPartnerDetails(partnerEmail, processResponse) {
     $.ajax({
-        type:'POST',
-        url:'https://app-lookfood.herokuapp.com/partners',
-        contentType:'application/json',
-        data:JSON.stringify(oData),
-        success: function(data,textStatus,jqXHR){
+        type: 'GET',
+        url: 'https://app-lookfood.herokuapp.com/partners/email?value=' + partnerEmail,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
+        },
+        success: function (data, textStatus, jqXHR) {
+            // console.log(data, textStatus, jqXHR);
+            processResponse(data, jqXHR);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // console.log(jqXHR.responseText);
+            processResponse(null, jqXHR);
+        }
+    })
+}
+
+function createUser(oData, processResponse) {
+    $.ajax({
+        type: 'POST',
+        url: 'https://app-lookfood.herokuapp.com/partners',
+        contentType: 'application/json',
+        data: JSON.stringify(oData),
+        success: function (data, textStatus, jqXHR) {
             processResponse(jqXHR);
         },
-        error:function(a, b, c){
-            console.log(a, b, c)
+        error: function (jqXHR, textStatus, errorThrown) {
+            // console.log(jqXHR.responseText);
+            hideGlobalLoader();
+            sap.m.MessageToast.show(oBundle.getText('requestFailure'))
         }
     })
 }

@@ -1,11 +1,14 @@
 sap.ui.getCore().attachInit(function () {
 
-    $.fn.removeClassStartingWith = function (filter) {
-        $(this).removeClass(function (index, className) {
-            return (className.match(new RegExp("\\S*" + filter + "\\S*", 'g')) || []).join(' ')
-        });
-        return this;
-    };
+    c_pageLogin = 'p_login';
+    c_pageCockpit = 'p_cockpit';
+    c_pageReview = 'p_review';
+    c_pageItmMgmt = 'p_itm_mgmt';
+    c_pageProfMgmt = 'p_prof_mgmt';
+    c_pagePartnerProfile = 'p_partner_profile';
+
+    c_pageNewItem = 'p_new_item';
+    c_pageNewProf = 'p_new_prof';
 
     //localization settings
     jQuery.sap.require("jquery.sap.resources");
@@ -14,7 +17,7 @@ sap.ui.getCore().attachInit(function () {
 
     lfApp = new sap.m.App({
         afterNavigate: function (event) {
-            if (event.getParameters().toId == 'p_login') {
+            if (event.getParameters().toId == c_pageLogin) {
                 sap.m.MessageToast.show('Sessão encerrada');
             }
         }
@@ -24,6 +27,7 @@ sap.ui.getCore().attachInit(function () {
     lfApp.addPage(getPageLogin());
     lfApp.addPage(getPageCockpit());
     lfApp.addPage(getPageReview());
+    lfApp.addPage(getPagePartnerProfile());
     lfApp.addPage(getPageItemMgmt());
     lfApp.addPage(getPageProfessionalMgmt());
 
@@ -46,7 +50,7 @@ sap.ui.getCore().attachInit(function () {
 //Main pages
 function getPageLogin() {
 
-    var pageLogin = new sap.m.Page('p_login', {
+    var pageLogin = new sap.m.Page(c_pageLogin, {
         title: oBundle.getText('loginPageTitle'),
         content: [
             new sap.m.FlexBox({
@@ -69,7 +73,8 @@ function getPageLogin() {
                                 text: oBundle.getText('loginUserLabel')
                             }),
                             new sap.m.Input('txtUserId', {
-                                placeholder: oBundle.getText('userInputPlaceholder')
+                                placeholder: oBundle.getText('userInputPlaceholder'),
+                                type: sap.m.InputType.Email
                             }),
                             new sap.m.Label({
                                 labelFor: 'txtPassword',
@@ -87,18 +92,22 @@ function getPageLogin() {
 
                                     showGlobalLoader()
 
-                                    var json = {
+                                    var user = {
                                         email: sap.ui.getCore().byId('txtUserId').getValue(),
                                         password: sap.ui.getCore().byId('txtPassword').getValue(),
                                     }
 
-                                    var user = new UserCredentials(sap.ui.getCore().byId('txtUserId').getValue(), sap.ui.getCore().byId('txtPassword').getValue())
+                                    doLogin(user, function (jqXHR) {
+                                        hideGlobalLoader();
 
-                                    doLogin(json, function (jqXHR) {
-                                        if (jqXHR.status == 200) {
-                                            hideGlobalLoader()
-                                            window.sessionStorage.setItem('Authorization', jqXHR.getResponseHeader('Authorization'))
-                                            lfApp.to('p_cockpit');
+                                        switch (jqXHR.status) {
+                                            case 200:
+                                                window.sessionStorage.setItem('Authorization', jqXHR.getResponseHeader('Authorization'))
+                                                lfApp.to(c_pageCockpit);
+                                                break;
+                                            case 401:
+                                                sap.m.MessageToast.show(oBundle.getText('incorrectCredentials'));
+                                                break;
                                         }
                                     });
                                 }
@@ -146,7 +155,7 @@ function getPageLogin() {
 }
 
 function getPageCockpit() {
-    var pageCockpit = new sap.m.Page('p_cockpit', {
+    var pageCockpit = new sap.m.Page(c_pageCockpit, {
         title: oBundle.getText('cockpitPageTitle'),
         headerContent: [
             new sap.m.Button({
@@ -197,7 +206,7 @@ function getPageCockpit() {
                             })
                         ],
                         press: function () {
-                            lfApp.to('p_items_mgmt');
+                            lfApp.to(c_pageItmMgmt);
                         }
                     }).addStyleClass('sapUiSmallMarginEnd'),
                     new sap.m.GenericTile({
@@ -212,7 +221,7 @@ function getPageCockpit() {
                             })
                         ],
                         press: function () {
-                            lfApp.to('p_prof_mgmt');
+                            lfApp.to(c_pageProfMgmt);
                         }
                     }).addStyleClass('sapUiSmallMarginEnd'),
                     new sap.m.GenericTile({
@@ -224,7 +233,10 @@ function getPageCockpit() {
                                     src: 'sap-icon://business-card'
                                 })
                             ]
-                        })
+                        }),
+                        press: function () {
+                            lfApp.to(c_pagePartnerProfile);
+                        }
                     }).addStyleClass('sapUiSmallMarginEnd'),
                     new sap.m.GenericTile({
                         header: oBundle.getText('tileReviewMode'),
@@ -237,7 +249,7 @@ function getPageCockpit() {
                             ]
                         }),
                         press: function () {
-                            lfApp.to('p_review');
+                            lfApp.to(c_pageReview);
                         }
                     }).addStyleClass('sapUiSmallMarginEnd')
                 ]
@@ -249,7 +261,7 @@ function getPageCockpit() {
 }
 
 function getPageReview() {
-    var pageReview = new sap.m.Page('p_review', {
+    var pageReview = new sap.m.Page(c_pageReview, {
         showNavButton: true,
         navButtonPress: function () {
             lfApp.back();
@@ -345,7 +357,7 @@ function getPageReview() {
 
 function getPageItemMgmt() {
 
-    var pageItemsMgmt = new sap.m.Page('p_items_mgmt', {
+    var pageItemsMgmt = new sap.m.Page(c_pageItmMgmt, {
         title: oBundle.getText('itemMgmtPageTitle'),
         showNavButton: true,
         navButtonPress: function () {
@@ -355,7 +367,7 @@ function getPageItemMgmt() {
             new sap.m.Button({
                 icon: 'sap-icon://add',
                 press: function () {
-                    lfApp.to('p_new_item');
+                    lfApp.to(c_pageNewItem);
                 }
             }),
             new sap.m.Button({
@@ -399,7 +411,7 @@ function getPageItemMgmt() {
 }
 
 function getPageProfessionalMgmt() {
-    var pageProfMgmt = new sap.m.Page('p_prof_mgmt', {
+    var pageProfMgmt = new sap.m.Page(c_pageProfMgmt, {
         title: oBundle.getText('profMgmtPageTitle'),
         showNavButton: true,
         navButtonPress: function () {
@@ -409,7 +421,7 @@ function getPageProfessionalMgmt() {
             new sap.m.Button({
                 icon: 'sap-icon://add',
                 press: function () {
-                    lfApp.to('p_new_prof');
+                    lfApp.to(c_pageNewProf);
                 }
             }),
             new sap.m.Button({
@@ -448,7 +460,7 @@ function getPageProfessionalMgmt() {
 }
 
 function getPageNewItem() {
-    var pageNewItem = new sap.m.Page('p_new_item', {
+    var pageNewItem = new sap.m.Page(c_pageNewItem, {
         title: oBundle.getText('newItemPageTitle'),
         showNavButton: true,
         navButtonPress: function () {
@@ -510,7 +522,7 @@ function getPageNewItem() {
 }
 
 function getPageNewProfessional() {
-    var pageNewProf = new sap.m.Page('p_new_prof', {
+    var pageNewProf = new sap.m.Page(c_pageNewProf, {
         title: oBundle.getText('newProfPageTitle'),
         showNavButton: true,
         navButtonPress: function () {
@@ -571,6 +583,92 @@ function getPageNewProfessional() {
     return pageNewProf;
 }
 
+function getPagePartnerProfile() {
+    var pagePartnerProfile = new sap.m.Page(c_pagePartnerProfile, {
+        title: oBundle.getText('partnerProfileTitle'),
+        showNavButton: true,
+        navButtonPress: function () {
+            lfApp.back();
+        },
+        content: [
+            new sap.m.VBox({
+                items: [
+                    new sap.ui.layout.form.SimpleForm({
+                        editable: true,
+                        layout: 'ResponsiveGridLayout',
+                        labelSpanXL: 4,
+                        labelSpanL: 3,
+                        labelSpanM: 4,
+                        labelSpanS: 12,
+                        adjustLabelSpan: false,
+                        emptySpanXL: 0,
+                        emptySpanL: 4,
+                        emptySpanM: 0,
+                        emptySpanS: 0,
+                        columnsXL: 2,
+                        columnsL: 1,
+                        columnsM: 1,
+                        singleContainerFullSize: false,
+                        content: [
+                            new sap.m.Toolbar({
+                                ariaLabelledBy: 'genDataFormTitle',
+                                content: [
+                                    new sap.m.Title('genDataFormTitle', {
+                                        text: oBundle.getText('genDataTitle')
+                                    })
+                                ]
+                            }),
+                            new sap.m.Label({
+                                text: oBundle.getText('partnerName')
+                            }),
+                            new sap.m.Input(),
+                            new sap.m.Label({
+                                text: oBundle.getText('partnerEmail')
+                            }),
+                            new sap.m.Input(),
+                            new sap.m.Label({
+                                text: oBundle.getText('partnerWebsite')
+                            }),
+                            new sap.m.Input(),
+                            new sap.m.Toolbar({
+                                ariaLabelledBy: 'addrFormTitle',
+                                content: [
+                                    new sap.m.Title('addrFormTitle', {
+                                        text: oBundle.getText('addrFormTitle')
+                                    })
+                                ]
+                            }),
+                            new sap.m.Label({
+                                text: oBundle.getText('partnerStreet')
+                            }),
+                            new sap.m.Input(),
+                            new sap.m.Input(),
+                            new sap.m.Label({
+                                text: oBundle.getText('partnerZipCode')
+                            }),
+                            new sap.m.Input()
+                        ]
+                    })
+                ]
+            })
+        ],
+        footer: new sap.m.Toolbar({
+            content: [
+                new sap.m.ToolbarSpacer(),
+                new sap.m.Button({
+                    text: oBundle.getText('btnSave'),
+                    type: 'Emphasized'
+                }),
+                new sap.m.Button({
+                    text: oBundle.getText('btnCancel')
+                })
+            ]
+        })
+    });
+
+    return pagePartnerProfile;
+}
+
 //Additional screens
 function getDialogNewUser() {
     var newUserDialog = new sap.m.Dialog({
@@ -587,8 +685,9 @@ function getDialogNewUser() {
                                 size: '2em',
                                 color: '#d52941'
                             }).addStyleClass('sapUiTinyMargin'),
-                            new sap.m.Input('txtNewUserEmail',{
-                                placeholder: oBundle.getText('newUserIdField')
+                            new sap.m.Input('txtNewUserEmail', {
+                                placeholder: oBundle.getText('newPartnerIdField'),
+                                type: sap.m.InputType.Email
                             })
                         ]
                     }),
@@ -599,8 +698,8 @@ function getDialogNewUser() {
                                 size: '2em',
                                 color: '#d52941'
                             }).addStyleClass('sapUiTinyMargin'),
-                            new sap.m.Input('txtNewUserPass',{
-                                placeholder: oBundle.getText('newUserPassField'),
+                            new sap.m.Input('txtNewUserPass', {
+                                placeholder: oBundle.getText('newPartnerPassField'),
                                 type: sap.m.InputType.Password
                             })
                         ]
@@ -621,21 +720,21 @@ function getDialogNewUser() {
             }).addStyleClass('sapUiContentPadding')
         ],
         beginButton: new sap.m.Button({
-            text: oBundle.getText('createUserButton'),
+            text: oBundle.getText('createPartnerButton'),
             type: 'Emphasized',
-            press:function(){
-                var n = new UserCredentials(
-                    sap.ui.getCore().byId('txtNewUserEmail').getValue(),
-                    sap.ui.getCore().byId('txtNewUserPass').getValue()
-                )
+            press: function () {
+                var n = {
+                    email: sap.ui.getCore().byId('txtNewUserEmail').getValue(),
+                    password: sap.ui.getCore().byId('txtNewUserPass').getValue()
+                }
 
-                console.log(JSON.stringify(n));
+                // console.log(JSON.stringify(n));
                 showGlobalLoader();
 
-                createUser(n, function(jqXHR){
+                createUser(n, function (jqXHR) {
                     if (jqXHR.status == 200) {
                         hideGlobalLoader();
-                        sap.m.MessageToast.show(oBundle.getText('userCreationSuccess'))
+                        sap.m.MessageToast.show(oBundle.getText('partnerCreationSucc'))
                     }
                     else
                         hideGlobalLoader();
@@ -670,7 +769,8 @@ function getDialogForgotPass() {
                         color: '#d52941'
                     }).addStyleClass('sapUiTinyMargin'),
                     new sap.m.Input({
-                        placeholder: oBundle.getText('forgotPassField')
+                        placeholder: oBundle.getText('forgotPassField'),
+                        type: sap.m.InputType.Email
                     })
                 ]
             })

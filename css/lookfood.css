@@ -18,7 +18,7 @@
 }
 @media only screen and (min-width: 1024px) {
 .vbox-login{
-    width: 40%;
+    width: 30%;
     padding: 20;
     background: rgba(255,246,246,0.8) !important;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
