@@ -16,7 +16,19 @@ sap.ui.define([
 
 	return Controller.extend("gourmeo.resources.main.controllers.App", {
 
+		getAppObj: function(){
+			var app = this.byId('gourmeoApp');
+
+			if (!app) {
+				jQuery.sap.log.info("App object can't be found");
+			}
+			return app;
+		},
+
 		onLoginBtnPress: function (event) {
+
+			var app = this.getAppObj();
+			var controller = this;
 
 			showGlobalLoader();
 
@@ -32,8 +44,7 @@ sap.ui.define([
 				data: JSON.stringify(oData),
 				success: function (data, textStatus, jqXHR) {
 					hideGlobalLoader();
-					console.log(data, textStatus, jqXHR);
-					// navigate(jqXHR);
+					app.to(controller.createId('pageCockpit'));
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					hideGlobalLoader();
@@ -173,6 +184,39 @@ sap.ui.define([
 			}).addStyleClass('sapUiContentPadding');
 
 			forgotPassDialog.open();
+		},
+
+		onLogoffBtnPress: function () {
+			var app = this.getAppObj();
+			var oBundle = this.getView().getModel('i18n').getResourceBundle();
+			var controller = this;
+
+			var logOffDialog = new sap.m.Dialog({
+				title: oBundle.getText('logoffDialogTitle'),
+				type: 'Message',
+				content: [
+					new sap.m.Text({
+						text: oBundle.getText('logoffDialogMessage')
+					})
+				],
+				beginButton: new sap.m.Button({
+					text: oBundle.getText('logoffConfirmBtn'),
+					press: function () {
+						logOffDialog.close();
+						app.to(controller.createId('pageLogin'));
+					}
+				}),
+				endButton: new sap.m.Button({
+					text: oBundle.getText('logoffCancelBtn'),
+					type: 'Emphasized',
+					press: function () {
+						logOffDialog.close();
+					}
+				}),
+				afterClose: function () {
+					logOffDialog.destroy();
+				}
+			}).open();
 		}
 	});
 

@@ -1,9 +1,9 @@
-<mvc:View controllerName="gourmeo.resources.main.controllers.App"
+<mvc:View controllerName="gourmeo.resources.main.controllers.App" 
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc">
-    <App>
+    <App id="gourmeoApp">
         <pages>
-            <Page title="{i18n>loginPageTitle}">
+            <Page title="{i18n>loginPageTitle}" id="pageLogin">
                 <content>
                     <FlexBox alignItems="Center" justifyContent="Center">
                         <items>
@@ -36,6 +36,12 @@
                         </items>
                     </FlexBox>
                 </content>
+            </Page>
+            <Page title="{i18n>cockpitPageTitle}" id="pageCockpit">
+                <headerContent>
+                    <Button text="{i18n>logoffBtn}" icon="sap-icon://log" press="onLogoffBtnPress" />
+                </headerContent>
+                <content></content>
             </Page>
         </pages>
     </App>
