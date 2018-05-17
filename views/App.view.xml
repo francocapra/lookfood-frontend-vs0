@@ -1,6 +1,8 @@
 <mvc:View controllerName="gourmeo.resources.main.controllers.App" 
     xmlns="sap.m" 
-    xmlns:mvc="sap.ui.core.mvc">
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form">
     <App id="gourmeoApp">
         <pages>
             <Page title="{i18n>loginPageTitle}" id="pageLogin">
@@ -37,11 +39,171 @@
                     </FlexBox>
                 </content>
             </Page>
-            <Page title="{i18n>cockpitPageTitle}" id="pageCockpit">
+            <Page title="{i18n>cockpitPageTitle}" id="pageCockpit" class="sapUiContentPadding">
                 <headerContent>
                     <Button text="{i18n>logoffBtn}" icon="sap-icon://log" press="onLogoffBtnPress" />
                 </headerContent>
-                <content></content>
+                <content>
+                    <HBox>
+                        <items>
+                            <GenericTile header="{i18n>tileItemsMgmt}" press="onTileItemMgmtPress" class="sapUiSmallMarginEnd">
+                                <tileContent>
+                                    <TileContent>
+                                        <content>
+                                            <ImageContent src="sap-icon://product" />
+                                        </content>
+                                    </TileContent>
+                                </tileContent>
+                            </GenericTile>
+                            <GenericTile header="{i18n>tileProfessionalMgmt}" press="onTileProfMgmtPress" class="sapUiSmallMarginEnd">
+                                <tileContent>
+                                    <TileContent>
+                                        <content>
+                                            <ImageContent src="sap-icon://employee" />
+                                        </content>
+                                    </TileContent>
+                                </tileContent>
+                            </GenericTile>
+                            <GenericTile header="{i18n>tileUserProfile}" subheader="{i18n>tileUserProfSubheader}" press="onTilePartProfPress" class="sapUiSmallMarginEnd">
+                                <tileContent>
+                                    <TileContent>
+                                        <content>
+                                            <ImageContent src="sap-icon://business-card" />
+                                        </content>
+                                    </TileContent>
+                                </tileContent>
+                            </GenericTile>
+                            <GenericTile header="{i18n>tileReviewMode}" press="onTileReviewModePress" class="sapUiSmallMarginEnd">
+                                <tileContent>
+                                    <TileContent>
+                                        <content>
+                                            <ImageContent src="sap-icon://favorite" />
+                                        </content>
+                                    </TileContent>
+                                </tileContent>
+                            </GenericTile>
+                        </items>
+                    </HBox>
+                </content>
+            </Page>
+            <Page title="{i18n>itemMgmtPageTitle}" id="pageItemsMgmt" showNavButton="true" navButtonPress="onNavButtonPress" noDataText="{i18n>tableItemsNoData}">
+                <headerContent>
+                    <Button icon="sap-icon://add" press="onAddItemPress" />
+                    <Button icon="sap-icon://refresh" press="onRefreshItemsPress" />
+                </headerContent>
+                <content>
+                    <Table>
+                        <columns>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnItem}" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnDesc}" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnResp}" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnAux}" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnCurReview}" />
+                                </header>
+                            </Column>
+                        </columns>
+                    </Table>
+                </content>
+            </Page>
+            <Page title="{i18n>profMgmtPageTitle}" id="pageProfMgmt" showNavButton="true" navButtonPress="onNavButtonPress" noDataText="{i18n>tableProfNoData}">
+                <headerContent>
+                    <Button icon="sap-icon://add" press="onAddProfPress" />
+                    <Button icon="sap-icon://refresh" press="onRefreshProfPress" />
+                </headerContent>
+                <content>
+                    <Table>
+                        <columns>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnName}" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnSurname}" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnRole}" />
+                                </header>
+                            </Column>
+                            <Column>
+                                <header>
+                                    <Text text="{i18n>tableColumnCurReview}" />
+                                </header>
+                            </Column>
+                        </columns>
+                    </Table>
+                </content>
+            </Page>
+            <Page title="{i18n>newItemPageTitle}" id="pageNewItem" showNavButton="true" navButtonPress="onNavButtonPress">
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="{i18n>newItemFormHeader}" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                            <f:content>
+                                <Label text="{i18n>newItemDescription}" />
+                                <Input />
+                                <Label text="{i18n>newItemResponsable}" />
+                                <Input />
+                                <Label text="{i18n>newItemAuxiliary}" />
+                                <Input />
+                            </f:content>
+                        </f:SimpleForm>
+                    </VBox>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <content>
+                            <ToolbarSpacer />
+                            <Button type="Emphasized" text="{i18n>btnSave}" />
+                            <Button text="{i18n>btnCancel}" />
+                        </content>
+                    </Toolbar>
+                </footer>
+            </Page>
+            <Page title="{i18n>newProfPageTitle}" id="pageNewProfessional" showNavButton="true" navButtonPress="onNavButtonPress">
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="{i18n>newProfFormHeader}" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                            <f:content>
+                                <Label text="{i18n>newProfName}" />
+                                <Input />
+                                <Label text="{i18n>newProfSurname}" />
+                                <Input />
+                                <Label text="{i18n>newProfRole}" />
+                                <Input />
+                            </f:content>
+                        </f:SimpleForm>
+                    </VBox>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <content>
+                            <ToolbarSpacer />
+                            <Button type="Emphasized" text="{i18n>btnSave}" />
+                            <Button text="{i18n>btnCancel}" />
+                        </content>
+                    </Toolbar>
+                </footer>
             </Page>
         </pages>
     </App>

@@ -4,8 +4,6 @@ sap.ui.define([
 ], function (Controller, MessageToast) {
 	"use strict";
 
-	var idPrefix = "appComponent---appRootView--";
-
 	var showGlobalLoader = function () {
 		sap.ui.core.BusyIndicator.show(0);
 	};
@@ -25,6 +23,11 @@ sap.ui.define([
 			return app;
 		},
 
+		onNavButtonPress: function(){
+			this.getAppObj().back();
+		},
+
+		//Login Page
 		onLoginBtnPress: function (event) {
 
 			var app = this.getAppObj();
@@ -33,8 +36,8 @@ sap.ui.define([
 			showGlobalLoader();
 
 			var oData = {
-				email: sap.ui.getCore().byId(idPrefix + 'txtUserId').getValue(),
-				password: sap.ui.getCore().byId(idPrefix + 'txtPassword').getValue(),
+				email: this.byId('txtUserId').getValue(),
+				password: this.byId('txtPassword').getValue(),
 			}
 
 			$.ajax({
@@ -49,7 +52,6 @@ sap.ui.define([
 				error: function (jqXHR, textStatus, errorThrown) {
 					hideGlobalLoader();
 					console.log(jqXHR.responseText);
-					// navigate(jqXHR);
 				}
 			})
 		},
@@ -186,6 +188,7 @@ sap.ui.define([
 			forgotPassDialog.open();
 		},
 
+		//Cockpit Page
 		onLogoffBtnPress: function () {
 			var app = this.getAppObj();
 			var oBundle = this.getView().getModel('i18n').getResourceBundle();
@@ -217,6 +220,30 @@ sap.ui.define([
 					logOffDialog.destroy();
 				}
 			}).open();
+		},
+
+		onTileItemMgmtPress: function(){
+			this.getAppObj().to(this.createId('pageItemsMgmt'));
+		},
+
+		onTileProfMgmtPress: function(){
+			this.getAppObj().to(this.createId('pageProfMgmt'));
+		},
+
+		onTilePartProfPress: function(){
+			this.getAppObj().to(this.createId());
+		},
+
+		onTileReviewModePress: function(){
+			this.getAppObj().to(this.createId());
+		},
+
+		onAddItemPress: function(){
+			this.getAppObj().to(this.createId('pageNewItem'));
+		},
+
+		onAddProfPress: function(){
+			this.getAppObj().to(this.createId('pageNewProfessional'));
 		}
 	});
 
