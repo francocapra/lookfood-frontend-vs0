@@ -1,31 +1,33 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/m/MessageToast"
-], function (Controller, MessageToast) {
-	"use strict";
+	], function (Controller, MessageToast) {
+		"use strict";
 
-	var showGlobalLoader = function () {
-		sap.ui.core.BusyIndicator.show(0);
-	};
+		var service = "https://app-lookfood.herokuapp.com/";
 
-	var hideGlobalLoader = function () {
-		sap.ui.core.BusyIndicator.hide();
-	};
+		var showGlobalLoader = function () {
+			sap.ui.core.BusyIndicator.show(0);
+		};
 
-	return Controller.extend("gourmeo.resources.main.controllers.App", {
+		var hideGlobalLoader = function () {
+			sap.ui.core.BusyIndicator.hide();
+		};
 
-		getAppObj: function(){
-			var app = this.byId('gourmeoApp');
+		return Controller.extend("gourmeo.resources.main.controllers.App", {
 
-			if (!app) {
-				jQuery.sap.log.info("App object can't be found");
-			}
-			return app;
-		},
+			getAppObj: function(){
+				var app = this.byId('gourmeoApp');
 
-		onNavButtonPress: function(){
-			this.getAppObj().back();
-		},
+				if (!app) {
+					jQuery.sap.log.info("App object can't be found");
+				}
+				return app;
+			},
+
+			onNavButtonPress: function(){
+				this.getAppObj().back();
+			},
 
 		//Login Page
 		onLoginBtnPress: function (event) {
@@ -42,7 +44,7 @@ sap.ui.define([
 
 			$.ajax({
 				type: 'POST',
-				url: 'https://app-lookfood.herokuapp.com/login',
+				url: service+'login',
 				contentType: 'application/json',
 				data: JSON.stringify(oData),
 				success: function (data, textStatus, jqXHR) {
@@ -63,50 +65,50 @@ sap.ui.define([
 			var newUserDialog = new sap.m.Dialog({
 				title: oBundle.getText('newPartnerDiagTitle'),
 				content: [
-					new sap.m.VBox({
-						justifyContent: 'Center',
-						alignItems: 'Center',
+				new sap.m.VBox({
+					justifyContent: 'Center',
+					alignItems: 'Center',
+					items: [
+					new sap.m.HBox({
 						items: [
-							new sap.m.HBox({
-								items: [
-									new sap.ui.core.Icon({
-										src: 'sap-icon://email',
-										size: '2em',
-										color: '#d52941'
-									}).addStyleClass('sapUiTinyMargin'),
-									new sap.m.Input('txtNewUserEmail', {
-										placeholder: oBundle.getText('newPartnerIdField'),
-										type: sap.m.InputType.Email
-									})
-								]
-							}),
-							new sap.m.HBox({
-								items: [
-									new sap.ui.core.Icon({
-										src: 'sap-icon://key',
-										size: '2em',
-										color: '#d52941'
-									}).addStyleClass('sapUiTinyMargin'),
-									new sap.m.Input('txtNewUserPass', {
-										placeholder: oBundle.getText('newPartnerPassField'),
-										type: sap.m.InputType.Password
-									})
-								]
-							}),
-							new sap.m.HBox({
-								items: [
-									new sap.ui.core.HTML({
-										content: '<a href="#"><i class="fab fa-facebook-square"' +
-											'style="font-size:2em;color:#3b5998;margin:0px 5px"></i></a>'
-									}),
-									new sap.ui.core.HTML({
-										content: '<a href="#"><i class="fab fa-google-plus"' +
-											'style="font-size:2em;color:#d34836;margin:0px 5px"></i></a>'
-									})
-								]
-							}).addStyleClass('sapUiTinyMarginTop sapUiTinyMarginBottom')
+						new sap.ui.core.Icon({
+							src: 'sap-icon://email',
+							size: '2em',
+							color: '#d52941'
+						}).addStyleClass('sapUiTinyMargin'),
+						new sap.m.Input('txtNewUserEmail', {
+							placeholder: oBundle.getText('newPartnerIdField'),
+							type: sap.m.InputType.Email
+						})
 						]
-					}).addStyleClass('sapUiContentPadding')
+					}),
+					new sap.m.HBox({
+						items: [
+						new sap.ui.core.Icon({
+							src: 'sap-icon://key',
+							size: '2em',
+							color: '#d52941'
+						}).addStyleClass('sapUiTinyMargin'),
+						new sap.m.Input('txtNewUserPass', {
+							placeholder: oBundle.getText('newPartnerPassField'),
+							type: sap.m.InputType.Password
+						})
+						]
+					}),
+					new sap.m.HBox({
+						items: [
+						new sap.ui.core.HTML({
+							content: '<a href="#"><i class="fab fa-facebook-square"' +
+							'style="font-size:2em;color:#3b5998;margin:0px 5px"></i></a>'
+						}),
+						new sap.ui.core.HTML({
+							content: '<a href="#"><i class="fab fa-google-plus"' +
+							'style="font-size:2em;color:#d34836;margin:0px 5px"></i></a>'
+						})
+						]
+					}).addStyleClass('sapUiTinyMarginTop sapUiTinyMarginBottom')
+					]
+				}).addStyleClass('sapUiContentPadding')
 				],
 				beginButton: new sap.m.Button({
 					text: oBundle.getText('createPartnerButton'),
@@ -151,21 +153,21 @@ sap.ui.define([
 			var forgotPassDialog = new sap.m.Dialog({
 				title: oBundle.getText('forgotPassDialogTitle'),
 				content: [
-					new sap.m.HBox({
-						justifyContent: 'Center',
-						alignItems: 'Center',
-						items: [
-							new sap.ui.core.Icon({
-								src: 'sap-icon://email',
-								size: '2em',
-								color: '#d52941'
-							}).addStyleClass('sapUiTinyMargin'),
-							new sap.m.Input({
-								placeholder: oBundle.getText('forgotPassField'),
-								type: sap.m.InputType.Email
-							})
-						]
+				new sap.m.HBox({
+					justifyContent: 'Center',
+					alignItems: 'Center',
+					items: [
+					new sap.ui.core.Icon({
+						src: 'sap-icon://email',
+						size: '2em',
+						color: '#d52941'
+					}).addStyleClass('sapUiTinyMargin'),
+					new sap.m.Input({
+						placeholder: oBundle.getText('forgotPassField'),
+						type: sap.m.InputType.Email
 					})
+					]
+				})
 				],
 				beginButton: new sap.m.Button({
 					type: 'Emphasized',
@@ -198,9 +200,9 @@ sap.ui.define([
 				title: oBundle.getText('logoffDialogTitle'),
 				type: 'Message',
 				content: [
-					new sap.m.Text({
-						text: oBundle.getText('logoffDialogMessage')
-					})
+				new sap.m.Text({
+					text: oBundle.getText('logoffDialogMessage')
+				})
 				],
 				beginButton: new sap.m.Button({
 					text: oBundle.getText('logoffConfirmBtn'),
