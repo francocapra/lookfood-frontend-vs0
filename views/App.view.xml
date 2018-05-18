@@ -2,7 +2,8 @@
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:l="sap.ui.layout" 
-    xmlns:f="sap.ui.layout.form">
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
     <App id="gourmeoApp">
         <pages>
             <Page title="{i18n>loginPageTitle}" id="pageLogin">
@@ -17,9 +18,9 @@
                                         </items>
                                     </FlexBox>
                                     <Label labelFor="txtUserId" text="{i18n>loginUserLabel}" />
-                                    <Input id="txtUserId" placeholder="{i18n>userInputPlaceholder}" />
+                                    <Input id="txtUserId" placeholder="{i18n>userInputPlaceholder}" submit="onLoginBtnPress"/>
                                     <Label labelFor="txtPassword" text="{i18n>loginUserPassword}" />
-                                    <Input id="txtPassword" placeholder="{i18n>passwordInputPlaceholder}" type="Password"/>
+                                    <Input id="txtPassword" placeholder="{i18n>passwordInputPlaceholder}" type="Password" submit="onLoginBtnPress"/>
                                     <Button text="{i18n>btnLogin}" type="Emphasized" press="onLoginBtnPress" width="100%" class="sapUiSmallMarginTop"/>
                                     <HBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginTop">
                                         <items>
@@ -205,6 +206,100 @@
                     </Toolbar>
                 </footer>
             </Page>
+            <Page id="pageReview" showNavButton="true" navButtonPress="onNavButtonPress">
+                <content>
+                    <VBox>
+                        <items>
+                            <Panel headerText="{i18n>highlights}">
+                                <content>
+                                    <FlexBox id="partnerTopItems" alignItems="Start" justifyContent="Start" />
+                                </content>
+                            </Panel>
+                            <List id="reviewItemsList" noDataText="{i18n>reviewListNoData}">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <content>
+                                            <Title text="{i18n>reviewListHeader}" />
+                                        </content>
+                                    </Toolbar>
+                                </headerToolbar>
+                            </List>
+                        </items>
+                    </VBox>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <content>
+                            <ToolbarSpacer />
+                            <Button text="{i18n>startReviewBtn}" type="Emphasized" press="onStartReviewPress" />
+                        </content>
+                    </Toolbar>
+                </footer>
+            </Page>
+            <Page id="pagePartnerProfile" title="{i18n>partnerProfileTitle}" showNavButton="true" navButtonPress="onNavButtonPress">
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <items>
+                            <f:SimpleForm id="SimpleFormChange354wideDual"
+                                editable="true"
+                                layout="ResponsiveGridLayout"
+                                title="{i18n>partnerFormHeader}"
+                                labelSpanXL="4"
+                                labelSpanL="3"
+                                labelSpanM="4"
+                                labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="0"
+                                emptySpanL="4"
+                                emptySpanM="0"
+                                emptySpanS="0"
+                                columnsXL="2"
+                                columnsL="1"
+                                columnsM="1"
+                                singleContainerFullSize="false" >
+                                <f:content>
+                                    <core:Title text="{i18n>partnerGenDataHeader}" />
+                                    <Label text="{i18n>partnerFullName}" />
+                                    <Input id="name" value="{SupplierName}" />
+                                    <Label text="{i18n>partnerWebsite}" />
+                                    <Input value="{Twitter}" />
+                                    <core:Title text="{i18n>partnerAddressHeader}" />
+                                    <Label text="{i18n>partnerStrtAndNumber}" />
+                                    <Input value="{Street}">
+                                    </Input>
+                                    <Input value="{HouseNumber}">
+                                        <layoutData>
+                                            <l:GridData span="XL2 L1 M3 S4" />
+                                        </layoutData>
+                                    </Input>
+                                    <Label text="{i18n>partnerZipCity}" />
+                                    <Input value="{ZIPCode}">
+                                        <layoutData>
+                                            <l:GridData span="XL2 L1 M3 S4" />
+                                        </layoutData>
+                                    </Input>
+                                    <Input value="{City}" />
+                                    <Label text="{i18n>partnerCountry}" />
+                                    <Select id="country" selectedKey="{Country}">
+                                        <items>
+                                            <core:Item text="Brasil" key="Brasil"/>
+                                        </items>
+                                    </Select>
+                                </f:content>
+                            </f:SimpleForm>
+                        </items>
+                    </VBox>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <content>
+                            <ToolbarSpacer />
+                            <Button text="{i18n>btnSave}" type="Emphasized" />
+                            <Button text="{i18n>btnCancel}" />
+                        </content>
+                    </Toolbar>
+                </footer>
+            </Page> 
         </pages>
     </App>
 </mvc:View>

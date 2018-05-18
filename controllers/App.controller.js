@@ -233,11 +233,11 @@ sap.ui.define([
 		},
 
 		onTilePartProfPress: function(){
-			this.getAppObj().to(this.createId());
+			this.getAppObj().to(this.createId('pagePartnerProfile'));
 		},
 
 		onTileReviewModePress: function(){
-			this.getAppObj().to(this.createId());
+			this.getAppObj().to(this.createId('pageReview'));
 		},
 
 		onAddItemPress: function(){
