@@ -15,13 +15,8 @@ sap.ui.define([
 
 		return Controller.extend("gourmeo.resources.main.controllers.PartnerProfile", {
 
-			getAppObj: function(){
-				var app = this.byId('gourmeoApp');
-
-				if (!app) {
-					jQuery.sap.log.info("App object can't be found");
-				}
-				return app;
+			onNavButtonPress:function(){
+				oApplication.app.back();
 			},
 
 			onInit: function(){

@@ -15,17 +15,16 @@ sap.ui.define([
 
 		return Controller.extend("gourmeo.resources.main.controllers.ProfessionalManagement", {
 
-			getAppObj: function(){
-				var app = this.byId('gourmeoApp');
-
-				if (!app) {
-					jQuery.sap.log.info("App object can't be found");
-				}
-				return app;
-			},
-
 			onInit: function(){
 
+			},
+
+			onNavButtonPress: function(){
+				oApplication.app.back();
+			},
+
+			onAddProfPress: function(){
+				oApplication.app.to('viewNewProfessional');
 			}
 		});
 

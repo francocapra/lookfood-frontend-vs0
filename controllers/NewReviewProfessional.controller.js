@@ -24,6 +24,10 @@ sap.ui.define([
 				return app;
 			},
 
+			onNavButtonPress:function(){
+				oApplication.app.back();
+			},
+
 			onInit: function(){
 
 			}

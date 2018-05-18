@@ -15,18 +15,16 @@ sap.ui.define([
 
 		return Controller.extend("gourmeo.resources.main.controllers.ItemManagement", {
 
-			getAppObj: function(){
-				var app = this.byId('gourmeoApp');
-
-				if (!app) {
-					jQuery.sap.log.info("App object can't be found");
-				}
-				return app;
-			},
-
 			onInit: function(){
 
-			}
+			},
+			onNavButtonPress:function(){
+				oApplication.app.back();
+			},
+
+			onAddItemPress: function(){
+				oApplication.app.to('viewNewItem');
+			},
 		});
 
 	});
