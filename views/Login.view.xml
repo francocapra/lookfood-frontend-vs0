@@ -1,0 +1,43 @@
+<mvc:View controllerName="gourmeo.resources.main.controllers.Login" 
+	xmlns="sap.m" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:l="sap.ui.layout" 
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+
+	<Page title="{i18n>loginPageTitle}" id="pageLogin">
+		<content>
+			<FlexBox alignItems="Center" justifyContent="Center">
+				<items>
+					<VBox class="vbox-login">
+						<items>
+							<FlexBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
+								<items>
+									<Image src="imgs/brand/gourmeo_logo_web.png" width="200px" height="200px" />
+								</items>
+							</FlexBox>
+							<Label labelFor="txtUserId" text="{i18n>loginUserLabel}" />
+							<Input id="txtUserId" placeholder="{i18n>userInputPlaceholder}" submit="onLoginBtnPress"/>
+							<Label labelFor="txtPassword" text="{i18n>loginUserPassword}" />
+							<Input id="txtPassword" placeholder="{i18n>passwordInputPlaceholder}" type="Password" submit="onLoginBtnPress"/>
+							<Button text="{i18n>btnLogin}" type="Emphasized" press="onLoginBtnPress" width="100%" class="sapUiSmallMarginTop"/>
+							<HBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginTop">
+								<items>
+									<Text text="{i18n>newUserLabel}" />
+									<Link text="{i18n>newUserLink}" class="sapUiTinyMarginBegin" press="onNewUserLinkPress"/>
+								</items>
+							</HBox>
+							<HBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginTop">
+								<items>
+									<Text text="{i18n>forgotPasswordLabel}" />
+									<Link text="{i18n>forgotPasswordLink}" class="sapUiTinyMarginBegin" press="onForgotPassLinkPress" />
+								</items>
+							</HBox>
+						</items>
+					</VBox>
+				</items>
+			</FlexBox>
+		</content>
+	</Page>
+
+</mvc:View>

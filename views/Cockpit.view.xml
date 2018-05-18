@@ -1,0 +1,56 @@
+<mvc:View controllerName="gourmeo.resources.main.controllers.Cockpit" 
+	xmlns="sap.m" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:l="sap.ui.layout" 
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+
+	<Page title="{i18n>cockpitPageTitle}" id="pageCockpit" class="sapUiContentPadding">
+		<headerContent>
+			<Button text="{i18n>logoffBtn}" icon="sap-icon://log" press="onLogoffBtnPress" />
+		</headerContent>
+		<content>
+			<HBox>
+				<items>
+					<GenericTile header="{i18n>tileItemsMgmt}" press="onTileItemMgmtPress" class="sapUiSmallMarginEnd">
+						<tileContent>
+							<TileContent>
+								<content>
+									<ImageContent src="sap-icon://product" />
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>tileProfessionalMgmt}" press="onTileProfMgmtPress" class="sapUiSmallMarginEnd">
+						<tileContent>
+							<TileContent>
+								<content>
+									<ImageContent src="sap-icon://employee" />
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>tileUserProfile}" subheader="{i18n>tileUserProfSubheader}" press="onTilePartProfPress" class="sapUiSmallMarginEnd">
+						<tileContent>
+							<TileContent>
+								<content>
+									<ImageContent src="sap-icon://business-card" />
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>tileReviewMode}" press="onTileReviewModePress" class="sapUiSmallMarginEnd">
+						<tileContent>
+							<TileContent>
+								<content>
+									<ImageContent src="sap-icon://favorite" />
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+				</items>
+			</HBox>
+		</content>
+	</Page>
+
+</mvc:View>

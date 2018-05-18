@@ -14,6 +14,7 @@
 	data-sap-ui-preload="async"
 	data-sap-ui-resourceroots='{
 	"gourmeo.resources.main": "./",
+	"gourmeo.xml.fragments": "./views/fragments/",
 	"gourmeo.tdc":"testdata"
 }'>
 </script>
@@ -24,7 +25,9 @@
 			app: new sap.ui.core.ComponentContainer({
 				name: "gourmeo.resources.main"
 			})
-		}).placeAt("content")
+		}).placeAt("content");
+
+		oApplication = {};
 	});
 </script>
 

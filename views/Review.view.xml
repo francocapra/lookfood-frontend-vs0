@@ -1,0 +1,39 @@
+<mvc:View controllerName="gourmeo.resources.main.controllers.Review" 
+    xmlns="sap.m" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Page id="pageReview" showNavButton="true" navButtonPress="onNavButtonPress">
+        <content>
+            <VBox>
+                <items>
+                    <Panel headerText="{i18n>highlights}">
+                        <content>
+                            <FlexBox id="partnerTopItems" alignItems="Start" justifyContent="Start" />
+                        </content>
+                    </Panel>
+                    <List id="reviewItemsList" noDataText="{i18n>reviewListNoData}">
+                        <headerToolbar>
+                            <Toolbar>
+                                <content>
+                                    <Title text="{i18n>reviewListHeader}" />
+                                </content>
+                            </Toolbar>
+                        </headerToolbar>
+                    </List>
+                </items>
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <content>
+                    <ToolbarSpacer />
+                    <Button text="{i18n>startReviewBtn}" type="Emphasized" press="onStartReviewPress" />
+                </content>
+            </Toolbar>
+        </footer>
+    </Page>
+
+</mvc:View>
