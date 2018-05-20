@@ -1,38 +1,33 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-	], function (Controller) {
+	"sap/ui/core/mvc/Controller",
+	"gourmeo/resources/main/controllers/Base"
+	], function (Controller, Base) {
 		"use strict";
 
 		var service = "https://app-lookfood.herokuapp.com/";
 		var oController;
-		var oBundle;
 
-		var showGlobalLoader = function () {
-			sap.ui.core.BusyIndicator.show(0);
-		};
-
-		var hideGlobalLoader = function () {
-			sap.ui.core.BusyIndicator.hide();
-		};
-
-		return Controller.extend("gourmeo.resources.main.controllers.Login", {
+		return Base.extend("gourmeo.resources.main.controllers.Login", {
 
 			onInit: function(){
 				oController = this;
 			},
 
-			onAfterRendering:function(){
-				oBundle = this.getView().getModel("i18n").getResourceBundle();
-			},
-
 			onExit:function(){
 				oController = null;
-				oBundle = null;
+			},
+
+			closeDialog:function(event){
+				event.getSource().getParent().close();
+			},
+
+			destroyDialog:function(event){
+				event.getSource().destroy();
 			},
 
 			onLoginBtnPress: function (event) {
 
-				showGlobalLoader();
+				oController.showGlobalLoader();
 
 				var oData = {
 					email: this.byId('txtUserId').getValue(),
@@ -45,15 +40,16 @@ sap.ui.define([
 					contentType: 'application/json',
 					data: JSON.stringify(oData),
 					success: function (data, textStatus, jqXHR) {
-						hideGlobalLoader();
+						window.sessionStorage.setItem('Authorization', jqXHR.getResponseHeader('Authorization'))
+						oController.hideGlobalLoader();
 						oApplication.app.to('viewCockpit');
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						hideGlobalLoader();
+						oController.hideGlobalLoader();
 						console.log(jqXHR.responseText);
-						sap.m.MessageToast.show(oBundle.getText('invalidLogin'));
+						sap.m.MessageToast.show(oController.getResourceBundle().getText('invalidLogin'));
 					}
-				})
+				});
 			},
 
 			onNewUserLinkPress: function () {
@@ -78,7 +74,7 @@ sap.ui.define([
 
 			onPressCreateUser:function(){
 
-				showGlobalLoader();
+				oController.showGlobalLoader();
 
 				let oData = {
 					email:this.byId('txtNewUserEmail').getValue(),
@@ -92,18 +88,18 @@ sap.ui.define([
 					data:JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){
 
-						hideGlobalLoader();
+						oController.hideGlobalLoader();
 
 						if(jqXHR.status == 200 || jqXHR.status == 201){
 							let succDialog = new sap.m.Dialog({
-								title:oBundle.getText('createUserSuccTitle'),
+								title: oController.getResourceBundle().getText('createUserSuccTitle'),
 								content:[
 								new sap.m.HBox({
 									justifyContent:'Center',
 									alignItems:'Center',
 									items:[
 									new sap.m.Text({
-										text:oBundle.getText('createUserSuccText')
+										text: oController.getResourceBundle().getText('createUserSuccText')
 									})
 									]
 								}).addStyleClass('sapUiSmallMarginTop')
@@ -121,18 +117,39 @@ sap.ui.define([
 						}
 					},
 					error:function(jqXHR, textStatus, errorThrown){
-						hideGlobalLoader();
+						oController.hideGlobalLoader();
 						console.log(jqXHR, textStatus, errorThrown);
 					}
 				});
 			},
 
-			onCloseDialog: function(event){
-				event.getSource().getParent().close();
-			},
+			onRecoverPass:function(){
 
-			onDialogAfterClose:function(event){
-				event.getSource().destroy();
+				oController.showGlobalLoader()
+
+				let email = this.byId('txtForgotEmail').getValue();
+
+				var oData = {
+					email:email
+				}
+
+				$.ajax({
+					type:'POST',
+					url:service+'auth/forgot',
+					contentType:'application/json',
+					data:JSON.stringify(oData),
+					success:function(data, textStatus, jqXHR){
+						oController.hideGlobalLoader()
+						if(jqXHR.status == 200 || jqXHR.status == 201){
+							alert('email recuperado')
+						}
+					},
+					error:function(jqXHR, textStatus, errorThrown){
+						oController.hideGlobalLoader()
+						console.log(jqXHR, textStatus, errorThrown);
+					}
+				});
+
 			}
 
 		});

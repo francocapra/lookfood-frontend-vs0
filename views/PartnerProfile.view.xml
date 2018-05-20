@@ -29,9 +29,9 @@
                         <f:content>
                             <core:Title text="{i18n>partnerGenDataHeader}" />
                             <Label text="{i18n>partnerFullName}" />
-                            <Input id="name" value="{SupplierName}" />
+                            <Input id="name" value="{PartnerName}" />
                             <Label text="{i18n>partnerWebsite}" />
-                            <Input value="{Twitter}" />
+                            <Input value="{PartnerWebsite}" />
                             <core:Title text="{i18n>partnerAddressHeader}" />
                             <Label text="{i18n>partnerStrtAndNumber}" />
                             <Input value="{Street}">

@@ -1,4 +1,4 @@
-<Dialog xmlns="sap.m" xmlns:core="sap.ui.core" title="{i18n>newPartnerDiagTitle}" afterClose="onDialogAfterClose" >
+<Dialog xmlns="sap.m" xmlns:core="sap.ui.core" title="{i18n>newPartnerDiagTitle}" afterClose="destroyDialog" >
 	<content>
 		<VBox justifyContent="Center" alignItems="Center" class="sapUiContentPadding">
 			<items>
@@ -27,6 +27,6 @@
 		<Button text="{i18n>createPartnerButton}" type="Emphasized" press="onPressCreateUser" />
 	</beginButton>
 	<endButton>
-		<Button text="{i18n>btnCancel}" press="onCloseDialog" />
+		<Button text="{i18n>btnCancel}" press="closeDialog" />
 	</endButton>
 </Dialog>

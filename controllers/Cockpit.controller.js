@@ -1,11 +1,11 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-	], function (Controller) {
+	"sap/ui/core/mvc/Controller",
+	"gourmeo/resources/main/controllers/Base"
+	], function (Controller, Base) {
 		"use strict";
 
 		var service = "https://app-lookfood.herokuapp.com/";
 		var oController;
-		var oBundle;
 
 		var showGlobalLoader = function () {
 			sap.ui.core.BusyIndicator.show(0);
@@ -15,19 +15,14 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.hide();
 		};
 
-		return Controller.extend("gourmeo.resources.main.controllers.Cockpit", {
+		return Base.extend("gourmeo.resources.main.controllers.Cockpit", {
 
 			onInit: function(){
 				oController = this;
 			},
 
-			onAfterRendering:function(){
-				oBundle = this.getView().getModel('i18n').getResourceBundle();
-			},
-
 			onExit:function(){
 				oController = null;
-				oBundle = null;
 			},
 
 			onNavButtonPress:function(){
@@ -36,27 +31,27 @@ sap.ui.define([
 
 			onLogoffBtnPress: function () {
 				let logoff = new sap.m.Dialog({
-					title:oBundle.getText('logoffDialogTitle'),
+					title:oController.getResourceBundle().getText('logoffDialogTitle'),
 					content:[
 					new sap.m.HBox({
 						justifyContent:'Center',
 						alignItems:'Center',
 						items:[
 						new sap.m.Text({
-							text:oBundle.getText('logoffDialogMessage')
+							text:oController.getResourceBundle().getText('logoffDialogMessage')
 						})
 						]
 					}).addStyleClass('sapUiSmallMarginTop')
 					],
 					beginButton:new sap.m.Button({
-						text:oBundle.getText('logoffConfirmBtn'),
+						text:oController.getResourceBundle().getText('logoffConfirmBtn'),
 						press:function(){
 							logoff.close();
 							oApplication.app.to('viewLogin');
 						}
 					}),
 					endButton:new sap.m.Button({
-						text:oBundle.getText('logoffCancelBtn'),
+						text:oController.getResourceBundle().getText('logoffCancelBtn'),
 						type:'Emphasized',
 						press:function(){
 							logoff.close();
