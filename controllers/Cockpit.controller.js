@@ -4,6 +4,8 @@ sap.ui.define([
 		"use strict";
 
 		var service = "https://app-lookfood.herokuapp.com/";
+		var oController;
+		var oBundle;
 
 		var showGlobalLoader = function () {
 			sap.ui.core.BusyIndicator.show(0);
@@ -16,7 +18,16 @@ sap.ui.define([
 		return Controller.extend("gourmeo.resources.main.controllers.Cockpit", {
 
 			onInit: function(){
+				oController = this;
+			},
 
+			onAfterRendering:function(){
+				oBundle = this.getView().getModel('i18n').getResourceBundle();
+			},
+
+			onExit:function(){
+				oController = null;
+				oBundle = null;
 			},
 
 			onNavButtonPress:function(){
@@ -24,34 +35,35 @@ sap.ui.define([
 			},
 
 			onLogoffBtnPress: function () {
-				var app = this.getAppObj();
-				var oBundle = this.getView().getModel('i18n').getResourceBundle();
-				var controller = this;
-
-				var logOffDialog = new sap.m.Dialog({
-					title: oBundle.getText('logoffDialogTitle'),
-					type: 'Message',
-					content: [
-					new sap.m.Text({
-						text: oBundle.getText('logoffDialogMessage')
-					})
+				let logoff = new sap.m.Dialog({
+					title:oBundle.getText('logoffDialogTitle'),
+					content:[
+					new sap.m.HBox({
+						justifyContent:'Center',
+						alignItems:'Center',
+						items:[
+						new sap.m.Text({
+							text:oBundle.getText('logoffDialogMessage')
+						})
+						]
+					}).addStyleClass('sapUiSmallMarginTop')
 					],
-					beginButton: new sap.m.Button({
-						text: oBundle.getText('logoffConfirmBtn'),
-						press: function () {
-							logOffDialog.close();
-							app.to(controller.createId('pageLogin'));
+					beginButton:new sap.m.Button({
+						text:oBundle.getText('logoffConfirmBtn'),
+						press:function(){
+							logoff.close();
+							oApplication.app.to('viewLogin');
 						}
 					}),
-					endButton: new sap.m.Button({
-						text: oBundle.getText('logoffCancelBtn'),
-						type: 'Emphasized',
-						press: function () {
-							logOffDialog.close();
+					endButton:new sap.m.Button({
+						text:oBundle.getText('logoffCancelBtn'),
+						type:'Emphasized',
+						press:function(){
+							logoff.close();
 						}
 					}),
-					afterClose: function () {
-						logOffDialog.destroy();
+					afterClose:function(){
+						logoff.destroy();
 					}
 				}).open();
 			},
