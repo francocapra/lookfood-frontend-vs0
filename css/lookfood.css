@@ -16,7 +16,7 @@
 
 /* Not relevant for screen size */
 .partnerProfilePicture{
-    padding: 8px;
+    padding: 3px;
     background-color: cadetblue;
     border-radius: 50%;
 }

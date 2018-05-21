@@ -5,7 +5,6 @@ sap.ui.define([
 	], function (Controller, Base) {
 		"use strict";
 
-		var service = "https://app-lookfood.herokuapp.com/";
 		var oController;
 
 		return Base.extend("gourmeo.resources.main.controllers.Login", {
@@ -23,7 +22,7 @@ sap.ui.define([
 
 				return $.ajax({
 					type: 'POST',
-					url: service+'login',
+					url: oController.getServiceApi()+'login',
 					contentType: 'application/json',
 					data: JSON.stringify(oData)
 				});
@@ -59,7 +58,7 @@ sap.ui.define([
 				let email = this.byId('txtUserId').getValue();
 				let password = this.byId('txtPassword').getValue();
 
-				$.when(oController.performLogin(email, password)).then(function(data, textStatus, jqXHR){
+				$.when(oController.performLogin(email, password)).done(function(data, textStatus, jqXHR){
 					
 					if(jqXHR.status == 200){
 
@@ -69,10 +68,12 @@ sap.ui.define([
 						oController.byId('txtUserId').setValue(null);
 						oController.byId('txtPassword').setValue(null);
 
-						$.when(oController.getPartnerDetails(email)).then(function(data, textStatus, jqXHR){
+						$.when(oController.getPartnerDetails(email)).done(function(data, textStatus, jqXHR){
 
 							if(jqXHR.status == 200)
 							{
+								data.pictureURL = oController.getBucketApi()+'partner'+data.id+'.jpg';
+
 								let partnerModel = new sap.ui.model.json.JSONModel(data);
 
 								oController.setModel(partnerModel, 'PartnerProfile');
@@ -81,14 +82,15 @@ sap.ui.define([
 							oController.hideGlobalLoader();
 							oApplication.app.to('viewCockpit');
 
-						});
+						}).fail(function(a,b,c){
+							oController.hideGlobalLoader();
+							console.log(a,b,c);
+						});;
 
 					}
-					else{
-						oController.hideGlobalLoader();
-
-						sap.m.MessageToast.show(oController.getResourceBundle().getText('invalidLogin'))
-					}
+				}).fail(function(a,b,c){
+					oController.hideGlobalLoader();
+					console.log(a,b,c);
 				});
 
 			},
@@ -124,7 +126,7 @@ sap.ui.define([
 
 				$.ajax({
 					type:'POST',
-					url:service+'partners',
+					url:oController.getServiceApi()+'partners',
 					contentType:'application/json',
 					data:JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){
@@ -176,7 +178,7 @@ sap.ui.define([
 
 				$.ajax({
 					type:'POST',
-					url:service+'auth/forgot',
+					url:oController.getServiceApi()+'auth/forgot',
 					contentType:'application/json',
 					data:JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){

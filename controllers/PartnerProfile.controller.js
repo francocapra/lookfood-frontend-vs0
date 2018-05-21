@@ -29,18 +29,76 @@ sap.ui.define([
 				
 			},
 
+			uploadPartnerPicture:function(file, authToken){
+
+				let formData = new FormData();
+
+				formData.append('file', file, file.name);
+
+				return $.ajax({
+					type:'POST',
+					url:oController.getServiceApi()+'partners/picture',
+					data: formData,
+					async:true,
+					cache:false,
+					contentType:false,
+					processData:false,
+					beforeSend:function(request){
+						request.setRequestHeader('Authorization', authToken)
+					}
+				})
+			},
+
 			setPartnerPicture:function(){
+
+				let fileUploader = new sap.ui.core.HTML({
+					content: '<input type="file" id="partnerPicUploader" accept="image/*" style="display: none;" />'
+				});
+
 				let pictureDialog = new sap.m.Dialog({
 					title: oController.getResourceBundle().getText('partnerPicDialogTitle'),
 					draggable: true,
 					content:[
-					new sap.m.HBox({
+					new sap.m.VBox({
 						justifyContent:'Center',
 						alignItems:'Center',
 						items:[
-						new sap.m.Image({
-							src:'imgs/boss.png'
-						}).addStyleClass('partnerProfilePicture')
+						new sap.m.Image('partnerProfilePicture',{
+							src:oController.getModel('PartnerProfile').getProperty('/pictureURL'),
+							width:'128px',
+							height:'128px',
+							error:function(event){
+								event.getSource().setSrc('imgs/boss.png');
+							},
+							press:function(){
+
+								let _uploader = $('#partnerPicUploader');
+
+								_uploader.on('change', function(){
+									let file = this.files[0];
+									let authToken = window.sessionStorage.getItem('Authorization');
+
+									if(!file)
+										return;
+
+									pictureDialog.setBusyIndicatorDelay(0).setBusy(true);
+
+									$.when(oController.uploadPartnerPicture(file, authToken)).done(function(data,textStatus,jqXHR){
+										let location = jqXHR.getResponseHeader('location')
+
+										sap.ui.getCore().byId('partnerProfilePicture').setSrc(location);
+
+										pictureDialog.setBusy(false);
+									}).fail(function(a,b,c){
+										console.log(a,b,c);
+										pictureDialog.setBusy(false);
+									});
+								});
+
+								_uploader.trigger('click');
+							}
+						}).addStyleClass('partnerProfilePicture'),
+						fileUploader
 						]
 					}).addStyleClass('sapUiSmallMargin')
 					],

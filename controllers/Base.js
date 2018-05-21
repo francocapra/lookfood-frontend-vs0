@@ -9,6 +9,10 @@ sap.ui.define([
 				return 'https://app-lookfood.herokuapp.com/';
 			},
 
+			getBucketApi: function(){
+				return 'https://lookfood-backend-img.s3.sa-east-1.amazonaws.com/';
+			},
+
 			showGlobalLoader : function () {
 				sap.ui.core.BusyIndicator.show(0);
 			},
