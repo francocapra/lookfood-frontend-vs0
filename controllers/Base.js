@@ -3,9 +3,11 @@ sap.ui.define([
 	], function (Controller) {
 		"use strict";
 
-		var service = "https://app-lookfood.herokuapp.com/";
-
 		return Controller.extend("gourmeo.resources.main.controllers.Base", {
+
+			getServiceApi: function(){
+				return 'https://app-lookfood.herokuapp.com/';
+			},
 
 			showGlobalLoader : function () {
 				sap.ui.core.BusyIndicator.show(0);
@@ -20,11 +22,11 @@ sap.ui.define([
 			},
 
 			getModel:function(sName){
-				return this.getView().getModel(sName);
+				return this.getOwnerComponent().getModel(sName);
 			},
 
 			setModel:function(oModel, sName){
-				return this.getView().setModel(oModel, sName);
+				return this.getOwnerComponent().setModel(oModel, sName);
 			}
 		});
 

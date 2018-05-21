@@ -23,6 +23,10 @@ sap.ui.define([
 
 			onInit: function(){
 				oController = this;
+			},
+
+			onBeforeRendering:function(){
+				console.log(oController.getModel('PartnerProfile'));
 			}
 		});
 

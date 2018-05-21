@@ -29,25 +29,25 @@
                         <f:content>
                             <core:Title text="{i18n>partnerGenDataHeader}" />
                             <Label text="{i18n>partnerFullName}" />
-                            <Input id="name" value="{PartnerName}" />
+                            <Input id="name" value="{PartnerProfile>/name}" />
                             <Label text="{i18n>partnerWebsite}" />
-                            <Input value="{PartnerWebsite}" />
+                            <Input value="{PartnerProfile>/website}" />
                             <core:Title text="{i18n>partnerAddressHeader}" />
                             <Label text="{i18n>partnerStrtAndNumber}" />
-                            <Input value="{Street}">
+                            <Input value="{PartnerProfile>/addresses/0/street}">
                             </Input>
-                            <Input value="{HouseNumber}">
+                            <Input value="{PartnerProfile>/addresses/0/number}">
                                 <layoutData>
                                     <l:GridData span="XL2 L1 M3 S4" />
                                 </layoutData>
                             </Input>
                             <Label text="{i18n>partnerZipCity}" />
-                            <Input value="{ZIPCode}">
+                            <Input value="{PartnerProfile>/addresses/0/postcode}">
                                 <layoutData>
                                     <l:GridData span="XL2 L1 M3 S4" />
                                 </layoutData>
                             </Input>
-                            <Input value="{City}" />
+                            <Input value="{PartnerProfile>/addresses/0/city/name}" />
                             <Label text="{i18n>partnerCountry}" />
                             <Select id="country" selectedKey="{Country}">
                                 <items>
@@ -64,7 +64,6 @@
                 <content>
                     <ToolbarSpacer />
                     <Button text="{i18n>btnSave}" type="Emphasized" />
-                    <Button text="{i18n>btnCancel}" />
                 </content>
             </Toolbar>
         </footer>

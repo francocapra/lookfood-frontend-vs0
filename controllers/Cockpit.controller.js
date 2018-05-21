@@ -4,16 +4,7 @@ sap.ui.define([
 	], function (Controller, Base) {
 		"use strict";
 
-		var service = "https://app-lookfood.herokuapp.com/";
 		var oController;
-
-		var showGlobalLoader = function () {
-			sap.ui.core.BusyIndicator.show(0);
-		};
-
-		var hideGlobalLoader = function () {
-			sap.ui.core.BusyIndicator.hide();
-		};
 
 		return Base.extend("gourmeo.resources.main.controllers.Cockpit", {
 
@@ -23,6 +14,7 @@ sap.ui.define([
 
 			onExit:function(){
 				oController = null;
+				this.destroy();
 			},
 
 			onNavButtonPress:function(){
