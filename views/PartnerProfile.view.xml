@@ -26,12 +26,28 @@
                         columnsL="1"
                         columnsM="1"
                         singleContainerFullSize="false" >
+                        <f:toolbar>
+                            <Toolbar id="TB1">
+                                <Title id="Title1" text="{i18n>partnerFormHeader}" level="H2" titleStyle="H2"/>
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://camera" type="Emphasized" press="setPartnerPicture" />
+                            </Toolbar>
+                        </f:toolbar>
                         <f:content>
                             <core:Title text="{i18n>partnerGenDataHeader}" />
                             <Label text="{i18n>partnerFullName}" />
-                            <Input id="name" value="{PartnerProfile>/name}" />
+                            <Input value="{PartnerProfile>/name}" />
+                            <Label text="{i18n>partnerDocNumber}" />
+                            <Input value="{PartnerProfile>/cnpj}" />
+                            <core:Title text="{i18n>partnerContactHeader}" />
+                            <Label text="{i18n>partnerEmail}" />
+                            <Input value="{PartnerProfile>/email}" />
                             <Label text="{i18n>partnerWebsite}" />
                             <Input value="{PartnerProfile>/website}" />
+                            <Label text="{i18n>partnerPhoneOne}" />
+                            <Input value="{PartnerProfile>/phones/0}" />
+                            <Label text="{i18n>partnerPhoneTwo}" />
+                            <Input value="{PartnerProfile>/phones/1}" />
                             <core:Title text="{i18n>partnerAddressHeader}" />
                             <Label text="{i18n>partnerStrtAndNumber}" />
                             <Input value="{PartnerProfile>/addresses/0/street}">
@@ -49,10 +65,14 @@
                             </Input>
                             <Input value="{PartnerProfile>/addresses/0/city/name}" />
                             <Label text="{i18n>partnerCountry}" />
+                            <Input value="{PartnerProfile>/addresses/0/city/region/name}" />
                             <Select id="country" selectedKey="{Country}">
                                 <items>
                                     <core:Item text="Brasil" key="Brasil"/>
                                 </items>
+                                <layoutData>
+                                    <l:GridData span="XL4 L2 M3 S4" />
+                                </layoutData>
                             </Select>
                         </f:content>
                     </f:SimpleForm>

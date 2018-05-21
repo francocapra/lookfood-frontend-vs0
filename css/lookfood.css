@@ -15,6 +15,11 @@
 }
 
 /* Not relevant for screen size */
+.partnerProfilePicture{
+    padding: 8px;
+    background-color: cadetblue;
+    border-radius: 50%;
+}
 span.sapMBtnInner.sapMBtnEmphasized{
     background-color: #d52941 !important;
     border-color: #d52941 !important;

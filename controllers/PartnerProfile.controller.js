@@ -26,7 +26,38 @@ sap.ui.define([
 			},
 
 			onBeforeRendering:function(){
-				console.log(oController.getModel('PartnerProfile'));
+				
+			},
+
+			setPartnerPicture:function(){
+				let pictureDialog = new sap.m.Dialog({
+					title: oController.getResourceBundle().getText('partnerPicDialogTitle'),
+					draggable: true,
+					content:[
+					new sap.m.HBox({
+						justifyContent:'Center',
+						alignItems:'Center',
+						items:[
+						new sap.m.Image({
+							src:'imgs/boss.png'
+						}).addStyleClass('partnerProfilePicture')
+						]
+					}).addStyleClass('sapUiSmallMargin')
+					],
+					beginButton: new sap.m.Button({
+						text:oController.getResourceBundle().getText('btnSave'),
+						type:'Emphasized'
+					}),
+					endButton: new sap.m.Button({
+						text: oController.getResourceBundle().getText('btnCancel'),
+						press:function(){
+							pictureDialog.close();
+						}
+					}),
+					afterClose:function(){
+						pictureDialog.destroy();
+					}
+				}).open();
 			}
 		});
 
