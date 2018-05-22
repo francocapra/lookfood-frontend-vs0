@@ -25,7 +25,6 @@
                 <content>
                     <ToolbarSpacer />
                     <Button type="Emphasized" text="{i18n>btnSave}" />
-                    <Button text="{i18n>btnCancel}" />
                 </content>
             </Toolbar>
         </footer>

@@ -4,8 +4,7 @@ sap.ui.define([
 	], function (Controller, Base) {
 		"use strict";
 
-		var service = "https://app-lookfood.herokuapp.com/";
-		var oController;
+		var oBaseController;
 
 		var showGlobalLoader = function () {
 			sap.ui.core.BusyIndicator.show(0);
@@ -22,7 +21,7 @@ sap.ui.define([
 			},
 
 			onInit: function(){
-				oController = this;
+				oBaseController = this;
 			},
 
 			onBeforeRendering:function(){
@@ -37,7 +36,7 @@ sap.ui.define([
 
 				return $.ajax({
 					type:'POST',
-					url:oController.getServiceApi()+'partners/picture',
+					url:oBaseController.getServiceApi()+'partners/picture',
 					data: formData,
 					async:true,
 					cache:false,
@@ -56,7 +55,7 @@ sap.ui.define([
 				});
 
 				let pictureDialog = new sap.m.Dialog({
-					title: oController.getResourceBundle().getText('partnerPicDialogTitle'),
+					title: oBaseController.getResourceBundle().getText('partnerPicDialogTitle'),
 					draggable: true,
 					content:[
 					new sap.m.VBox({
@@ -64,7 +63,7 @@ sap.ui.define([
 						alignItems:'Center',
 						items:[
 						new sap.m.Image('partnerProfilePicture',{
-							src:oController.getModel('PartnerProfile').getProperty('/pictureURL'),
+							src: oBaseController.getBucketApi()+'partner'+oBaseController.getModel('PartnerProfile').getProperty('/id')+'.jpg',
 							width:'128px',
 							height:'128px',
 							error:function(event){
@@ -83,7 +82,7 @@ sap.ui.define([
 
 									pictureDialog.setBusyIndicatorDelay(0).setBusy(true);
 
-									$.when(oController.uploadPartnerPicture(file, authToken)).done(function(data,textStatus,jqXHR){
+									$.when(oBaseController.uploadPartnerPicture(file, authToken)).done(function(data,textStatus,jqXHR){
 										let location = jqXHR.getResponseHeader('location')
 
 										sap.ui.getCore().byId('partnerProfilePicture').setSrc(location);
@@ -103,11 +102,11 @@ sap.ui.define([
 					}).addStyleClass('sapUiSmallMargin')
 					],
 					beginButton: new sap.m.Button({
-						text:oController.getResourceBundle().getText('btnSave'),
+						text:oBaseController.getResourceBundle().getText('btnSave'),
 						type:'Emphasized'
 					}),
 					endButton: new sap.m.Button({
-						text: oController.getResourceBundle().getText('btnCancel'),
+						text: oBaseController.getResourceBundle().getText('btnCancel'),
 						press:function(){
 							pictureDialog.close();
 						}

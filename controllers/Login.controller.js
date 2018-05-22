@@ -5,12 +5,12 @@ sap.ui.define([
 	], function (Controller, Base) {
 		"use strict";
 
-		var oController;
+		var oBaseController;
 
 		return Base.extend("gourmeo.resources.main.controllers.Login", {
 
 			onInit: function(){
-				oController = this;
+				oBaseController = this;
 			},
 
 			performLogin: function(email, password){
@@ -22,7 +22,7 @@ sap.ui.define([
 
 				return $.ajax({
 					type: 'POST',
-					url: oController.getServiceApi()+'login',
+					url: oBaseController.getServiceApi()+'login',
 					contentType: 'application/json',
 					data: JSON.stringify(oData)
 				});
@@ -32,7 +32,7 @@ sap.ui.define([
 
 				return $.ajax({
 					type:'GET',
-					url:oController.getServiceApi()+'partners/email?value='+email,
+					url:oBaseController.getServiceApi()+'partners/email?value='+email,
 					beforeSend:function(request){
 						request.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
 					}
@@ -40,7 +40,7 @@ sap.ui.define([
 			},
 
 			onExit:function(){
-				oController = null;
+				oBaseController = null;
 			},
 
 			closeDialog:function(event){
@@ -53,43 +53,41 @@ sap.ui.define([
 
 			onLoginBtnPress: function (event) {
 
-				oController.showGlobalLoader();
+				oBaseController.showGlobalLoader();
 
 				let email = this.byId('txtUserId').getValue();
 				let password = this.byId('txtPassword').getValue();
 
-				$.when(oController.performLogin(email, password)).done(function(data, textStatus, jqXHR){
+				$.when(oBaseController.performLogin(email, password)).done(function(data, textStatus, jqXHR){
 					
 					if(jqXHR.status == 200){
 
 						window.sessionStorage.setItem('Authorization', jqXHR.getResponseHeader('Authorization'))
-						window.sessionStorage.setItem('PartnerEmail', oController.byId('txtUserId').getValue());
+						window.sessionStorage.setItem('PartnerEmail', oBaseController.byId('txtUserId').getValue());
 
-						oController.byId('txtUserId').setValue(null);
-						oController.byId('txtPassword').setValue(null);
+						oBaseController.byId('txtUserId').setValue(null);
+						oBaseController.byId('txtPassword').setValue(null);
 
-						$.when(oController.getPartnerDetails(email)).done(function(data, textStatus, jqXHR){
+						$.when(oBaseController.getPartnerDetails(email)).done(function(data, textStatus, jqXHR){
 
 							if(jqXHR.status == 200)
 							{
-								data.pictureURL = oController.getBucketApi()+'partner'+data.id+'.jpg';
-
 								let partnerModel = new sap.ui.model.json.JSONModel(data);
 
-								oController.setModel(partnerModel, 'PartnerProfile');
+								oBaseController.setModel(partnerModel, 'PartnerProfile');
 							}
 
-							oController.hideGlobalLoader();
+							oBaseController.hideGlobalLoader();
 							oApplication.app.to('viewCockpit');
 
 						}).fail(function(a,b,c){
-							oController.hideGlobalLoader();
+							oBaseController.hideGlobalLoader();
 							console.log(a,b,c);
 						});;
 
 					}
 				}).fail(function(a,b,c){
-					oController.hideGlobalLoader();
+					oBaseController.hideGlobalLoader();
 					console.log(a,b,c);
 				});
 
@@ -117,7 +115,7 @@ sap.ui.define([
 
 			onPressCreateUser:function(){
 
-				oController.showGlobalLoader();
+				oBaseController.showGlobalLoader();
 
 				let oData = {
 					email:this.byId('txtNewUserEmail').getValue(),
@@ -126,23 +124,23 @@ sap.ui.define([
 
 				$.ajax({
 					type:'POST',
-					url:oController.getServiceApi()+'partners',
+					url:oBaseController.getServiceApi()+'partners',
 					contentType:'application/json',
 					data:JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){
 
-						oController.hideGlobalLoader();
+						oBaseController.hideGlobalLoader();
 
 						if(jqXHR.status == 200 || jqXHR.status == 201){
 							let succDialog = new sap.m.Dialog({
-								title: oController.getResourceBundle().getText('createUserSuccTitle'),
+								title: oBaseController.getResourceBundle().getText('createUserSuccTitle'),
 								content:[
 								new sap.m.HBox({
 									justifyContent:'Center',
 									alignItems:'Center',
 									items:[
 									new sap.m.Text({
-										text: oController.getResourceBundle().getText('createUserSuccText')
+										text: oBaseController.getResourceBundle().getText('createUserSuccText')
 									})
 									]
 								}).addStyleClass('sapUiSmallMarginTop')
@@ -160,7 +158,7 @@ sap.ui.define([
 						}
 					},
 					error:function(jqXHR, textStatus, errorThrown){
-						oController.hideGlobalLoader();
+						oBaseController.hideGlobalLoader();
 						console.log(jqXHR, textStatus, errorThrown);
 					}
 				});
@@ -168,7 +166,7 @@ sap.ui.define([
 
 			onRecoverPass:function(){
 
-				oController.showGlobalLoader()
+				oBaseController.showGlobalLoader()
 
 				let email = this.byId('txtForgotEmail').getValue();
 
@@ -178,17 +176,17 @@ sap.ui.define([
 
 				$.ajax({
 					type:'POST',
-					url:oController.getServiceApi()+'auth/forgot',
+					url:oBaseController.getServiceApi()+'auth/forgot',
 					contentType:'application/json',
 					data:JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){
-						oController.hideGlobalLoader()
+						oBaseController.hideGlobalLoader()
 						if(jqXHR.status == 200 || jqXHR.status == 201){
 							alert('email recuperado')
 						}
 					},
 					error:function(jqXHR, textStatus, errorThrown){
-						oController.hideGlobalLoader()
+						oBaseController.hideGlobalLoader()
 						console.log(jqXHR, textStatus, errorThrown);
 					}
 				});

@@ -15,7 +15,15 @@
                         <Label text="{i18n>newProfSurname}" />
                         <Input />
                         <Label text="{i18n>newProfRole}" />
-                        <Input />
+                        <Select id="profrole" selectedKey="">
+                            <items>
+                                <core:Item text="Chef" key="Chef"/>
+                                <core:Item text="Auxiliar" key="Aux"/>
+                            </items>
+                            <layoutData>
+                                <l:GridData span="XL4 L2 M3 S4" />
+                            </layoutData>
+                        </Select>
                     </f:content>
                 </f:SimpleForm>
             </VBox>
@@ -25,7 +33,6 @@
                 <content>
                     <ToolbarSpacer />
                     <Button type="Emphasized" text="{i18n>btnSave}" />
-                    <Button text="{i18n>btnCancel}" />
                 </content>
             </Toolbar>
         </footer>
