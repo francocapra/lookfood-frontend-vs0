@@ -13,7 +13,9 @@
         <content>
             <Table id="tblPartnerProducts"
                 inset="false"
-                items="{PartnerPrdCollection>/ProductCollection}" >
+                items="{PartnerPrdCollection>/ProductCollection}"
+                mode="SingleSelectMaster"
+                selectionChange="onSelectionChange" >
                 <columns>
                     <Column>
                         <Text text="{i18n>tableColumnItem}" />
@@ -22,7 +24,7 @@
                         <Text text="{i18n>tableColumnDesc}" />
                     </Column>
                     <Column>
-                        <Text text="{i18n>tableColumnResp}" />
+                        <Text text="{i18n>tableColumnChef}" />
                     </Column>
                     <Column>
                         <Text text="{i18n>tableColumnAux}" />
