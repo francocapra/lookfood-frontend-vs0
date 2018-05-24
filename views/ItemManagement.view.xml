@@ -11,34 +11,37 @@
             <Button icon="sap-icon://refresh" press="onRefreshItemsPress" />
         </headerContent>
         <content>
-            <Table>
+            <Table id="tblPartnerProducts"
+                inset="false"
+                items="{PartnerPrdCollection>/ProductCollection}" >
                 <columns>
                     <Column>
-                        <header>
-                            <Text text="{i18n>tableColumnItem}" />
-                        </header>
+                        <Text text="{i18n>tableColumnItem}" />
                     </Column>
                     <Column>
-                        <header>
-                            <Text text="{i18n>tableColumnDesc}" />
-                        </header>
+                        <Text text="{i18n>tableColumnDesc}" />
                     </Column>
                     <Column>
-                        <header>
-                            <Text text="{i18n>tableColumnResp}" />
-                        </header>
+                        <Text text="{i18n>tableColumnResp}" />
                     </Column>
                     <Column>
-                        <header>
-                            <Text text="{i18n>tableColumnAux}" />
-                        </header>
+                        <Text text="{i18n>tableColumnAux}" />
                     </Column>
                     <Column>
-                        <header>
-                            <Text text="{i18n>tableColumnCurReview}" />
-                        </header>
+                        <Text text="{i18n>tableColumnCurReview}" />
                     </Column>
                 </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{PartnerPrdCollection>id}" />
+                            <Text text="{PartnerPrdCollection>description}" />
+                            <Text text="" />
+                            <Text text="" />
+                            <Text text="" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
             </Table>
         </content>
     </Page>

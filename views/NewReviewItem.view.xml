@@ -8,14 +8,18 @@
     <Page title="{i18n>newItemPageTitle}" id="pageNewItem" showNavButton="true" navButtonPress="onNavButtonPress">
         <content>
             <VBox class="sapUiSmallMargin">
-                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="{i18n>newItemFormHeader}" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
                     <f:content>
+                        <core:Title text="{i18n>newItemFormHeaderGen}" />
                         <Label text="{i18n>newItemDescription}" />
-                        <Input />
-                        <Label text="{i18n>newItemResponsable}" />
-                        <Input />
+                        <Input required="true" change="onItemDescChange" id="txtNewItemDesc" />
+                        <Label text="{i18n>newItemPrice}" />
+                        <Input description="{i18n>newItemCurrency}" id="txtNewItemPrice" />
+                        <core:Title text="{i18n>newItemFormHeaderMakers}" />
+                        <Label text="{i18n>newItemResponsible}" />
+                        <Input id="txtNewItemRespo" />
                         <Label text="{i18n>newItemAuxiliary}" />
-                        <Input />
+                        <Input id="txtNewItemAux" />
                     </f:content>
                 </f:SimpleForm>
             </VBox>
@@ -24,7 +28,7 @@
             <Toolbar>
                 <content>
                     <ToolbarSpacer />
-                    <Button type="Emphasized" text="{i18n>btnSave}" />
+                    <Button type="Emphasized" text="{i18n>btnSave}" press="onSaveItemPress" />
                 </content>
             </Toolbar>
         </footer>

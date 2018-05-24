@@ -4,16 +4,16 @@ sap.ui.define([
 	], function (Controller, Base) {
 		"use strict";
 
-		var oController;
+		var oBaseController;
 
 		return Base.extend("gourmeo.resources.main.controllers.Cockpit", {
 
 			onInit: function(){
-				oController = this;
+				oBaseController = this;
 			},
 
 			onExit:function(){
-				oController = null;
+				oBaseController = null;
 				this.destroy();
 			},
 
@@ -23,27 +23,27 @@ sap.ui.define([
 
 			onLogoffBtnPress: function () {
 				let logoff = new sap.m.Dialog({
-					title:oController.getResourceBundle().getText('logoffDialogTitle'),
+					title:oBaseController.getResourceBundle().getText('logoffDialogTitle'),
 					content:[
 					new sap.m.HBox({
 						justifyContent:'Center',
 						alignItems:'Center',
 						items:[
 						new sap.m.Text({
-							text:oController.getResourceBundle().getText('logoffDialogMessage')
+							text:oBaseController.getResourceBundle().getText('logoffDialogMessage')
 						})
 						]
 					}).addStyleClass('sapUiSmallMarginTop')
 					],
 					beginButton:new sap.m.Button({
-						text:oController.getResourceBundle().getText('logoffConfirmBtn'),
+						text:oBaseController.getResourceBundle().getText('logoffConfirmBtn'),
 						press:function(){
 							logoff.close();
 							oApplication.app.to('viewLogin');
 						}
 					}),
 					endButton:new sap.m.Button({
-						text:oController.getResourceBundle().getText('logoffCancelBtn'),
+						text:oBaseController.getResourceBundle().getText('logoffCancelBtn'),
 						type:'Emphasized',
 						press:function(){
 							logoff.close();
@@ -59,9 +59,9 @@ sap.ui.define([
 				oApplication.app.to('viewItemMgmt');
 			},
 
-			onTileProfMgmtPress: function(){
-				oApplication.app.to('viewProfMgmt');
-			},
+			// onTileProfMgmtPress: function(){
+			// 	oApplication.app.to('viewProfMgmt');
+			// },
 
 			onTilePartProfPress: function(){
 				oApplication.app.to('viewPartnerProfile');

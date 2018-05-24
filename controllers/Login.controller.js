@@ -77,15 +77,15 @@ sap.ui.define([
 								oBaseController.setModel(partnerModel, 'PartnerProfile');
 							}
 
-							oBaseController.hideGlobalLoader();
 							oApplication.app.to('viewCockpit');
 
 						}).fail(function(a,b,c){
-							oBaseController.hideGlobalLoader();
 							console.log(a,b,c);
-						});;
-
+						}).always(function(){
+							oBaseController.hideGlobalLoader();
+						});
 					}
+
 				}).fail(function(a,b,c){
 					oBaseController.hideGlobalLoader();
 					console.log(a,b,c);

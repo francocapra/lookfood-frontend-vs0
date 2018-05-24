@@ -21,7 +21,7 @@
 							</TileContent>
 						</tileContent>
 					</GenericTile>
-					<GenericTile header="{i18n>tileProfessionalMgmt}" press="onTileProfMgmtPress" class="sapUiSmallMarginEnd">
+<!-- 					<GenericTile header="{i18n>tileProfessionalMgmt}" press="onTileProfMgmtPress" class="sapUiSmallMarginEnd">
 						<tileContent>
 							<TileContent>
 								<content>
@@ -29,7 +29,7 @@
 								</content>
 							</TileContent>
 						</tileContent>
-					</GenericTile>
+					</GenericTile> -->
 					<GenericTile header="{i18n>tileUserProfile}" subheader="{i18n>tileUserProfSubheader}" press="onTilePartProfPress" class="sapUiSmallMarginEnd">
 						<tileContent>
 							<TileContent>
