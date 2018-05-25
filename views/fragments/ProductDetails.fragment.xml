@@ -1,0 +1,56 @@
+<Dialog xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" title="{i18n>itemDialogHeader}">
+	<content>
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm
+				editable="true"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="3"
+				labelSpanL="3"
+				labelSpanM="3"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="4"
+				emptySpanL="4"
+				emptySpanM="4"
+				emptySpanS="0"
+				columnsXL="1"
+				columnsL="1"
+				columnsM="1"
+				singleContainerFullSize="false" >
+				<f:content>
+					<Label text="{i18n>ProductDetailsDesc}" />
+					<Input id="name" value="{mProductDetails>/description}" />
+					<Label text="{i18n>ProductDetailsPrice}" />
+					<Input value="{mProductDetails>/price}" />
+					<!-- <Input value="{mProductDetails>/currency}">
+						<layoutData>
+							<l:GridData span="XL1 L2 M2 S4" />
+						</layoutData>
+					</Input> -->
+					<Select id="currency" selectedKey="{mProductDetails>/currency}">
+						<items>
+							<core:Item text="BRL" key="BRL"/>
+							<core:Item text="USD" key="USD"/>
+						</items>
+						<layoutData>
+							<l:GridData span="XL1 L2 M2 S4" />
+						</layoutData>
+					</Select>
+					<Label text="{i18n>ProductDetailsChef}" />
+					<Input value="{mProductDetails>/chef}" />
+					<Label text="{i18n>ProductDetailsAux}" />
+					<Input value="{mProductDetails>/aux}" />
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+	</content>
+	<beginButton>
+		<Button text="{i18n>btnSave}" type="Emphasized" />
+	</beginButton>
+	<endButton>
+		<Button text="{i18n>btnCancel}" press="closeDialog" />
+	</endButton>
+</Dialog>

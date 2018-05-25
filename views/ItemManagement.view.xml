@@ -11,41 +11,30 @@
             <Button icon="sap-icon://refresh" press="onRefreshItemsPress" />
         </headerContent>
         <content>
-            <Table id="tblPartnerProducts"
-                inset="false"
+            <List
                 items="{PartnerPrdCollection>/ProductCollection}"
-                mode="SingleSelectMaster"
-                selectionChange="onSelectionChange" >
-                <columns>
-                    <Column>
-                        <Text text="{i18n>tableColumnItem}" />
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>tableColumnDesc}" />
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>tableColumnChef}" />
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>tableColumnAux}" />
-                    </Column>
-                    <Column>
-                        <Text text="{i18n>tableColumnCurReview}" />
-                    </Column>
-                </columns>
+                headerText="{i18n>listHeader}">
                 <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{PartnerPrdCollection>id}" />
-                            <Text text="{PartnerPrdCollection>description}" />
-                            <Text text="" />
-                            <Text text="" />
-                            <Text text="" />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-        </content>
-    </Page>
+                    <ObjectListItem
+                        title="{PartnerPrdCollection>description}"
+                        icon="imgs/food.png"
+                        type="Active"
+                        press="onListItemPress"
+                        number="400.00"
+                        numberUnit="USD">
+                        <firstStatus>
+                            <ObjectStatus
+                                text="Very Good"
+                                state="Success" />
+                            </firstStatus>
+                            <attributes>
+                                <ObjectAttribute text="{i18n>listItemId}: {PartnerPrdCollection>id}" />
+                                <ObjectAttribute text="{i18n>listItemIntId}: {PartnerPrdCollection>internalId}" />
+                            </attributes>
+                        </ObjectListItem>
+                    </items>
+                </List>
+            </content>
+        </Page>
 
-</mvc:View>
+    </mvc:View>
