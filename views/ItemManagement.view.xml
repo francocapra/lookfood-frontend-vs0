@@ -20,7 +20,7 @@
                         icon="imgs/food.png"
                         type="Active"
                         press="onListItemPress"
-                        number="400.00"
+                        number="{PartnerPrdCollection>price}"
                         numberUnit="USD">
                         <firstStatus>
                             <ObjectStatus
@@ -29,7 +29,7 @@
                             </firstStatus>
                             <attributes>
                                 <ObjectAttribute text="{i18n>listItemId}: {PartnerPrdCollection>id}" />
-                                <ObjectAttribute text="{i18n>listItemIntId}: {PartnerPrdCollection>internalId}" />
+                                <ObjectAttribute text="{i18n>listItemExtId}: {PartnerPrdCollection>idExternal}" />
                             </attributes>
                         </ObjectListItem>
                     </items>

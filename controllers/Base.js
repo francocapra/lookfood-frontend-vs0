@@ -6,7 +6,7 @@ sap.ui.define([
 		return Controller.extend("gourmeo.resources.main.controllers.Base", {
 
 			getServiceApi: function(){
-				return 'https://app-lookfood.herokuapp.com/';
+				return 'https://app-lookfood-backend.herokuapp.com/';
 			},
 
 			getBucketApi: function(){

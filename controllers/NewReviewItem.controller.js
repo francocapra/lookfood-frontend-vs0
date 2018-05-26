@@ -33,7 +33,8 @@ sap.ui.define([
 					description : this.byId('txtNewItemDesc').getValue(),
 					price : this.byId('txtNewItemPrice').getValue(),
 					chef : this.byId('txtNewItemRespo').getValue(),
-					auxiliar : this.byId('txtNewItemAux').getValue()
+					auxiliar : this.byId('txtNewItemAux').getValue(),
+					idExternal: this.byId('txtExternalId').getValue()
 				}
 
 				$.ajax({
