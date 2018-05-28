@@ -20,6 +20,10 @@ sap.ui.define([
 				oApplication.app.to('viewNewItem');
 			},
 
+			onAfterRendering:function(){
+				oBaseController.onRefreshItemsPress();
+			},
+
 			getPartnerProducts: function(){
 				return $.ajax({
 					type:'GET',
@@ -30,10 +34,10 @@ sap.ui.define([
 				});
 			},
 
-			uploadProductPicture:function(file, authToken){
+			uploadProductPicture:function(file, authToken, prdId){
 				let formData = new FormData();
 
-				formData.append('file', file, file.name);
+				formData.append('file', file, 'product'+prdId+'.jpg');
 
 				return $.ajax({
 					type:'POST',
@@ -138,10 +142,11 @@ sap.ui.define([
 						return;
 
 					let oDialog = sap.ui.core.Fragment.byId('prdDetailsFragment', 'prdDetailsDialog');
+					let prdId = oDialog.getModel('mProductDetails').getData().id;
 
 					oDialog.setBusyIndicatorDelay(0).setBusy(true);
 
-					$.when(oBaseController.uploadProductPicture(file, authToken)).done(function(data,textStatus,oResponse){
+					$.when(oBaseController.uploadProductPicture(file, authToken, prdId)).done(function(data,textStatus,oResponse){
 						let location = oResponse.getResponseHeader('location')
 
 						oDialog.setBusy(false);

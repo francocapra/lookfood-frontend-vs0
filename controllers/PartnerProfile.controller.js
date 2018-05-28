@@ -6,14 +6,6 @@ sap.ui.define([
 
 		var oBaseController;
 
-		var showGlobalLoader = function () {
-			sap.ui.core.BusyIndicator.show(0);
-		};
-
-		var hideGlobalLoader = function () {
-			sap.ui.core.BusyIndicator.hide();
-		};
-
 		return Base.extend("gourmeo.resources.main.controllers.PartnerProfile", {
 
 			onNavButtonPress:function(){
@@ -22,10 +14,6 @@ sap.ui.define([
 
 			onInit: function(){
 				oBaseController = this;
-			},
-
-			onBeforeRendering:function(){
-				
 			},
 
 			uploadPartnerPicture:function(file, authToken){
@@ -82,14 +70,16 @@ sap.ui.define([
 
 									pictureDialog.setBusyIndicatorDelay(0).setBusy(true);
 
-									$.when(oBaseController.uploadPartnerPicture(file, authToken)).done(function(data,textStatus,jqXHR){
-										let location = jqXHR.getResponseHeader('location')
+									$.when(oBaseController.uploadPartnerPicture(file, authToken))
+									.done(function(data,textStatus,oResponse){
+										let location = oResponse.getResponseHeader('location')
 
 										sap.ui.getCore().byId('partnerProfilePicture').setSrc(location);
-
-										pictureDialog.setBusy(false);
-									}).fail(function(a,b,c){
+									})
+									.fail(function(a,b,c){
 										console.log(a,b,c);
+									})
+									.always(function(){
 										pictureDialog.setBusy(false);
 									});
 								});

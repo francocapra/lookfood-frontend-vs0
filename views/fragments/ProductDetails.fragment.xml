@@ -25,6 +25,8 @@
 				columnsM="1"
 				singleContainerFullSize="false" >
 				<f:content>
+					<Label text="{i18n>ProductDetailsExtId}" />
+					<Input id="externalId" value="{mProductDetails>/externalId}" />
 					<Label text="{i18n>ProductDetailsDesc}" />
 					<Input id="name" value="{mProductDetails>/description}" />
 					<Label text="{i18n>ProductDetailsPrice}" />
