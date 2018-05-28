@@ -1,8 +1,12 @@
 <Dialog xmlns="sap.m"
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core" title="{i18n>itemDialogHeader}">
+	xmlns:core="sap.ui.core" title="{i18n>itemDialogHeader}" id="prdDetailsDialog">
 	<content>
+		<HBox alignItem="Center" justifyContent="Center" class="sapUiSmallMarginTop" >
+			<Image width="128px" height="128px" id="imgProductPicture" press="onPrdImagePress" />
+			<core:HTML content="&lt;input type=&quot;file&quot; id=&quot;productPicUploader&quot; accept=&quot;image/*&quot; style=&quot;display: none;&quot; /&gt;" />
+		</HBox>
 		<VBox class="sapUiSmallMargin">
 			<f:SimpleForm
 				editable="true"
@@ -25,11 +29,6 @@
 					<Input id="name" value="{mProductDetails>/description}" />
 					<Label text="{i18n>ProductDetailsPrice}" />
 					<Input value="{mProductDetails>/price}" />
-					<!-- <Input value="{mProductDetails>/currency}">
-						<layoutData>
-							<l:GridData span="XL1 L2 M2 S4" />
-						</layoutData>
-					</Input> -->
 					<Select id="currency" selectedKey="{mProductDetails>/currency}">
 						<items>
 							<core:Item text="BRL" key="BRL"/>
