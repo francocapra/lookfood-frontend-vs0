@@ -49,6 +49,18 @@ sap.ui.define([
 				});
 			},
 
+			updateProductDetails:function(oData, authToken){
+				return $.ajax({
+					type:'PUT',
+					url:oBaseController.getServiceApi()+'products/'+oData.id,
+					contentType:'application/json',
+					data: JSON.stringify(oData),
+					beforeSend:function(oRequest){
+						oRequest.setRequestHeader('Authorization', authToken);						
+					}
+				});
+			},
+
 			onRefreshItemsPress: function(){
 
 				oBaseController.getView().setBusyIndicatorDelay(0).setBusy(true);
@@ -67,6 +79,27 @@ sap.ui.define([
 				})
 				.always(function(){
 					oBaseController.getView().setBusy(false);
+				});
+			},
+
+			onSavePrdDetails: function(oEvent){
+				let oDialog = oEvent.getSource().getParent();
+				let oModel = oDialog.getModel('mProductDetails');
+				let authToken = window.sessionStorage.getItem('Authorization');
+
+				oDialog.setBusyIndicatorDelay(0).setBusy(true);
+
+				$.when(oBaseController.updateProductDetails(oModel.getData(), authToken))
+				.done(function(data, textStatus, oResponse){
+					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('updateItemSuccessfullMsg'));
+				})
+				.fail(function(error, textStatus, oResponse){
+					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('updateItemFailureMsg'));
+				})
+				.always(function(){
+					oDialog.setBusy(false);
+					oDialog.close();
+					oBaseController.onRefreshItemsPress();
 				});
 			},
 

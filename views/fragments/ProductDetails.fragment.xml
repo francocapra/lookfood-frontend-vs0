@@ -47,7 +47,7 @@
 		</VBox>
 	</content>
 	<beginButton>
-		<Button text="{i18n>btnSave}" type="Emphasized" />
+		<Button text="{i18n>btnSave}" type="Emphasized" press="onSavePrdDetails" />
 	</beginButton>
 	<endButton>
 		<Button text="{i18n>btnCancel}" press="closeDialog" />
