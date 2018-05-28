@@ -73,17 +73,17 @@ sap.ui.define([
 			onListItemPress: function(oEvent) {
 
 				let oModel = oEvent.getSource().getBindingContext('PartnerPrdCollection').getObject();
-				
 				let prdDetails = sap.ui.xmlfragment('prdDetailsFragment','gourmeo.xml.fragments.ProductDetails', this);
 
 				prdDetails.setModel(new sap.ui.model.json.JSONModel(oModel), 'mProductDetails')
 
 				this.getView().addDependent(prdDetails);
 
-				if(oModel.imageUrl)
-					sap.ui.core.Fragment.byId('prdDetailsFragment', 'imgProductPicture').setSrc(oModel.imageUrl);
-				else
-					sap.ui.core.Fragment.byId('prdDetailsFragment', 'imgProductPicture').setSrc('imgs/food-tray.png');
+				let productImage = sap.ui.core.Fragment.byId('prdDetailsFragment', 'imgProductPicture');
+				productImage.setSrc(oBaseController.getBucketApi()+'product'+oModel.id+'.jpg');
+				productImage.attachError(function(){
+					productImage.setSrc('imgs/food-tray.png');
+				});
 
 				prdDetails.attachAfterClose(function(dialogCloseEvent){
 					dialogCloseEvent.getSource().destroy();
@@ -94,7 +94,7 @@ sap.ui.define([
 				oEvent.getSource().getParent().close();
 			},
 
-			onPrdImagePress:function(){
+			onPrdImagePress:function(oEvent){
 				let _uploader = $('#productPicUploader');
 
 				_uploader.on('change', function(){
@@ -108,17 +108,14 @@ sap.ui.define([
 
 					oDialog.setBusyIndicatorDelay(0).setBusy(true);
 
-					let authToken = window.sessionStorage.getItem('Authorization');
+					$.when(oBaseController.uploadProductPicture(file, authToken)).done(function(data,textStatus,oResponse){
+						let location = oResponse.getResponseHeader('location')
 
-					$.when(oBaseController.uploadProductPicture(file, authToken)).done(function(data,textStatus,jqXHR){
-						let location = jqXHR.getResponseHeader('location')
-
-						sap.ui.getCore().byId('partnerProfilePicture').setSrc(location);
-
-						pictureDialog.setBusy(false);
+						oDialog.setBusy(false);
+						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('imgSavedSuccessfully'))
 					}).fail(function(a,b,c){
 						console.log(a,b,c);
-						pictureDialog.setBusy(false);
+						oDialog.setBusy(false);
 					});
 				});
 
