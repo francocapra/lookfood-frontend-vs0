@@ -1,16 +1,12 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"gourmeo/resources/main/controllers/Base"
+	"lookfood/resources/main/controllers/Base"
 	], function (Controller, Base) {
 		"use strict";
 
 		var oBaseController;
 
-		return Base.extend("gourmeo.resources.main.controllers.PartnerProfile", {
-
-			onNavButtonPress:function(){
-				oApplication.app.back();
-			},
+		return Base.extend("lookfood.resources.main.controllers.PartnerProfile", {
 
 			onInit: function(){
 				oBaseController = this;

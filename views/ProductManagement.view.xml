@@ -1,14 +1,14 @@
-<mvc:View controllerName="gourmeo.resources.main.controllers.ItemManagement" 
+<mvc:View controllerName="lookfood.resources.main.controllers.ProductManagement" 
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:l="sap.ui.layout" 
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
 
-    <Page title="{i18n>itemMgmtPageTitle}" id="pageItemsMgmt" showNavButton="true" navButtonPress="onNavBack" noDataText="{i18n>tableItemsNoData}">
+    <Page title="{i18n>prdMgmtPageTitle}" id="pageProductsMgmt" showNavButton="true" navButtonPress="onNavBack" noDataText="{i18n>tableProductsNoData}">
         <headerContent>
-            <Button icon="sap-icon://add" press="onAddItemPress" />
-            <Button icon="sap-icon://refresh" press="onRefreshItemsPress" />
+            <Button icon="sap-icon://add" press="onAddProductPress" />
+            <Button icon="sap-icon://refresh" press="onRefreshProductsPress" />
         </headerContent>
         <content>
             <List

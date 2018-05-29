@@ -1,13 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"gourmeo/resources/main/controllers/Base",
+	"lookfood/resources/main/controllers/Base",
 	"sap/ui/model/json/JSONModel"
 	], function (Controller, Base) {
 		"use strict";
 
 		var oBaseController;
 
-		return Base.extend("gourmeo.resources.main.controllers.Login", {
+		return Base.extend("lookfood.resources.main.controllers.Login", {
 
 			onInit: function(){
 				oBaseController = this;
@@ -96,7 +96,7 @@ sap.ui.define([
 			onNewUserLinkPress: function () {
 
 				let newUserDialog = sap.ui.xmlfragment(this.getView().getId(),
-					'gourmeo.xml.fragments.NewUserDialog', this);
+					'lookfood.xml.fragments.NewUserDialog', this);
 
 				this.getView().addDependent(newUserDialog);
 
@@ -106,7 +106,7 @@ sap.ui.define([
 			onForgotPassLinkPress: function () {
 
 				let forgotPassDialog = sap.ui.xmlfragment(this.getView().getId(),
-					'gourmeo.xml.fragments.ForgotPassword', this);
+					'lookfood.xml.fragments.ForgotPassword', this);
 
 				this.getView().addDependent(forgotPassDialog);
 

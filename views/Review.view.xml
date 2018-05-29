@@ -1,11 +1,11 @@
-<mvc:View controllerName="gourmeo.resources.main.controllers.Review" 
+<mvc:View controllerName="lookfood.resources.main.controllers.Review" 
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:l="sap.ui.layout" 
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
 
-    <Page id="pageReview" showNavButton="true" navButtonPress="onNavButtonPress">
+    <Page id="pageReview" showNavButton="true" navButtonPress="onNavBack">
         <content>
             <VBox>
                 <items>

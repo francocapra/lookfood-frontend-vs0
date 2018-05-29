@@ -4,7 +4,7 @@ sap.ui.define([
 	], function (Controller, History) {
 		"use strict";
 
-		return Controller.extend("gourmeo.resources.main.controllers.Base", {
+		return Controller.extend("lookfood.resources.main.controllers.Base", {
 
 			getRouter : function () {
 				return sap.ui.core.UIComponent.getRouterFor(this);
@@ -19,7 +19,8 @@ sap.ui.define([
 				if (sPreviousHash !== undefined) {
 					window.history.go(-1);
 				} else {
-					this.getRouter().navTo("appLogin", {}, true /*no history*/);
+					// this.getRouter().navTo("appLogin", {}, true /*no history*/);
+					alert('There is no navigation history');
 				}
 			},
 

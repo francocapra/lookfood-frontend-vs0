@@ -1,26 +1,22 @@
 sap.ui.define([
-	"gourmeo/resources/main/controllers/Base"
+	"lookfood/resources/main/controllers/Base"
 	], function (Base) {
 		"use strict";
 
 		var oBaseController;
 
-		return Base.extend("gourmeo.resources.main.controllers.ItemManagement", {
+		return Base.extend("lookfood.resources.main.controllers.ProductManagement", {
 
 			onInit: function(){
 				oBaseController = this;
 			},
 
-			onNavButtonPress:function(){
-				this.getRouter().navBack();
-			},
-
-			onAddItemPress: function(){
-				oApplication.app.to('viewNewItem');
+			onAddProductPress: function(){
+				this.getRouter().navTo('appNewProduct');
 			},
 
 			onAfterRendering:function(){
-				oBaseController.onRefreshItemsPress();
+				oBaseController.onRefreshProductsPress();
 			},
 
 			getPartnerProducts: function(){
@@ -64,7 +60,7 @@ sap.ui.define([
 				});
 			},
 
-			onRefreshItemsPress: function(){
+			onRefreshProductsPress: function(){
 
 				oBaseController.getView().setBusyIndicatorDelay(0).setBusy(true);
 
@@ -94,22 +90,22 @@ sap.ui.define([
 
 				$.when(oBaseController.updateProductDetails(oModel.getData(), authToken))
 				.done(function(data, textStatus, oResponse){
-					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('updateItemSuccessfullMsg'));
+					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('updatePrdSuccessfullMsg'));
 				})
 				.fail(function(error, textStatus, oResponse){
-					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('updateItemFailureMsg'));
+					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('updatePrdFailureMsg'));
 				})
 				.always(function(){
 					oDialog.setBusy(false);
 					oDialog.close();
-					oBaseController.onRefreshItemsPress();
+					oBaseController.onRefreshProductsPress();
 				});
 			},
 
 			onListItemPress: function(oEvent) {
 
 				let oModel = oEvent.getSource().getBindingContext('PartnerPrdCollection').getObject();
-				let prdDetails = sap.ui.xmlfragment('prdDetailsFragment','gourmeo.xml.fragments.ProductDetails', this);
+				let prdDetails = sap.ui.xmlfragment('prdDetailsFragment','lookfood.xml.fragments.ProductDetails', this);
 
 				prdDetails.setModel(new sap.ui.model.json.JSONModel(oModel), 'mProductDetails')
 

@@ -13,7 +13,7 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.hide();
 		};
 
-		return Controller.extend("gourmeo.resources.main.controllers.ProfessionalManagement", {
+		return Controller.extend("lookfood.resources.main.controllers.ProfessionalManagement", {
 
 			onInit: function(){
 

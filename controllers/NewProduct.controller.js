@@ -1,22 +1,17 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"gourmeo/resources/main/controllers/Base"
-	], function (Controller, Base) {
+	"lookfood/resources/main/controllers/Base"
+	], function (Base) {
 		"use strict";
 
 		var oBaseController;
 
-		return Base.extend("gourmeo.resources.main.controllers.NewReviewItem", {
-
-			onNavButtonPress:function(){
-				oApplication.app.back();
-			},
+		return Base.extend("lookfood.resources.main.controllers.NewProduct", {
 
 			onInit: function(){
 				oBaseController = this;
 			},
 
-			onItemDescChange:function(event){
+			onProductDescChange:function(event){
 				let input = event.getSource();
 
 				if(input.getValue() === '')
@@ -25,16 +20,16 @@ sap.ui.define([
 					input.setValueState(sap.ui.core.ValueState.None);
 			},
 
-			onSaveItemPress: function(){
+			onSaveProductPress: function(){
 
 				oBaseController.showGlobalLoader();
 
 				let oData = {
-					description : this.byId('txtNewItemDesc').getValue(),
-					price : this.byId('txtNewItemPrice').getValue(),
-					currency : this.byId('txtNewItemPrice').getDescription(),
-					chef : this.byId('txtNewItemRespo').getValue(),
-					auxiliar : this.byId('txtNewItemAux').getValue(),
+					description : this.byId('txtNewPrdDesc').getValue(),
+					price : this.byId('txtNewPrdPrice').getValue(),
+					currency : this.byId('txtNewPrdPrice').getDescription(),
+					chef : this.byId('txtNewPrdRespo').getValue(),
+					auxiliar : this.byId('txtNewPrdAux').getValue(),
 					idExternal: this.byId('txtExternalId').getValue()
 				}
 
@@ -47,11 +42,11 @@ sap.ui.define([
 						request.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
 					},
 					success:function(data, statusText, oResponse){
-						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('newItemSuccessfullMessage'));
+						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('newPrdSuccessfullMessage'));
 					},
 					error:function(error, textStatus, oResponse){
 						console.log(error, textStatus, oResponse);
-						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('newItemFailureMessage'));
+						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('newPrdFailureMessage'));
 					},
 					complete:function(){
 						oBaseController.hideGlobalLoader();

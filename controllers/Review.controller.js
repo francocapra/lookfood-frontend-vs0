@@ -1,11 +1,11 @@
 sap.ui.define([
-	"gourmeo/resources/main/controllers/Base"
+	"lookfood/resources/main/controllers/Base"
 	], function (Base) {
 		"use strict";
 
 		var oBaseController;
 
-		return Base.extend("gourmeo.resources.main.controllers.Review", {
+		return Base.extend("lookfood.resources.main.controllers.Review", {
 
 			onInit: function(){
 				oBaseController = this;
@@ -22,10 +22,6 @@ sap.ui.define([
 						oRequest.setRequestHeader(authToken);
 					}
 				});
-			},
-
-			onNavButtonPress:function(){
-				oApplication.app.back();
 			},
 		});
 

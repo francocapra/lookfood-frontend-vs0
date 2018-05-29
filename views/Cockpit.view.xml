@@ -1,4 +1,4 @@
-<mvc:View controllerName="gourmeo.resources.main.controllers.Cockpit" 
+<mvc:View controllerName="lookfood.resources.main.controllers.Cockpit" 
 	xmlns="sap.m" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:l="sap.ui.layout" 

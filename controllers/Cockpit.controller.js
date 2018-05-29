@@ -1,12 +1,12 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"gourmeo/resources/main/controllers/Base"
+	"lookfood/resources/main/controllers/Base"
 	], function (Controller, Base) {
 		"use strict";
 
 		var oBaseController;
 
-		return Base.extend("gourmeo.resources.main.controllers.Cockpit", {
+		return Base.extend("lookfood.resources.main.controllers.Cockpit", {
 
 			onInit: function(){
 				oBaseController = this;
@@ -14,11 +14,6 @@ sap.ui.define([
 
 			onExit:function(){
 				oBaseController = null;
-				this.destroy();
-			},
-
-			onNavButtonPress:function(){
-				oApplication.app.back();
 			},
 
 			onLogoffBtnPress: function () {
@@ -56,7 +51,7 @@ sap.ui.define([
 			},
 
 			onTileItemMgmtPress: function(){
-				this.getRouter().navTo('appItemsManagement');
+				this.getRouter().navTo('appProductManagement');
 			},
 
 			// onTileProfMgmtPress: function(){
@@ -64,11 +59,11 @@ sap.ui.define([
 			// },
 
 			onTilePartProfPress: function(){
-				oApplication.app.to('viewPartnerProfile');
+				this.getRouter().navTo('appPartnerProfile');
 			},
 
 			onTileReviewModePress: function(){
-				oApplication.app.to('viewReviewMode');
+				this.getRouter().navTo('appReviewMode');
 			}
 
 		});

@@ -1,7 +1,7 @@
 {
 	"_version":"1.8.0",
 	"sap.app": {
-		"id": "gourmeo.resources.main",
+		"id": "lookfood.resources.main",
 		"type": "application",
 		"i18n": "res/i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -20,7 +20,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "gourmeo.resources.main.views.App",
+			"viewName": "lookfood.resources.main.views.App",
 			"type": "XML",
 			"async": true,
 			"id": "lookfoodApp"
@@ -35,7 +35,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "gourmeo.resources.main.res.i18n.i18n"
+					"bundleName": "lookfood.resources.main.res.i18n.i18n"
 				}
 			}
 		},
@@ -43,7 +43,7 @@
 			"config": {
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"viewPath": "gourmeo.resources.main.views",
+				"viewPath": "lookfood.resources.main.views",
 				"controlId": "lookfoodApp",
 				"controlAggregation": "pages",
 				"transition": "slide",
@@ -64,9 +64,24 @@
 					"target": "cockpit"
 				},
 				{
-					"pattern":"itemManagement",
-					"name":"appItemsManagement",
-					"target":"itemManagement"
+					"pattern":"productManagement",
+					"name":"appProductManagement",
+					"target":"productManagement"
+				},
+				{
+					"pattern":"newProduct",
+					"name":"appNewProduct",
+					"target":"newProduct"
+				},
+				{
+					"pattern":"partnerProfile",
+					"name":"appPartnerProfile",
+					"target":"partnerProfile"	
+				},
+				{
+					"pattern":"reviewMode",
+					"name":"appReviewMode",
+					"target":"reviewMode"	
 				}
 			],
 			"targets": {
@@ -85,9 +100,24 @@
 					"viewName": "Cockpit",
 					"viewLevel" : 2
 				},
-				"itemManagement":{
-					"viewId": "itemManagement",
-					"viewName": "ItemManagement",
+				"productManagement":{
+					"viewId": "productManagement",
+					"viewName": "ProductManagement",
+					"viewLevel" : 2
+				},
+				"newProduct":{
+					"viewId": "newProduct",
+					"viewName": "NewProduct",
+					"viewLevel" : 2
+				},
+				"partnerProfile":{
+					"viewId": "partnerProfile",
+					"viewName": "PartnerProfile",
+					"viewLevel" : 2
+				},
+				"reviewMode":{
+					"viewId": "reviewMode",
+					"viewName": "Review",
 					"viewLevel" : 2
 				}
 			}

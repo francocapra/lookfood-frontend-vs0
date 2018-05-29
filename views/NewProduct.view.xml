@@ -1,0 +1,42 @@
+<mvc:View controllerName="lookfood.resources.main.controllers.NewProduct" 
+    xmlns="sap.m" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified">
+
+    <Page title="{i18n>newProductPageTitle}" id="pageNewProduct" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                    <f:content>
+                        <core:Title text="{i18n>newPrdFormHeaderGen}" />
+                        <Label text="{i18n>newPrdDescription}" />
+                        <Input required="true" change="onProductDescChange" id="txtNewPrdDesc" />
+                        <Label text="{i18n>newPrdPrice}" />
+                        <Input description="{i18n>newPrdCurrency}" id="txtNewPrdPrice" />
+                        <Label text="{i18n>newPrdExternalId}" />
+                        <Input id="txtExternalId" />
+                        <Label text="{i18n>newPrdPrdPicture}" />
+                        <u:FileUploader id="prdPictureUploader" />
+                        <core:Title text="{i18n>newPrdFormHeaderMakers}" />
+                        <Label text="{i18n>newPrdResponsible}" />
+                        <Input id="txtNewPrdRespo" />
+                        <Label text="{i18n>newPrdAuxiliary}" />
+                        <Input id="txtNewPrdAux" />
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <content>
+                    <ToolbarSpacer />
+                    <Button type="Emphasized" text="{i18n>btnSave}" press="onSaveProductPress" />
+                </content>
+            </Toolbar>
+        </footer>
+    </Page>
+
+</mvc:View>
