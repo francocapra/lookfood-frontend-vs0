@@ -39,7 +39,7 @@ sap.ui.define([
 						text:oBaseController.getResourceBundle().getText('logoffConfirmBtn'),
 						press:function(){
 							logoff.close();
-							oApplication.app.to('viewLogin');
+							oBaseController.getRouter().navTo('appLogin');
 						}
 					}),
 					endButton:new sap.m.Button({
@@ -56,7 +56,7 @@ sap.ui.define([
 			},
 
 			onTileItemMgmtPress: function(){
-				oApplication.app.to('viewItemMgmt');
+				this.getRouter().navTo('appItemsManagement');
 			},
 
 			// onTileProfMgmtPress: function(){

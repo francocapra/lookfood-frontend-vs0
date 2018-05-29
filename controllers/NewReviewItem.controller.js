@@ -32,6 +32,7 @@ sap.ui.define([
 				let oData = {
 					description : this.byId('txtNewItemDesc').getValue(),
 					price : this.byId('txtNewItemPrice').getValue(),
+					currency : this.byId('txtNewItemPrice').getDescription(),
 					chef : this.byId('txtNewItemRespo').getValue(),
 					auxiliar : this.byId('txtNewItemAux').getValue(),
 					idExternal: this.byId('txtExternalId').getValue()

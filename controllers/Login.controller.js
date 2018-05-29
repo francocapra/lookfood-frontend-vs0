@@ -77,7 +77,7 @@ sap.ui.define([
 								oBaseController.setModel(partnerModel, 'PartnerProfile');
 							}
 
-							oApplication.app.to('viewCockpit');
+							oBaseController.getRouter().navTo('appCockpit'); 
 
 						}).fail(function(a,b,c){
 							console.log(a,b,c);

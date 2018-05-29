@@ -1,7 +1,6 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
 	"gourmeo/resources/main/controllers/Base"
-	], function (Controller, Base) {
+	], function (Base) {
 		"use strict";
 
 		var oBaseController;

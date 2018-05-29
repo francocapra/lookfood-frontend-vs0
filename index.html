@@ -14,20 +14,25 @@
 	data-sap-ui-preload="async"
 	data-sap-ui-resourceroots='{
 	"gourmeo.resources.main": "./",
-	"gourmeo.xml.fragments": "./views/fragments/",
-	"gourmeo.tdc":"testdata"
+	"gourmeo.xml.fragments": "./views/fragments/"
 }'>
 </script>
 
 <script>
 	sap.ui.getCore().attachInit(function () {
-		new sap.m.Shell({
-			app: new sap.ui.core.ComponentContainer({
-				name: "gourmeo.resources.main"
-			})
-		}).placeAt("content");
-
-		oApplication = {};
+		sap.ui.require([
+			"sap/m/Shell",
+			"sap/ui/core/ComponentContainer"
+			], function(Shell, ComponentContainer){
+				new Shell({
+					app: new ComponentContainer({
+						name: "gourmeo.resources.main",
+						settings:{
+							id : "lookfoodNav"
+						}
+					})
+				}).placeAt("content");
+			});
 	});
 </script>
 
@@ -35,7 +40,7 @@
 crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="css/lookfood.css">
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<title>Gourmeo</title>
+<title>LookFood</title>
 </head>
 
 <body class="sapUiBody" id="content">
