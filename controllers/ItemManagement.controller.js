@@ -37,11 +37,11 @@ sap.ui.define([
 			uploadProductPicture:function(file, authToken, prdId){
 				let formData = new FormData();
 
-				formData.append('file', file, 'product'+prdId+'.jpg');
+				formData.append('file', file, file.name);
 
 				return $.ajax({
 					type:'POST',
-					url:oBaseController.getServiceApi()+'products/picture',
+					url:oBaseController.getServiceApi()+'products/picture?id='+prdId,
 					data: formData,
 					async:true,
 					cache:false,

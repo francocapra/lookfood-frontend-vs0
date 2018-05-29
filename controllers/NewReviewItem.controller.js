@@ -45,11 +45,12 @@ sap.ui.define([
 					beforeSend:function(request){
 						request.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
 					},
-					success:function(data, statusText, jqXHR){
-						console.log(data, statusText, jqXHR);
+					success:function(data, statusText, oResponse){
+						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('newItemSuccessfullMessage'));
 					},
-					error:function(a,b,c){
-						console.log(a,b,c);
+					error:function(error, textStatus, oResponse){
+						console.log(error, textStatus, oResponse);
+						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('newItemFailureMessage'));
 					},
 					complete:function(){
 						oBaseController.hideGlobalLoader();

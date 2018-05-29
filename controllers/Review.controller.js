@@ -1,22 +1,28 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-	], function (Controller) {
+	"sap/ui/core/mvc/Controller",
+	"gourmeo/resources/main/controllers/Base"
+	], function (Controller, Base) {
 		"use strict";
 
-		var service = "https://app-lookfood.herokuapp.com/";
+		var oBaseController;
 
-		var showGlobalLoader = function () {
-			sap.ui.core.BusyIndicator.show(0);
-		};
-
-		var hideGlobalLoader = function () {
-			sap.ui.core.BusyIndicator.hide();
-		};
-
-		return Controller.extend("gourmeo.resources.main.controllers.Review", {
+		return Base.extend("gourmeo.resources.main.controllers.Review", {
 
 			onInit: function(){
+				oBaseController = this;
+			},
 
+			getTopProducts: function(){
+
+				let authToken = window.sessionStorage.getItem('Authorization');
+
+				return $.ajax({
+					type:'GET',
+					url:oBaseController.getServiceApi()+'products/top',
+					beforeSend:function(oRequest){
+						oRequest.setRequestHeader(authToken);
+					}
+				});
 			},
 
 			onNavButtonPress:function(){

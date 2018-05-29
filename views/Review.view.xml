@@ -9,9 +9,16 @@
         <content>
             <VBox>
                 <items>
-                    <Panel headerText="{i18n>highlights}">
+                    <Panel class="sapUiSmallMarginTop" >
+                        <headerToolbar>
+                            <Toolbar height="3rem" >
+                                <Title text="{i18n>highlights}" />
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://refresh" type="Emphasized" />
+                            </Toolbar>
+                        </headerToolbar>
                         <content>
-                            <FlexBox id="partnerTopItems" alignItems="Start" justifyContent="Start" />
+                            <FlexBox id="partnerTopItems" alignItems="Center" justifyContent="Center" class="sapUiSmallMargin" />
                         </content>
                     </Panel>
                     <List id="reviewItemsList" noDataText="{i18n>reviewListNoData}">
