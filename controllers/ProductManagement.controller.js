@@ -15,20 +15,6 @@ sap.ui.define([
 				this.getRouter().navTo('appNewProduct');
 			},
 
-			onAfterRendering:function(){
-				oBaseController.onRefreshProductsPress();
-			},
-
-			getPartnerProducts: function(){
-				return $.ajax({
-					type:'GET',
-					url:oBaseController.getServiceApi()+'products',
-					beforeSend:function(oRequest){
-						oRequest.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
-					}
-				});
-			},
-
 			uploadProductPicture:function(file, authToken, prdId){
 				let formData = new FormData();
 

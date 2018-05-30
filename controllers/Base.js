@@ -4,6 +4,8 @@ sap.ui.define([
 	], function (Controller, History) {
 		"use strict";
 
+		var oBaseController;
+
 		return Controller.extend("lookfood.resources.main.controllers.Base", {
 
 			getRouter : function () {
@@ -50,6 +52,19 @@ sap.ui.define([
 
 			setModel:function(oModel, sName){
 				return this.getOwnerComponent().setModel(oModel, sName);
+			},
+
+			getPartnerProducts: function(){
+
+				let serviceApi = this.getServiceApi();
+
+				return $.ajax({
+					type:'GET',
+					url:serviceApi+'products',
+					beforeSend:function(oRequest){
+						oRequest.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
+					}
+				});
 			}
 		});
 

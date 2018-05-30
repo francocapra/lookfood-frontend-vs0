@@ -18,29 +18,60 @@
                             </Toolbar>
                         </headerToolbar>
                         <content>
-                            <FlexBox id="partnerTopItems" alignItems="Center" justifyContent="Center" class="sapUiSmallMargin" />
-                        </content>
-                    </Panel>
-                    <List id="reviewItemsList" noDataText="{i18n>reviewListNoData}">
-                        <headerToolbar>
-                            <Toolbar>
-                                <content>
-                                    <Title text="{i18n>reviewListHeader}" />
-                                </content>
-                            </Toolbar>
-                        </headerToolbar>
-                    </List>
-                </items>
-            </VBox>
-        </content>
-        <footer>
-            <Toolbar>
-                <content>
-                    <ToolbarSpacer />
-                    <Button text="{i18n>startReviewBtn}" type="Emphasized" press="onStartReviewPress" />
-                </content>
-            </Toolbar>
-        </footer>
-    </Page>
+                           <HBox aligntItems="Center" justifyContent="Center">
+                            <GenericTile class="sapUiTinyMargin" header="Arroz a Grega"
+                                subheader="Department" press="press">
+                                <TileContent>
+                                    <ImageContent src="imgs/food-tray.png" />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile class="sapUiTinyMargin" header="Lasanha"
+                                subheader="Department" press="press">
+                                <TileContent>
+                                    <ImageContent src="imgs/food-tray.png" />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile class="sapUiTinyMargin" header="Feijoada com Samba"
+                                subheader="Department" press="press">
+                                <TileContent>
+                                    <ImageContent src="imgs/food-tray.png" />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile class="sapUiTinyMargin" header="Arroz com Pagode"
+                                subheader="Department" press="press">
+                                <TileContent>
+                                    <ImageContent src="imgs/food-tray.png" />
+                                </TileContent>
+                            </GenericTile>
+                            <GenericTile class="sapUiTinyMargin" header="Tuti Frutti"
+                                subheader="Department" press="press">
+                                <TileContent>
+                                    <ImageContent src="imgs/food-tray.png" />
+                                </TileContent>
+                            </GenericTile>
+                        </HBox>
+                    </content>
+                </Panel>
+                <List id="reviewItemsList" noDataText="{i18n>reviewListNoData}">
+                    <headerToolbar>
+                        <Toolbar>
+                            <content>
+                                <Title text="{i18n>reviewListHeader}" />
+                            </content>
+                        </Toolbar>
+                    </headerToolbar>
+                </List>
+            </items>
+        </VBox>
+    </content>
+    <footer>
+        <Toolbar>
+            <content>
+                <ToolbarSpacer />
+                <Button text="{i18n>startReviewBtn}" type="Emphasized" press="onStartReviewPress" />
+            </content>
+        </Toolbar>
+    </footer>
+</Page>
 
 </mvc:View>

@@ -34,7 +34,6 @@ sap.ui.define([
 						text:oBaseController.getResourceBundle().getText('logoffConfirmBtn'),
 						press:function(){
 							logoff.close();
-							oBaseController.getRouter().navTo('appLogin');
 						}
 					}),
 					endButton:new sap.m.Button({
@@ -44,14 +43,37 @@ sap.ui.define([
 							logoff.close();
 						}
 					}),
-					afterClose:function(){
+					afterClose:function(oEvent){
+
 						logoff.destroy();
+						
+						if(oEvent.getParameters().origin.getText() == oBaseController.getResourceBundle().getText('logoffConfirmBtn'))
+							oBaseController.getRouter().navTo('appLogin');
 					}
 				}).open();
 			},
 
 			onTileItemMgmtPress: function(){
-				this.getRouter().navTo('appProductManagement');
+
+				oBaseController.showGlobalLoader();
+
+				$.when(oBaseController.getPartnerProducts())
+				.done(function(data, textStatus, oResponse){
+					if(data){
+						let prdModel = new sap.ui.model.json.JSONModel({
+							ProductCollection: data
+						});
+						oBaseController.setModel(prdModel, 'PartnerPrdCollection');
+
+						oBaseController.getRouter().navTo('appProductManagement');
+					}
+				})
+				.fail(function(a,b,c){
+					console.log(a,b,c);
+				})
+				.always(function(){
+					oBaseController.hideGlobalLoader();
+				});
 			},
 
 			// onTileProfMgmtPress: function(){
@@ -62,8 +84,32 @@ sap.ui.define([
 				this.getRouter().navTo('appPartnerProfile');
 			},
 
+			getTopProducts:function(){
+				return $.ajax({
+					type:'GET',
+					url:oBaseController.getServiceApi()+'products/top',
+					beforeSend:function(oRequest){
+						oRequest.setRequestHeader('Authorization',
+							window.sessionStorage.getItem('Authorization'));
+					}
+				});
+			},
+
 			onTileReviewModePress: function(){
-				this.getRouter().navTo('appReviewMode');
+
+				oBaseController.showGlobalLoader();
+
+				$.when(this.getTopProducts())
+				.done(function(data,textStatus,oResponse){
+					console.log(data);
+				})
+				.fail(function(error,textStatus,oResponse){
+
+				})
+				.always(function(){
+					oBaseController.hideGlobalLoader();
+					oBaseController.getRouter().navTo('appReviewMode');
+				});
 			}
 
 		});

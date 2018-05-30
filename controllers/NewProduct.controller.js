@@ -11,6 +11,10 @@ sap.ui.define([
 				oBaseController = this;
 			},
 
+			onExit:function(){
+				console.log('exiting');
+			},
+
 			onProductDescChange:function(event){
 				let input = event.getSource();
 
