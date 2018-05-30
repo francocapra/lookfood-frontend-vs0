@@ -101,14 +101,17 @@ sap.ui.define([
 
 				$.when(this.getTopProducts())
 				.done(function(data,textStatus,oResponse){
-					console.log(data);
+					let oModel = new sap.ui.model.json.JSONModel(data);
+
+					oBaseController.setModel(oModel, 'TopProducts');
+
+					oBaseController.getRouter().navTo('appReviewMode');
 				})
 				.fail(function(error,textStatus,oResponse){
-
+					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('topProductsError'));
 				})
 				.always(function(){
 					oBaseController.hideGlobalLoader();
-					oBaseController.getRouter().navTo('appReviewMode');
 				});
 			}
 

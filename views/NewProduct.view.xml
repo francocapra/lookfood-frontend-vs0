@@ -19,7 +19,7 @@
                         <Label text="{i18n>newPrdExternalId}" />
                         <Input id="txtExternalId" />
                         <Label text="{i18n>newPrdPrdPicture}" />
-                        <u:FileUploader id="prdPictureUploader" />
+                        <u:FileUploader id="prdPictureUploader" change="onFileUploaderChange" />
                         <core:Title text="{i18n>newPrdFormHeaderMakers}" />
                         <Label text="{i18n>newPrdResponsible}" />
                         <Input id="txtNewPrdRespo" />

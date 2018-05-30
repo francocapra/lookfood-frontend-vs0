@@ -10,17 +10,18 @@
 			<Button text="{i18n>logoffBtn}" icon="sap-icon://log" press="onLogoffBtnPress" />
 		</headerContent>
 		<content>
-			<HBox>
-				<items>
-					<GenericTile header="{i18n>tileItemsMgmt}" press="onTileItemMgmtPress" class="sapUiSmallMarginEnd">
-						<tileContent>
-							<TileContent>
-								<content>
-									<ImageContent src="sap-icon://product" />
-								</content>
-							</TileContent>
-						</tileContent>
-					</GenericTile>
+			<ScrollContainer>
+				<HBox class="sapUiSmallMarginTop sapUiSmallMarginBottom sapUiSmallMarginBegin">
+					<items>
+						<GenericTile header="{i18n>tileItemsMgmt}" press="onTileItemMgmtPress" class="sapUiSmallMarginEnd">
+							<tileContent>
+								<TileContent>
+									<content>
+										<ImageContent src="sap-icon://product" />
+									</content>
+								</TileContent>
+							</tileContent>
+						</GenericTile>
 <!-- 					<GenericTile header="{i18n>tileProfessionalMgmt}" press="onTileProfMgmtPress" class="sapUiSmallMarginEnd">
 						<tileContent>
 							<TileContent>
@@ -50,7 +51,8 @@
 					</GenericTile>
 				</items>
 			</HBox>
-		</content>
-	</Page>
+		</ScrollContainer>
+	</content>
+</Page>
 
 </mvc:View>

@@ -81,6 +81,8 @@ sap.ui.define([
 
 						}).fail(function(a,b,c){
 							console.log(a,b,c);
+							sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('loginErrPartnerDetails'));
+							oBaseController.getRouter().navTo('appCockpit'); 
 						}).always(function(){
 							oBaseController.hideGlobalLoader();
 						});
@@ -88,6 +90,7 @@ sap.ui.define([
 
 				}).fail(function(a,b,c){
 					oBaseController.hideGlobalLoader();
+					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('loginErrInvalidLogin'));
 					console.log(a,b,c);
 				});
 

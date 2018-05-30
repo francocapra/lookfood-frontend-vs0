@@ -4,6 +4,7 @@ sap.ui.define([
 		"use strict";
 
 		var oBaseController;
+		var oFile;
 
 		return Base.extend("lookfood.resources.main.controllers.NewProduct", {
 
@@ -24,9 +25,15 @@ sap.ui.define([
 					input.setValueState(sap.ui.core.ValueState.None);
 			},
 
+			onFileUploaderChange:function(oEvent){
+				this.oFile = oEvent.getParameters().files[0];
+			},
+
 			onSaveProductPress: function(){
 
 				oBaseController.showGlobalLoader();
+
+				let formData = new FormData();
 
 				let oData = {
 					description : this.byId('txtNewPrdDesc').getValue(),
@@ -37,11 +44,18 @@ sap.ui.define([
 					idExternal: this.byId('txtExternalId').getValue()
 				}
 
+				if(this.oFile){
+					formData.append('file', this.oFile, this.oFile.name);
+				}
+
 				$.ajax({
 					type:'POST',
 					url:oBaseController.getServiceApi()+'products',
-					contentType:'application/json',
-					data:JSON.stringify(oData),
+					async:true,
+					cache:false,
+					contentType:false,
+					processData:false,
+					data:formData,
 					beforeSend:function(request){
 						request.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
 					},

@@ -4,7 +4,6 @@
     xmlns:l="sap.ui.layout" 
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-
     <Page id="pageReview" showNavButton="true" navButtonPress="onNavBack">
         <content>
             <VBox>
@@ -18,34 +17,29 @@
                             </Toolbar>
                         </headerToolbar>
                         <content>
-                           <HBox aligntItems="Center" justifyContent="Center">
-                            <GenericTile class="sapUiTinyMargin" header="Arroz a Grega"
-                                subheader="Department" press="press">
-                                <TileContent>
+                         <HBox aligntItems="Center" justifyContent="Center">
+                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/0/description}" subheader="{i18n>topProductRate}: {TopProducts>/0/rate}" press="press">
+                                <TileContent footer="{i18n>topProductId}: {TopProducts>/0/id}" >
                                     <ImageContent src="imgs/food-tray.png" />
                                 </TileContent>
                             </GenericTile>
-                            <GenericTile class="sapUiTinyMargin" header="Lasanha"
-                                subheader="Department" press="press">
-                                <TileContent>
+                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/1/description}" subheader="{i18n>topProductRate}: {TopProducts>/1/rate}" press="press">
+                                <TileContent footer="{i18n>topProductId}: {TopProducts>/1/id}">
                                     <ImageContent src="imgs/food-tray.png" />
                                 </TileContent>
                             </GenericTile>
-                            <GenericTile class="sapUiTinyMargin" header="Feijoada com Samba"
-                                subheader="Department" press="press">
-                                <TileContent>
+                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/2/description}" subheader="{i18n>topProductRate}: {TopProducts>/2/rate}" press="press">
+                                <TileContent footer="{i18n>topProductId}: {TopProducts>/2/id}">
                                     <ImageContent src="imgs/food-tray.png" />
                                 </TileContent>
                             </GenericTile>
-                            <GenericTile class="sapUiTinyMargin" header="Arroz com Pagode"
-                                subheader="Department" press="press">
-                                <TileContent>
+                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/3/description}" subheader="{i18n>topProductRate}: {TopProducts>/3/rate}" press="press">
+                                <TileContent footer="{i18n>topProductId}: {TopProducts>/3/id}">
                                     <ImageContent src="imgs/food-tray.png" />
                                 </TileContent>
                             </GenericTile>
-                            <GenericTile class="sapUiTinyMargin" header="Tuti Frutti"
-                                subheader="Department" press="press">
-                                <TileContent>
+                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/4/description}" subheader="{i18n>topProductRate}: {TopProducts>/4/rate}" press="press">
+                                <TileContent footer="{i18n>topProductId}: {TopProducts>/4/id}">
                                     <ImageContent src="imgs/food-tray.png" />
                                 </TileContent>
                             </GenericTile>
