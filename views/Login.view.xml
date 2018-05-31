@@ -9,11 +9,11 @@
 		<content>
 			<FlexBox alignItems="Center" justifyContent="Center">
 				<items>
-					<VBox class="vbox-login">
+					<VBox class="vbox-login sapUiMediumMarginTop">
 						<items>
 							<FlexBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
 								<items>
-									<Image src="imgs/brand/gourmeo_logo_web.png" width="200px" height="200px" />
+									<Image src="imgs/brand/logo-medium.png" />
 								</items>
 							</FlexBox>
 							<Label labelFor="txtUserId" text="{i18n>loginUserLabel}" />
