@@ -3,9 +3,9 @@
 	xmlns:core="sap.ui.core">
 	<SelectDialog
 		search="handleSearch"
-		confirm="handleClose"
+		confirm="handleConfirm"
 		multiSelect="true"
-		cancel="handleClose"
+		cancel="handleCancel"
 		items="{
 		path: 'mProductsForReview>/'
 		}" >

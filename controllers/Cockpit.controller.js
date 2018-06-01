@@ -81,19 +81,35 @@ sap.ui.define([
 
 			onTileCreateReviewPress: function(){
 
-				let oModel = new sap.ui.model.json.JSONModel(
-					jQuery.sap.getModulePath('lookfood.mockdata','/reviews/products_for_review.json')
-					);
+				// let oModel = new sap.ui.model.json.JSONModel(
+				// 	jQuery.sap.getModulePath('lookfood.mockdata','/reviews/products_for_review.json')
+				// 	);
 
-				if (!this._oDialog) {
-					this._oDialog = sap.ui.xmlfragment("lookfood.xml.fragments.ProductsForReview", this);
-					this._oDialog.setModel(oModel, 'mProductsForReview');
+				oBaseController.showGlobalLoader();
 
-					this._oDialog.setTitle(oBaseController.getResourceBundle().getText('prdsForReviewTitle'));
-					this._oDialog.setNoDataText(oBaseController.getResourceBundle().getText('prdsForReviewNoData'));
-				}
+				$.when(oBaseController.getPartnerProducts())
+				.done(function(data, textStatus, oResponse){
+					if(data){
+						let prdModel = new sap.ui.model.json.JSONModel(data);
 
-				this._oDialog.open();
+						if (!oBaseController._oDialog) {
+							oBaseController._oDialog = sap.ui.xmlfragment("lookfood.xml.fragments.ProductsForReview", oBaseController);
+							oBaseController._oDialog.setModel(prdModel, 'mProductsForReview');
+
+							oBaseController._oDialog.setTitle(oBaseController.getResourceBundle().getText('prdsForReviewTitle'));
+							oBaseController._oDialog.setNoDataText(oBaseController.getResourceBundle().getText('prdsForReviewNoData'));
+						}
+
+						oBaseController._oDialog.open();
+					}
+				})
+				.fail(function(a,b,c){
+					console.log(a,b,c);
+				})
+				.always(function(){
+					oBaseController.hideGlobalLoader();
+				});
+
 			},
 
 			handleSearch: function(oEvent) {
@@ -101,6 +117,18 @@ sap.ui.define([
 				var oFilter = new sap.ui.model.Filter("description", sap.ui.model.FilterOperator.Contains, sValue);
 				var oBinding = oEvent.getSource().getBinding("items");
 				oBinding.filter([oFilter]);
+			},
+
+			handleConfirm:function(oEvent){
+				var aContexts = oEvent.getParameter("selectedContexts");
+
+				let oProducts = [];
+
+				aContexts.forEach(function(oContext){
+					oProducts.push(oContext.getObject());
+				});
+
+				console.log(oProducts);
 			},
 
 			onTilePartProfPress: function(){
@@ -140,4 +168,4 @@ sap.ui.define([
 
 		});
 
-	});
+});
