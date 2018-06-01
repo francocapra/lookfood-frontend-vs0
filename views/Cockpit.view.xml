@@ -22,37 +22,37 @@
 								</TileContent>
 							</tileContent>
 						</GenericTile>
-<!-- 					<GenericTile header="{i18n>tileProfessionalMgmt}" press="onTileProfMgmtPress" class="sapUiSmallMarginEnd">
-						<tileContent>
-							<TileContent>
-								<content>
-									<ImageContent src="sap-icon://employee" />
-								</content>
-							</TileContent>
-						</tileContent>
-					</GenericTile> -->
-					<GenericTile header="{i18n>tileUserProfile}" subheader="{i18n>tileUserProfSubheader}" press="onTilePartProfPress" class="sapUiSmallMarginEnd">
-						<tileContent>
-							<TileContent>
-								<content>
-									<ImageContent src="sap-icon://business-card" />
-								</content>
-							</TileContent>
-						</tileContent>
-					</GenericTile>
-					<GenericTile header="{i18n>tileReviewMode}" press="onTileReviewModePress" class="sapUiSmallMarginEnd">
-						<tileContent>
-							<TileContent>
-								<content>
-									<ImageContent src="sap-icon://favorite" />
-								</content>
-							</TileContent>
-						</tileContent>
-					</GenericTile>
-				</items>
-			</HBox>
-		</ScrollContainer>
-	</content>
-</Page>
+						<GenericTile header="{i18n>tileUserProfile}" subheader="{i18n>tileUserProfSubheader}" press="onTilePartProfPress" class="sapUiSmallMarginEnd">
+							<tileContent>
+								<TileContent>
+									<content>
+										<ImageContent src="sap-icon://business-card" />
+									</content>
+								</TileContent>
+							</tileContent>
+						</GenericTile>
+						<GenericTile header="{i18n>tileCreateReview}" press="onTileCreateReviewPress" class="sapUiSmallMarginEnd">
+							<tileContent>
+								<TileContent>
+									<content>
+										<ImageContent src="sap-icon://action" />
+									</content>
+								</TileContent>
+							</tileContent>
+						</GenericTile>
+						<GenericTile header="{i18n>tileReviewMode}" press="onTileReviewModePress" class="sapUiSmallMarginEnd">
+							<tileContent>
+								<TileContent>
+									<content>
+										<ImageContent src="sap-icon://favorite" />
+									</content>
+								</TileContent>
+							</tileContent>
+						</GenericTile>
+					</items>
+				</HBox>
+			</ScrollContainer>
+		</content>
+	</Page>
 
 </mvc:View>

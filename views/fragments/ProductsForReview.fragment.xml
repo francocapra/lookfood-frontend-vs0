@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		search="handleSearch"
+		confirm="handleClose"
+		multiSelect="true"
+		cancel="handleClose"
+		items="{
+		path: 'mProductsForReview>/'
+		}" >
+		<StandardListItem
+			title="{mProductsForReview>description}"
+			description="{mProductsForReview>id}"
+			icon="imgs/food-tray.png"
+			iconDensityAware="false"
+			iconInset="false"
+			type="Active" />
+		</SelectDialog>
+	</core:FragmentDefinition>

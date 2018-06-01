@@ -14,6 +14,9 @@ sap.ui.define([
 
 			onExit:function(){
 				oBaseController = null;
+				if (this._oDialog) {
+					this._oDialog.destroy();
+				}
 			},
 
 			onLogoffBtnPress: function () {
@@ -76,9 +79,29 @@ sap.ui.define([
 				});
 			},
 
-			// onTileProfMgmtPress: function(){
-			// 	oApplication.app.to('viewProfMgmt');
-			// },
+			onTileCreateReviewPress: function(){
+
+				let oModel = new sap.ui.model.json.JSONModel(
+					jQuery.sap.getModulePath('lookfood.mockdata','/reviews/products_for_review.json')
+					);
+
+				if (!this._oDialog) {
+					this._oDialog = sap.ui.xmlfragment("lookfood.xml.fragments.ProductsForReview", this);
+					this._oDialog.setModel(oModel, 'mProductsForReview');
+
+					this._oDialog.setTitle(oBaseController.getResourceBundle().getText('prdsForReviewTitle'));
+					this._oDialog.setNoDataText(oBaseController.getResourceBundle().getText('prdsForReviewNoData'));
+				}
+
+				this._oDialog.open();
+			},
+
+			handleSearch: function(oEvent) {
+				var sValue = oEvent.getParameter("value");
+				var oFilter = new sap.ui.model.Filter("description", sap.ui.model.FilterOperator.Contains, sValue);
+				var oBinding = oEvent.getSource().getBinding("items");
+				oBinding.filter([oFilter]);
+			},
 
 			onTilePartProfPress: function(){
 				this.getRouter().navTo('appPartnerProfile');
