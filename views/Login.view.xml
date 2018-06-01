@@ -13,7 +13,7 @@
 						<items>
 							<FlexBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
 								<items>
-									<Image src="imgs/brand/logo-medium.png" />
+									<Image src="imgs/brand/logo.png" class="logoImage" />
 								</items>
 							</FlexBox>
 							<Label labelFor="txtUserId" text="{i18n>loginUserLabel}" />

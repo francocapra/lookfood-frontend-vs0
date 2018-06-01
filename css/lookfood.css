@@ -2,10 +2,18 @@
 .vbox-login{
     width: 80%;
 }
+.logoImage{
+    width: 200px;
+    height: auto;
+}
 }
 @media only screen and (min-width: 768px) {
 .vbox-login{
     width: 60%;
+}
+.logoImage{
+    width: 300px;
+    height: auto;
 }
 }
 @media only screen and (min-width: 1024px) {

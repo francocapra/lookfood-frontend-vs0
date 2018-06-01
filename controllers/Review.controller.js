@@ -69,6 +69,10 @@ sap.ui.define([
                             	_previewDialog.destroy();
                             	console.log(reviewCode);
 
+                            	let oModel = new sap.ui.model.json.JSONModel(
+                            		jQuery.sap.getModulePath('lookfood.mockdata','/reviews/review.json')
+                            		);
+
                             }
                         }).open();
 			}

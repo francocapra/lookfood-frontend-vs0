@@ -1,14 +1,14 @@
 <mvc:View controllerName="lookfood.resources.main.controllers.Review" 
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
-    xmlns:l="sap.ui.layout" 
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified" 
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <Page id="pageReview" showNavButton="true" navButtonPress="onNavBack">
         <content>
-            <VBox>
-                <items>
-                    <Panel class="sapUiSmallMarginTop" >
+
+                    <!-- <Panel class="sapUiSmallMarginTop" >
                         <headerToolbar>
                             <Toolbar height="3rem" >
                                 <Title text="{i18n>highlights}" />
@@ -45,27 +45,33 @@
                             </GenericTile>
                         </HBox>
                     </content>
-                </Panel>
-                <List id="reviewItemsList" noDataText="{i18n>reviewListNoData}">
-                    <headerToolbar>
-                        <Toolbar>
-                            <content>
-                                <Title text="{i18n>reviewListHeader}" />
-                            </content>
-                        </Toolbar>
-                    </headerToolbar>
-                </List>
-            </items>
-        </VBox>
-    </content>
-    <footer>
-        <Toolbar>
-            <content>
-                <ToolbarSpacer />
-                <Button text="{i18n>startReviewBtn}" type="Emphasized" press="onStartReviewPress" />
+                </Panel> -->
+                <SplitContainer mode="StretchCompressMode">
+                    <masterPages>
+                        <Page showHeader="false">
+                            <List headerText="Top Products" items="{TopProducts>/}">
+                                <items>
+                                    <ObjectListItem
+                                        title="{TopProducts>description}"
+                                        type="Active"
+                                        icon="imgs/food-tray.png"
+                                        number="{parts:[{path:'TopProducts>rate'}],
+                                        type: 'sap.ui.model.type.Float'}">
+                                    </ObjectListItem>
+                                </items>
+                            </List>
+                        </Page>
+                    </masterPages>
+                </SplitContainer>
             </content>
-        </Toolbar>
-    </footer>
-</Page>
+            <footer>
+                <Toolbar>
+                    <content>
+                        <ToolbarSpacer />
+                        <Button text="{i18n>startReviewBtn}" type="Emphasized" press="onStartReviewPress" />
+                    </content>
+                </Toolbar>
+            </footer>
+        </Page>
 
-</mvc:View>
+    </mvc:View>
