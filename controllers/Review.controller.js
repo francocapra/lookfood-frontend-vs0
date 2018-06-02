@@ -24,7 +24,38 @@ sap.ui.define([
 				});
 			},
 
-			onStartReviewPress:function(){
+			onTypeReviewCodePress:function(){
+
+				let oDialog = new sap.m.Dialog({
+					title:'Provide review code',
+					content:[
+					new sap.m.VBox({
+						items:[
+						new sap.m.Input({
+							placeholder:'Type your review code here'
+						})
+						]
+					}).addStyleClass('sapUiSmallMargin')
+					],
+					beginButton:new sap.m.Button({
+						text:'OK',
+						type:'Emphasized'
+					}),
+					endButton:new sap.m.Button({
+						text:'Cancel',
+						press:function(){
+							oDialog.close();
+						}
+					}),
+					afterClose:function(){
+						oDialog.destroy();
+					}
+				})
+
+				oDialog.open();
+			},
+
+			onScanQrCodePress:function(){
 				let scanner = null;
 				let reviewCode = null;
 

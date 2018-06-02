@@ -32,6 +32,9 @@
     background-color: cadetblue;
     border-radius: 50%;
 }
+.reviewTileContent{
+    width: 95% !important;
+}
 span.sapMBtnInner.sapMBtnEmphasized{
     background-color: #d52941 !important;
     border-color: #d52941 !important;

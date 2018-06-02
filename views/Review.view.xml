@@ -5,73 +5,51 @@
     xmlns:u="sap.ui.unified" 
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Page id="pageReview" showNavButton="true" navButtonPress="onNavBack">
+    <Page id="pageReview" showNavButton="true" navButtonPress="onNavBack" showHeader="false">
         <content>
+            <SplitContainer mode="StretchCompressMode">
+                <masterPages>
+                    <Page showHeader="false">
+                        <List headerText="{i18n>topProductsListHeader}" items="{TopProducts>/}">
+                            <items>
+                                <ObjectListItem
+                                    title="{TopProducts>description}"
+                                    type="Active"
+                                    icon="imgs/food-tray.png"
+                                    number="{parts:[{path:'TopProducts>rate'}],
+                                    type: 'sap.ui.model.type.Float'}">
+                                </ObjectListItem>
+                            </items>
+                        </List>
+                    </Page>
+                </masterPages>
+                <detailPages>
+                    <Page showHeader="false">
+                        <VBox alignItems="Center" justifyContent="Center" class="sapUiContentPadding">
+                            <GenericTile class="sapUiMediumMarginTop" header="{i18n>reviewTileStartReviewHeader}"
+                                subheader="{i18n>reviewTileStartReviewSub}" frameType="TwoByOne"
+                                press="onTypeReviewCodePress">
+                                <TileContent>
+                                    <ImageContent
+                                        class="reviewTileContent"
+                                        src="sap-icon://action">
+                                    </ImageContent>
+                                </TileContent>
+                            </GenericTile>
+                        </VBox>
+                    </Page>
+                </detailPages>
+            </SplitContainer>
+        </content>
+        <footer>
+            <Toolbar>
+                <content>
+                    <ToolbarSpacer />
+                    <Button text="{i18n>scanQrCodeBtn}" type="Emphasized" press="onScanQrCodePress" />
+                    <Button text="{i18n>saveReviewBtn}" type="Accept" />
+                </content>
+            </Toolbar>
+        </footer>
+    </Page>
 
-                    <!-- <Panel class="sapUiSmallMarginTop" >
-                        <headerToolbar>
-                            <Toolbar height="3rem" >
-                                <Title text="{i18n>highlights}" />
-                                <ToolbarSpacer />
-                                <Button icon="sap-icon://refresh" type="Emphasized" />
-                            </Toolbar>
-                        </headerToolbar>
-                        <content>
-                         <HBox aligntItems="Center" justifyContent="Center">
-                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/0/description}" subheader="{i18n>topProductRate}: {TopProducts>/0/rate}" press="press">
-                                <TileContent footer="{i18n>topProductId}: {TopProducts>/0/id}" >
-                                    <ImageContent src="imgs/food-tray.png" />
-                                </TileContent>
-                            </GenericTile>
-                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/1/description}" subheader="{i18n>topProductRate}: {TopProducts>/1/rate}" press="press">
-                                <TileContent footer="{i18n>topProductId}: {TopProducts>/1/id}">
-                                    <ImageContent src="imgs/food-tray.png" />
-                                </TileContent>
-                            </GenericTile>
-                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/2/description}" subheader="{i18n>topProductRate}: {TopProducts>/2/rate}" press="press">
-                                <TileContent footer="{i18n>topProductId}: {TopProducts>/2/id}">
-                                    <ImageContent src="imgs/food-tray.png" />
-                                </TileContent>
-                            </GenericTile>
-                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/3/description}" subheader="{i18n>topProductRate}: {TopProducts>/3/rate}" press="press">
-                                <TileContent footer="{i18n>topProductId}: {TopProducts>/3/id}">
-                                    <ImageContent src="imgs/food-tray.png" />
-                                </TileContent>
-                            </GenericTile>
-                            <GenericTile class="sapUiTinyMargin" header="{TopProducts>/4/description}" subheader="{i18n>topProductRate}: {TopProducts>/4/rate}" press="press">
-                                <TileContent footer="{i18n>topProductId}: {TopProducts>/4/id}">
-                                    <ImageContent src="imgs/food-tray.png" />
-                                </TileContent>
-                            </GenericTile>
-                        </HBox>
-                    </content>
-                </Panel> -->
-                <SplitContainer mode="StretchCompressMode">
-                    <masterPages>
-                        <Page showHeader="false">
-                            <List headerText="Top Products" items="{TopProducts>/}">
-                                <items>
-                                    <ObjectListItem
-                                        title="{TopProducts>description}"
-                                        type="Active"
-                                        icon="imgs/food-tray.png"
-                                        number="{parts:[{path:'TopProducts>rate'}],
-                                        type: 'sap.ui.model.type.Float'}">
-                                    </ObjectListItem>
-                                </items>
-                            </List>
-                        </Page>
-                    </masterPages>
-                </SplitContainer>
-            </content>
-            <footer>
-                <Toolbar>
-                    <content>
-                        <ToolbarSpacer />
-                        <Button text="{i18n>startReviewBtn}" type="Emphasized" press="onStartReviewPress" />
-                    </content>
-                </Toolbar>
-            </footer>
-        </Page>
-
-    </mvc:View>
+</mvc:View>
