@@ -122,13 +122,39 @@ sap.ui.define([
 			handleConfirm:function(oEvent){
 				var aContexts = oEvent.getParameter("selectedContexts");
 
-				let oProducts = [];
+				let oProducts = {
+					products:[]
+				};
 
 				aContexts.forEach(function(oContext){
-					oProducts.push(oContext.getObject());
+					oProducts.products.push(oContext.getObject());
 				});
 
-				console.log(oProducts);
+				oBaseController.showGlobalLoader();
+
+				$.when(oBaseController.startNewReview(oProducts))
+				.done(function(data,textStatus,oResponse){
+					console.log(data,textStatus,oResponse);
+				})
+				.fail(function(error,textStatus,oResponse){
+					console.log(error,textStatus,oResponse);
+				})
+				.always(function(){
+					oBaseController.hideGlobalLoader();
+				});
+			},
+
+			startNewReview:function(oProducts){
+				return $.ajax({
+					type:'POST',
+					url:oBaseController.getServiceApi()+'reviews',
+					contentType:'application/json',
+					data:JSON.stringify(oProducts),
+					beforeSend:function(oRequest){
+						let authToken = window.sessionStorage.getItem('Authorization');
+						oRequest.setRequestHeader('Authorization', authToken);
+					}
+				});
 			},
 
 			onTilePartProfPress: function(){
