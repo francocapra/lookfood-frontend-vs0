@@ -39,8 +39,8 @@
 			</FlexBox>
 			<HBox justifyContent="Center" alignItems="Center" class="loginGlobalizationSeparator" >
 				<items>
-					<Link text="English" class="sapUiSmallMargin" href="/lookfood-frontend?sap-language=en_US" />
-					<Link text="Português" class="sapUiSmallMargin" href="/lookfood-frontend?sap-language=pt_BR" />
+					<Link text="English" class="sapUiSmallMargin" href="?sap-language=en_US" />
+					<Link text="Português" class="sapUiSmallMargin" href="?sap-language=pt_BR" />
 				</items>
 			</HBox>
 		</content>
