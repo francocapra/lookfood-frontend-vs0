@@ -15,8 +15,9 @@
 		showSubHeader="false"
 		backgroundDesign="Solid">
 		<content id="loginForm">
+
 			<HBox id="HBoxLogo"
-				class="sapUiMediumMarginTop"				
+				class="sapUiLargeMarginTopBottom"				
 				justifyContent="Center">
 				<items>
 					<Image src="imgs/brand/logo.png" class="logoImage">
@@ -28,7 +29,7 @@
 			</HBox>
 
 			<VBox id="VBoxLogin" 
-				class="sapUiLargeMarginTop loginGlobalizationSeparator" 
+				class="sapUiLargeMarginTopBottom loginGlobalizationSeparator" 
 				width="auto"
 				alignItems="Center">
 
@@ -46,9 +47,9 @@
 					columnsM="1"
 					columnsS="1"				
 					singleContainerFullSize="false" >
-						<f:content >
+						<f:content>
 							
-							<Label labelFor="txtUserId" text="{i18n>loginUserLabel}"  design="Bold"/>
+							<Label labelFor="txtUserId" text="{i18n>loginUserLabel}"  design="Bold" class="sapUiLargeMarginTop" />
 							<Input id="txtUserId" 
 								placeholder="{i18n>userInputPlaceholder}" 
 								submit="onLoginBtnPress"/>
@@ -70,30 +71,31 @@
 				</f:SimpleForm>
 			</VBox>
 
-			<HBox id="HBoxNewUser"
-				class="sapUiMediumMarginTop"
+			<HBox id="HBoxNewUser"											
 				justifyContent="Center">
 				<items>
 					<Text labelFor="linkNewUser" text="{i18n>newUserLabel}" >
 						<layoutData>
-							<FlexItemData growFactor="0.1"  />
+							<FlexItemData growFactor="0.01"  />
 						</layoutData>
 					</Text>													
 					<Link id="linkNewUser" text="{i18n>newUserLink}" press="onNewUserLinkPress"/>
 				</items>
 			</HBox>
+
 			<HBox id="HBoxForgotPassword"
-				class="sapUiTinyMarginTop"				
+				class="sapUiTinyMarginTop"			
 				justifyContent="Center">
 				<items>
 					<Text labelFor="linkForgotPw" text="{i18n>forgotPasswordLabel}">
 						<layoutData>
-							<FlexItemData growFactor="0.1"  />
+							<FlexItemData growFactor="0.01"  />
 						</layoutData>
 					</Text>
 					<Link id="linkForgotPw" text="{i18n>forgotPasswordLink}" press="onForgotPassLinkPress" /> 	
 				</items>
 			</HBox>
+			
 			<HBox id="HBoxLanguage"
 				class="sapUiLargeMarginTop loginGlobalizationSeparator" 			
 				justifyContent="Center">
