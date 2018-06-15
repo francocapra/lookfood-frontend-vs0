@@ -123,11 +123,11 @@ sap.ui.define([
 				var aContexts = oEvent.getParameter("selectedContexts");
 
 				let oProducts = {
-					products:[]
+					itemsReviewDTO:[]
 				};
 
 				aContexts.forEach(function(oContext){
-					oProducts.products.push(oContext.getObject());
+					oProducts.itemsReviewDTO.push(oContext.getObject());
 				});
 
 				oBaseController.showGlobalLoader();

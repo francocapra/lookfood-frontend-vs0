@@ -64,8 +64,7 @@
 							<Button id="submitLogin"
 								text="{i18n>btnLogin}" 
 								type="Emphasized" 
-								press="onLoginBtnPress" 
-									/>						
+								press="onLoginBtnPress"/>						
 							
 						</f:content>
 				</f:SimpleForm>
@@ -87,12 +86,7 @@
 				class="sapUiTinyMarginTop"			
 				justifyContent="Center">
 				<items>
-					<Text labelFor="linkForgotPw" text="{i18n>forgotPasswordLabel}">
-						<layoutData>
-							<FlexItemData growFactor="0.01"  />
-						</layoutData>
-					</Text>
-					<Link id="linkForgotPw" text="{i18n>forgotPasswordLink}" press="onForgotPassLinkPress" /> 	
+					<Link id="linkForgotPw" text="{i18n>forgotPasswordLabel}" press="onForgotPassLinkPress" /> 	
 				</items>
 			</HBox>
 			
