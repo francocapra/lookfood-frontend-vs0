@@ -5,53 +5,48 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
 
-	<Page title="{i18n>cockpitPageTitle}" id="pageCockpit" class="sapUiContentPadding">
+	<Page title="{i18n>cockpitPageTitle}" id="pageCockpit" class="sapUiResponsiveContentPadding">
 		<headerContent>
 			<Button text="{i18n>logoffBtn}" icon="sap-icon://log" press="onLogoffBtnPress" />
 		</headerContent>
 		<content>
-			<ScrollContainer>
-				<HBox class="sapUiSmallMarginTop sapUiSmallMarginBottom sapUiSmallMarginBegin">
-					<items>
-						<GenericTile header="{i18n>tileItemsMgmt}" press="onTileItemMgmtPress" class="sapUiSmallMarginEnd">
-							<tileContent>
-								<TileContent>
-									<content>
-										<ImageContent src="sap-icon://product" />
-									</content>
-								</TileContent>
-							</tileContent>
-						</GenericTile>
-						<GenericTile header="{i18n>tileUserProfile}" subheader="{i18n>tileUserProfSubheader}" press="onTilePartProfPress" class="sapUiSmallMarginEnd">
-							<tileContent>
-								<TileContent>
-									<content>
-										<ImageContent src="sap-icon://business-card" />
-									</content>
-								</TileContent>
-							</tileContent>
-						</GenericTile>
-						<GenericTile header="{i18n>tileCreateReview}" press="onTileCreateReviewPress" class="sapUiSmallMarginEnd">
-							<tileContent>
-								<TileContent>
-									<content>
-										<ImageContent src="sap-icon://action" />
-									</content>
-								</TileContent>
-							</tileContent>
-						</GenericTile>
-						<GenericTile header="{i18n>tileReviewMode}" press="onTileReviewModePress" class="sapUiSmallMarginEnd">
-							<tileContent>
-								<TileContent>
-									<content>
-										<ImageContent src="sap-icon://favorite" />
-									</content>
-								</TileContent>
-							</tileContent>
-						</GenericTile>
-					</items>
-				</HBox>
-			</ScrollContainer>
+						
+			<GenericTile header="{i18n>tileItemsMgmt}" press="onTileItemMgmtPress" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+				<tileContent>
+					<TileContent>
+						<content>
+							<ImageContent src="sap-icon://product" />
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+			<GenericTile header="{i18n>tileUserProfile}" subheader="{i18n>tileUserProfSubheader}" press="onTilePartProfPress" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+				<tileContent>
+					<TileContent>
+						<content>
+							<ImageContent src="sap-icon://business-card" />
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+			<GenericTile header="{i18n>tileCreateReview}" press="onTileCreateReviewPress" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+				<tileContent>
+					<TileContent>
+						<content>
+							<ImageContent src="sap-icon://action" />
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+			<GenericTile header="{i18n>tileReviewMode}" press="onTileReviewModePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+				<tileContent>
+					<TileContent>
+						<content>
+							<ImageContent src="sap-icon://favorite" />
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
 		</content>
 	</Page>
 

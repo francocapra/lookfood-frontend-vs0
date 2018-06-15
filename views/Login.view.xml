@@ -3,47 +3,105 @@
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:l="sap.ui.layout" 
 	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core">
+	xmlns:core="sap.ui.core"
+	xmlns:html="http://www.w3.org/1999/xhtml">
 
-	<Page title="{i18n>loginPageTitle}" id="pageLogin">
-		<content>
-			<FlexBox alignItems="Center" justifyContent="Center">
+	<Page 
+		id="pageLogin" 
+		title="{i18n>loginPageTitle}" 
+		class="sapUiResponsiveContentPadding"
+		showHeader="false"
+		showFooter="true"
+		showSubHeader="false"
+		backgroundDesign="Solid">
+		<content id="loginForm">
+			<HBox id="HBoxLogo"
+				class="sapUiMediumMarginTop"				
+				justifyContent="Center">
 				<items>
-					<VBox class="vbox-login sapUiMediumMarginTop">
-						<items>
-							<FlexBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
-								<items>
-									<Image src="imgs/brand/logo.png" class="logoImage" />
-								</items>
-							</FlexBox>
-							<Label labelFor="txtUserId" text="{i18n>loginUserLabel}" />
-							<Input id="txtUserId" placeholder="{i18n>userInputPlaceholder}" submit="onLoginBtnPress"/>
-							<Label labelFor="txtPassword" text="{i18n>loginUserPassword}" />
-							<Input id="txtPassword" placeholder="{i18n>passwordInputPlaceholder}" type="Password" submit="onLoginBtnPress"/>
-							<Button text="{i18n>btnLogin}" type="Emphasized" press="onLoginBtnPress" width="100%" class="sapUiSmallMarginTop"/>
-							<HBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginTop">
-								<items>
-									<Text text="{i18n>newUserLabel}" />
-									<Link text="{i18n>newUserLink}" class="sapUiTinyMarginBegin" press="onNewUserLinkPress"/>
-								</items>
-							</HBox>
-							<HBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginTop">
-								<items>
-									<Text text="{i18n>forgotPasswordLabel}" />
-									<Link text="{i18n>forgotPasswordLink}" class="sapUiTinyMarginBegin" press="onForgotPassLinkPress" />
-								</items>
-							</HBox>
-						</items>
-					</VBox>
+					<Image src="imgs/brand/logo.png" class="logoImage">
+						<layoutData>
+							<FlexItemData growFactor="0.1"  />
+						</layoutData>
+					</Image>							
 				</items>
-			</FlexBox>
-			<HBox justifyContent="Center" alignItems="Center" class="loginGlobalizationSeparator" >
+			</HBox>
+
+			<VBox id="VBoxLogin" 
+				class="sapUiLargeMarginTop loginGlobalizationSeparator" 
+				width="auto"
+				alignItems="Center">
+
+				<f:SimpleForm 
+					id="SimpleFormLoginTop"
+					editable="false"				
+					layout="ResponsiveGridLayout"			
+					labelSpanXL="12"
+					labelSpanL="12"
+					labelSpanM="12"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					columnsXL="1"
+					columnsL="1"
+					columnsM="1"
+					columnsS="1"				
+					singleContainerFullSize="false" >
+						<f:content >
+							
+							<Label labelFor="txtUserId" text="{i18n>loginUserLabel}"  design="Bold"/>
+							<Input id="txtUserId" 
+								placeholder="{i18n>userInputPlaceholder}" 
+								submit="onLoginBtnPress"/>
+
+							<Label labelFor="txtPassword" text="{i18n>loginUserPassword}" design="Bold"/>
+							<Input id="txtPassword"	
+								placeholder="{i18n>passwordInputPlaceholder}" 
+								type="Password" 
+								submit="onLoginBtnPress"/>
+							
+							<Label labelFor="submitLogin"/> 
+							<Button id="submitLogin"
+								text="{i18n>btnLogin}" 
+								type="Emphasized" 
+								press="onLoginBtnPress" 
+									/>						
+							
+						</f:content>
+				</f:SimpleForm>
+			</VBox>
+
+			<HBox id="HBoxNewUser"
+				class="sapUiMediumMarginTop"
+				justifyContent="Center">
+				<items>
+					<Text labelFor="linkNewUser" text="{i18n>newUserLabel}" >
+						<layoutData>
+							<FlexItemData growFactor="0.1"  />
+						</layoutData>
+					</Text>													
+					<Link id="linkNewUser" text="{i18n>newUserLink}" press="onNewUserLinkPress"/>
+				</items>
+			</HBox>
+			<HBox id="HBoxForgotPassword"
+				class="sapUiTinyMarginTop"				
+				justifyContent="Center">
+				<items>
+					<Text labelFor="linkForgotPw" text="{i18n>forgotPasswordLabel}">
+						<layoutData>
+							<FlexItemData growFactor="0.1"  />
+						</layoutData>
+					</Text>
+					<Link id="linkForgotPw" text="{i18n>forgotPasswordLink}" press="onForgotPassLinkPress" /> 	
+				</items>
+			</HBox>
+			<HBox id="HBoxLanguage"
+				class="sapUiLargeMarginTop loginGlobalizationSeparator" 			
+				justifyContent="Center">
 				<items>
 					<Link text="English" class="sapUiSmallMargin" href="?sap-language=en_US" />
-					<Link text="Português" class="sapUiSmallMargin" href="?sap-language=pt_BR" />
+					<Link text="Português" class="sapUiSmallMargin" href="?sap-language=pt_BR" />	
 				</items>
 			</HBox>
 		</content>
 	</Page>
-
 </mvc:View>
