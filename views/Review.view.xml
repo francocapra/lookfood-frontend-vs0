@@ -5,7 +5,7 @@
     xmlns:u="sap.ui.unified" 
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Page id="pageReview" showNavButton="true" navButtonPress="onNavBack" showHeader="false">
+    <Page id="pageReview" showNavButton="true" navButtonPress="onNavBack" showHeader="true">
         <content>
             <SplitContainer mode="StretchCompressMode">
                 <masterPages>

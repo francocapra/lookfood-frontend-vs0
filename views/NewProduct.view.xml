@@ -9,17 +9,32 @@
     <Page title="{i18n>newProductPageTitle}" id="pageNewProduct" showNavButton="true" navButtonPress="onNavBack">
         <content>
             <VBox class="sapUiSmallMargin">
-                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                <f:SimpleForm 
+                    editable="true" 
+                    layout="ResponsiveGridLayout" 
+                    labelSpanXL="3" 
+                    labelSpanL="3" 
+                    labelSpanM="3" 
+                    labelSpanS="12" 
+                    adjustLabelSpan="false" 
+                    emptySpanXL="4" 
+                    emptySpanL="4" 
+                    emptySpanM="4" 
+                    emptySpanS="0" 
+                    columnsXL="1" 
+                    columnsL="1" 
+                    columnsM="1" 
+                    singleContainerFullSize="false">
                     <f:content>
                         <core:Title text="{i18n>newPrdFormHeaderGen}" />
                         <Label text="{i18n>newPrdDescription}" />
-                        <Input required="true" change="onProductDescChange" id="txtNewPrdDesc" />
+                        <Input id="txtNewPrdDesc" required="true" change="onProductDescChange" />
                         <Label text="{i18n>newPrdPrice}" />
-                        <Input description="{i18n>newPrdCurrency}" id="txtNewPrdPrice" />
+                        <Input id="txtNewPrdPrice" description="{i18n>newPrdCurrency}" />
                         <Label text="{i18n>newPrdExternalId}" />
                         <Input id="txtExternalId" />
                         <Label text="{i18n>newPrdPrdPicture}" />
-                        <u:FileUploader id="prdPictureUploader" change="onFileUploaderChange" />
+                        <u:FileUploader id="prdPictureUploader" fileType="tiff,png,jpg" typeMissmatch="handleTypeMissmatch"/>
                         <core:Title text="{i18n>newPrdFormHeaderMakers}" />
                         <Label text="{i18n>newPrdResponsible}" />
                         <Input id="txtNewPrdRespo" />

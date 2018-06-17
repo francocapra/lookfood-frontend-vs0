@@ -7,7 +7,7 @@
 		multiSelect="true"
 		cancel="handleCancel"
 		items="{
-		path: 'mProductsForReview>/'
+			path: 'mProductsForReview>/'
 		}" >
 		<StandardListItem
 			title="{mProductsForReview>description}"

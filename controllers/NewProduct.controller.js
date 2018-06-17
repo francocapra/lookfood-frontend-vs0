@@ -1,6 +1,7 @@
 sap.ui.define([
-	"lookfood/resources/main/controllers/Base"
-	], function (Base) {
+	"lookfood/resources/main/controllers/Base",
+	"sap/m/MessageToast"
+	], function (Base,MessageToast) {
 		"use strict";
 
 		var oBaseController;
@@ -13,63 +14,105 @@ sap.ui.define([
 			},
 
 			onExit:function(){
-				console.log('exiting');
+				console.log("exiting");
 			},
 
-			onProductDescChange:function(event){
-				let input = event.getSource();
+			onProductDescChange: function(oEvent){
+				let input = oEvent.getSource();
 
-				if(input.getValue() === '')
-					input.setValueState(sap.ui.core.ValueState.Error);
-				else
+				if(input.getValue())
 					input.setValueState(sap.ui.core.ValueState.None);
+				else
+					input.setValueState(sap.ui.core.ValueState.Error);
 			},
 
-			onFileUploaderChange:function(oEvent){
-				this.oFile = oEvent.getParameters().files[0];
+			handleTypeMissmatch: function(oEvent){	
+				var aFileTypes = oEvent.getSource().getFileType();
+				jQuery.each(aFileTypes, function(key, value) {aFileTypes[key] = "*." +  value;});
+				var sSupportedFileTypes = aFileTypes.join(", ");
+				MessageToast.show( this.getResourceBundle()
+									   .getText("newPrdMsgTypeMissmatch" ,
+									    		[oEvent.getParameter("fileType")] ,
+												[sSupportedFileTypes] ));		
 			},
 
-			onSaveProductPress: function(){
+			onSaveProductPress: function(oEvent){
 
 				oBaseController.showGlobalLoader();
-
-				let formData = new FormData();
-
-				let oData = {
-					description : this.byId('txtNewPrdDesc').getValue(),
-					price : this.byId('txtNewPrdPrice').getValue(),
-					currency : this.byId('txtNewPrdPrice').getDescription(),
-					chef : this.byId('txtNewPrdRespo').getValue(),
-					auxiliar : this.byId('txtNewPrdAux').getValue(),
-					idExternal: this.byId('txtExternalId').getValue()
-				}
-
-				if(this.oFile){
-					formData.append('file', this.oFile, this.oFile.name);
-				}
-
-				$.ajax({
-					type:'POST',
-					url:oBaseController.getServiceApi()+'products',
-					async:true,
-					cache:false,
-					contentType:false,
-					processData:false,
-					data:formData,
-					beforeSend:function(request){
-						request.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
-					},
-					success:function(data, statusText, oResponse){
-						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('newPrdSuccessfullMessage'));
-					},
-					error:function(error, textStatus, oResponse){
-						console.log(error, textStatus, oResponse);
-						sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('newPrdFailureMessage'));
-					},
-					complete:function(){
-						oBaseController.hideGlobalLoader();
+			
+				let fnPostBody = function() {
+					
+					var body = {
+						description : this.byId("txtNewPrdDesc").getValue(),
+						price : this.byId("txtNewPrdPrice").getValue(),
+						currency : this.byId("txtNewPrdPrice").getDescription(),
+						idExternal: this.byId("txtExternalId").getValue()
 					}
-				});
+					return $.ajax({
+							type: "POST",
+							url: oBaseController.getServiceApi()+"products",
+							contentType: "application/json",
+							data: JSON.stringify(body),
+						beforeSend:function(request){
+							request.setRequestHeader("Authorization", window.sessionStorage.getItem("Authorization"));
+						},
+						success:function(){
+							MessageToast.show(oBaseController.getResourceBundle().getText("newPrdSuccessfullMessage"));
+						},
+						error:function(error, textStatus, oResponse){						
+							MessageToast.show(oBaseController.getResourceBundle().getText("newPrdFailureMessage"));
+						},
+						complete:function(){
+							oBaseController.hideGlobalLoader();
+						}
+					});
+				}
+				
+				let fnPostImg = function(response){
+
+					var oFileUploader = oBaseController.getView().byId("prdPictureUploader");
+
+					if(!oFileUploader.getValue()){ 
+						MessageToast.show(this.getResourceBundle().getText("newPrdMessageMissingFile"));								
+						return;
+					}
+					var formData = new FormData();
+
+					var file = jQuery.sap.domById(oFileUploader.getId() + "-fu").files[0];
+
+					if(file){
+						formData.append( "file", file, file.name);
+					}				
+					
+					var sLocation = response.getResponseHeader("location");
+					var aIdProduct = location.substring(location.lastIndexOf("/")+1, sLocation.length);
+					var sURL = oBaseController.getServiceApi()+"products?id="+aIdProduct;
+
+					return $.ajax({
+							type: "POST",
+							url: sURL,
+							data: formData,
+							async:true,
+							cache:false,
+							contentType:false,
+							processData:false,
+						beforeSend:function(oRequestHeader){
+							oRequestHeader.setRequestHeader("Authorization", window.sessionStorage.getItem("Authorization"));
+						},
+						success:function(){
+							MessageToast.show(oBaseController.getResourceBundle().getText("newPrdSuccessfullMessage"));
+						},
+						error:function(){						
+							MessageToast.show(oBaseController.getResourceBundle().getText("newPrdFailureMessage"));
+						},
+						complete:function(){
+							oBaseController.hideGlobalLoader();
+						}
+					});
+				};
+
+				$.when(fnPostBody()).done(function(data,status,response){fnPostImg(response);});
+
 			}
 		});
 
