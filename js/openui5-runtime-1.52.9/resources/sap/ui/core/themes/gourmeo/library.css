@@ -5,9 +5,9 @@
 * data:{"Path": "UI5.sap/ui/core.gourmeo.library", "PathPattern": "/%frameworkId%/%libId%/themes/%themeId%/%fileId%.css", "Extends": ["sap_belize","base"], "Version": { "Build":"1.54.3.20180430134133", "Source": "1.54.3", "Engine": "1.32.6"}}
 */
 
-.sapThemeMetaData-UI5-sap-ui-core {
+/* .sapThemeMetaData-UI5-sap-ui-core {
     background-image: url('data:text/plain;utf-8,{"Path": "UI5.sap/ui/core.gourmeo.library", "PathPattern": "/%frameworkId%/%libId%/themes/%themeId%/%fileId%.css", "Extends": ["sap_belize","base"], "Version": { "Build":"1.54.3.20180430134133", "Source": "1.54.3", "Engine": "1.32.6"}}');
-}
+} */
 
 .sapSvgLibs {
     background-image: none, url(../../../../../../Base/baseLib/sap_belize/svg/libs/SAPGUI-icons.svg), url(../../../../../../Base/baseLib/sap_belize/svg/libs/SAPWeb-icons.svg)
@@ -368,7 +368,7 @@
 }
 
 .sapUiBusy {
-    background-image: url(../../../../../../UI5/sap/ui/core/themes/base/img/Busy.gif);
+    background-image: url(../../../../../../resources/sap/ui/core/themes/base/img/Busy.gif);
     display: block;
     width: 48px;
     height: 48px;
@@ -1432,7 +1432,7 @@ html[data-sap-ui-browser^="ed"] .sapUiIcon:focus::after {
 
 .sapContrast .sapUiBusy,
 .sapUiBusy.sapContrast {
-    background-image: url(../../../../../../UI5/sap/ui/core/themes/base/img/Busy.gif);
+    background-image: url(../../../../../../resources/sap/ui/core/themes/base/img/Busy.gif);
     outline: none
 }
 

@@ -1,10 +1,12 @@
 <Dialog xmlns="sap.m"
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core" title="{i18n>itemDialogHeader}" id="prdDetailsDialog">
+	xmlns:core="sap.ui.core" 
+	title="{i18n>itemDialogHeader}" 
+	id="prdDetailsDialog">
 	<content>
 		<HBox alignItem="Center" justifyContent="Center" class="sapUiSmallMarginTop" >
-			<Image width="128px" height="128px" id="imgProductPicture" press="onPrdImagePress" />
+			<Image id="imgProductPicture" width="128px" height="128px" press="onPrdImagePress" />
 			<core:HTML content="&lt;input type=&quot;file&quot; id=&quot;productPicUploader&quot; accept=&quot;image/*&quot; style=&quot;display: none;&quot; /&gt;" />
 		</HBox>
 		<VBox class="sapUiSmallMargin">
@@ -37,7 +39,7 @@
 							<core:Item text="USD" key="USD"/>
 						</items>
 						<layoutData>
-							<l:GridData span="XL1 L2 M2 S4" />
+							<l:GridData span="XL1 L2 M2 S5" />
 						</layoutData>
 					</Select>
 					<Label text="{i18n>ProductDetailsChef}" />

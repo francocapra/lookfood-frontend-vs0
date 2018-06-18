@@ -13,6 +13,10 @@ sap.ui.define([
 				oBaseController = this;
 			},
 
+			onNavBack : function() {
+				history.go(-1);
+			},
+
 			performLogin: function(email, password){
 				
 				let oData = {

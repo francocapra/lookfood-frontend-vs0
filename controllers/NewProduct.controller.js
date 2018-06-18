@@ -1,7 +1,8 @@
 sap.ui.define([
 	"lookfood/resources/main/controllers/Base",
-	"sap/m/MessageToast"
-	], function (Base,MessageToast) {
+	"sap/m/MessageToast",
+	"sap/ui/core/routing/History"
+	], function (Base,MessageToast,History) {
 		"use strict";
 
 		var oBaseController;
@@ -11,6 +12,16 @@ sap.ui.define([
 
 			onInit: function(){
 				oBaseController = this;
+			},
+			
+			onNavBack: function (oEvent) {
+				var sPreviousHash = History.getInstance().getPreviousHash();
+
+				if (sPreviousHash !== undefined) {
+					window.history.go(-1);
+				} else {
+					this.getRouter().navTo("appProductManagement", {}, true );					
+				}
 			},
 
 			onExit:function(){

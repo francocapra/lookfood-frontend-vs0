@@ -1,7 +1,7 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"lookfood/resources/main/controllers/Base"
-	], function (Controller, Base) {
+	"lookfood/resources/main/controllers/Base",
+	"sap/ui/core/routing/History"
+	], function (Base, History) {
 		"use strict";
 
 		var oBaseController;
@@ -10,6 +10,16 @@ sap.ui.define([
 
 			onInit: function(){
 				oBaseController = this;
+			},
+
+			onNavBack: function (oEvent) {
+				var sPreviousHash = History.getInstance().getPreviousHash();
+
+				if (sPreviousHash !== undefined) {
+					window.history.go(-1);
+				} else {
+					this.getRouter().navTo("appLogin", {}, true );					
+				}
 			},
 
 			onExit:function(){

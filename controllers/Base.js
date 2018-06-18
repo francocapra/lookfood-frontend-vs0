@@ -1,7 +1,6 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/ui/core/routing/History"
-	], function (Controller, History) {
+	"sap/ui/core/mvc/Controller"
+	], function (Controller) {
 		"use strict";
 
 		var oBaseController;
@@ -10,20 +9,6 @@ sap.ui.define([
 
 			getRouter : function () {
 				return sap.ui.core.UIComponent.getRouterFor(this);
-			},
-
-			onNavBack: function (oEvent) {
-				var oHistory, sPreviousHash;
-
-				oHistory = History.getInstance();
-				sPreviousHash = oHistory.getPreviousHash();
-
-				if (sPreviousHash !== undefined) {
-					window.history.go(-1);
-				} else {
-					// this.getRouter().navTo("appLogin", {}, true /*no history*/);
-					alert('There is no navigation history');
-				}
 			},
 
 			getServiceApi: function(){

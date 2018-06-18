@@ -17,7 +17,7 @@
                 <items>
                     <ObjectListItem
                         title="{PartnerPrdCollection>description}"
-                        icon="imgs/food-tray.png"
+                        icon="../imgs/food-tray.svg"
                         type="Active"
                         press="onListItemPress"
                         number="{   
