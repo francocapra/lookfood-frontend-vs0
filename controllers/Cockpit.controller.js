@@ -1,15 +1,27 @@
 sap.ui.define([
 	"lookfood/resources/main/controllers/Base",
-	"sap/ui/core/routing/History"
-	], function (Base, History) {
+	"sap/ui/core/routing/History",
+	"sap/ui/model/json/JSONModel",
+	"sap/m/MessageToast",
+	'lookfood/resources/main/model/formatter',
+	'sap/ui/Device',
+	'sap/m/ActionSheet',
+	'sap/m/Button'
+	], function (Base, History, JSONModel, MessageToast, formatter, Device, ActionSheet, Button) {
 		"use strict";
 
-		var oBaseController;
-
 		return Base.extend("lookfood.resources.main.controllers.Cockpit", {
+			
+			formatter: formatter,
 
 			onInit: function(){
-				oBaseController = this;
+				var oViewModel = new JSONModel({
+					isPhone : Device.system.phone
+				});
+				this.setModel(oViewModel, "view");
+				Device.media.attachHandler(function (oDevice) {
+					this.getModel("view").setProperty("/isPhone", oDevice.name === "Phone");
+				}.bind(this));				
 			},
 
 			onNavBack: function (oEvent) {
@@ -23,102 +35,67 @@ sap.ui.define([
 			},
 
 			onExit:function(){
-				oBaseController = null;
 				if (this._oDialog) {
 					this._oDialog.destroy();
 				}
 			},
 
-			onLogoffBtnPress: function () {
-				let logoff = new sap.m.Dialog({
-					title:oBaseController.getResourceBundle().getText('logoffDialogTitle'),
-					content:[
-					new sap.m.HBox({
-						justifyContent:'Center',
-						alignItems:'Center',
-						items:[
-						new sap.m.Text({
-							text:oBaseController.getResourceBundle().getText('logoffDialogMessage')
-						})
-						]
-					}).addStyleClass('sapUiSmallMarginTop')
-					],
-					beginButton:new sap.m.Button({
-						text:oBaseController.getResourceBundle().getText('logoffConfirmBtn'),
-						press:function(){
-							logoff.close();
+			onLogoffBtnPress: function (oEvent) {	
+				var oBundle = this.getModel("i18n").getResourceBundle();
+				var fnHandleUserMenuItemPress = function (oEvent) {
+					this.fnLogOff();
+					this.getRouter().navTo('appLogin');
+				}.bind(this);
+				var oActionSheet = new ActionSheet(this.getView().createId("userMessageActionSheet"), {
+						title: oBundle.getText("userHeaderTitle"),
+						showCancelButton: false,
+						buttons: [
+							new Button({
+								text: 'Log Off',
+								type: sap.m.ButtonType.Transparent,
+								press: fnHandleUserMenuItemPress
+							}),
+						],
+						afterClose: function () {
+							oActionSheet.destroy();
 						}
-					}),
-					endButton:new sap.m.Button({
-						text:oBaseController.getResourceBundle().getText('logoffCancelBtn'),
-						type:'Emphasized',
-						press:function(){
-							logoff.close();
-						}
-					}),
-					afterClose:function(oEvent){
-
-						logoff.destroy();
-						
-						if(oEvent.getParameters().origin.getText() == oBaseController.getResourceBundle().getText('logoffConfirmBtn'))
-							oBaseController.getRouter().navTo('appLogin');
-					}
-				}).open();
+					});
+					// forward compact/cozy style into dialog
+					// jQuery.sap.syncStyleClass(this.getView().getController().getOwnerComponent().getContentDensityClass(), this.getView(), oActionSheet);
+					oActionSheet.openBy(oEvent.getSource());
 			},
 
-			onTileItemMgmtPress: function(){
-
-				oBaseController.showGlobalLoader();
-
-				$.when(oBaseController.getPartnerProducts())
-				.done(function(data, textStatus, oResponse){
-					if(data){
-						let prdModel = new sap.ui.model.json.JSONModel({
-							ProductCollection: data
-						});
-						oBaseController.setModel(prdModel, 'PartnerPrdCollection');
-
-						oBaseController.getRouter().navTo('appProductManagement');
-					}
-				})
-				.fail(function(a,b,c){
-					console.log(a,b,c);
-				})
-				.always(function(){
-					oBaseController.hideGlobalLoader();
-				});
+			onPressProducts: function(){
+				this.getRouter().navTo('appProductManagement');
 			},
 
 			onTileCreateReviewPress: function(){
 
-				// let oModel = new sap.ui.model.json.JSONModel(
-				// 	jQuery.sap.getModulePath('lookfood.mockdata','/reviews/products_for_review.json')
-				// 	);
+				this.showGlobalLoader();
 
-				oBaseController.showGlobalLoader();
+				$.when(this.getPartnerProducts())
+					.done(function(data, textStatus, oResponse){
+						if(data){
+							let prdModel = new JSONModel(data);
 
-				$.when(oBaseController.getPartnerProducts())
-				.done(function(data, textStatus, oResponse){
-					if(data){
-						let prdModel = new sap.ui.model.json.JSONModel(data);
+							if (!this._oDialog) {
+								this._oDialog = sap.ui.xmlfragment("lookfood.xml.fragments.ProductsForReview", this);
+								this._oDialog.setModel(prdModel, 'mProductsForReview');
 
-						if (!oBaseController._oDialog) {
-							oBaseController._oDialog = sap.ui.xmlfragment("lookfood.xml.fragments.ProductsForReview", oBaseController);
-							oBaseController._oDialog.setModel(prdModel, 'mProductsForReview');
+								this._oDialog.setTitle(this.getResourceBundle().getText('prdsForReviewTitle'));
+								this._oDialog.setNoDataText(this.getResourceBundle().getText('prdsForReviewNoData'));
+							}
 
-							oBaseController._oDialog.setTitle(oBaseController.getResourceBundle().getText('prdsForReviewTitle'));
-							oBaseController._oDialog.setNoDataText(oBaseController.getResourceBundle().getText('prdsForReviewNoData'));
+							this._oDialog.open();
 						}
-
-						oBaseController._oDialog.open();
-					}
-				})
-				.fail(function(a,b,c){
-					console.log(a,b,c);
-				})
-				.always(function(){
-					oBaseController.hideGlobalLoader();
-				});
+					}.bind(this))
+					.fail(function(a,b,c){
+						console.log(a,b,c);
+					})
+					.always(function(){
+						this.hideGlobalLoader();
+					}.bind(this)
+				);
 
 			},
 
@@ -140,24 +117,25 @@ sap.ui.define([
 					oProducts.itemsReviewDTO.push(oContext.getObject());
 				});
 
-				oBaseController.showGlobalLoader();
+				this.showGlobalLoader();
 
-				$.when(oBaseController.startNewReview(oProducts))
-				.done(function(data,textStatus,oResponse){
-					console.log(data,textStatus,oResponse);
-				})
-				.fail(function(error,textStatus,oResponse){
-					console.log(error,textStatus,oResponse);
-				})
-				.always(function(){
-					oBaseController.hideGlobalLoader();
-				});
+				$.when(this.startNewReview(oProducts))
+					.done(function(data,textStatus,oResponse){
+						console.log(data,textStatus,oResponse);
+					})
+					.fail(function(error,textStatus,oResponse){
+						console.log(error,textStatus,oResponse);
+					})
+					.always(function(){
+						this.hideGlobalLoader();
+					}.bind(this)
+				);
 			},
 
 			startNewReview:function(oProducts){
 				return $.ajax({
 					type:'POST',
-					url:oBaseController.getServiceApi()+'reviews',
+					url:this.getServiceApi()+'reviews',
 					contentType:'application/json',
 					data:JSON.stringify(oProducts),
 					beforeSend:function(oRequest){
@@ -167,14 +145,14 @@ sap.ui.define([
 				});
 			},
 
-			onTilePartProfPress: function(){
+			onPressAdminProfile: function(){
 				this.getRouter().navTo('appPartnerProfile');
 			},
 
 			getTopProducts:function(){
 				return $.ajax({
 					type:'GET',
-					url:oBaseController.getServiceApi()+'products/top',
+					url:this.getServiceApi()+'products/top',
 					beforeSend:function(oRequest){
 						oRequest.setRequestHeader('Authorization',
 							window.sessionStorage.getItem('Authorization'));
@@ -184,22 +162,21 @@ sap.ui.define([
 
 			onTileReviewModePress: function(){
 
-				oBaseController.showGlobalLoader();
+				this.showGlobalLoader();
 
 				$.when(this.getTopProducts())
-				.done(function(data,textStatus,oResponse){
-					let oModel = new sap.ui.model.json.JSONModel(data);
-
-					oBaseController.setModel(oModel, 'TopProducts');
-
-					oBaseController.getRouter().navTo('appReviewMode');
-				})
-				.fail(function(error,textStatus,oResponse){
-					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('topProductsError'));
-				})
-				.always(function(){
-					oBaseController.hideGlobalLoader();
-				});
+					.done(function(data,textStatus,oResponse){
+						let oModel = new JSONModel(data);
+						this.setModel(oModel, 'TopProducts');
+						this.getRouter().navTo('appReviewMode');
+					}.bind(this))
+					.fail(function(error,textStatus,oResponse){
+						MessageToast.show(this.getResourceBundle().getText('topProductsError'));
+					}.bind(this))
+					.always(function(){
+						this.hideGlobalLoader();
+					}.bind(this)
+				);
 			}
 
 		});

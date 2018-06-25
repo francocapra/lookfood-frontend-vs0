@@ -1,15 +1,32 @@
 sap.ui.define([
 	"lookfood/resources/main/controllers/Base",
-	"sap/ui/core/routing/History"
-	], function (Base,History) {
+	"sap/ui/core/routing/History",
+	"sap/ui/model/json/JSONModel"
+	], function (Base, History, JSONModel) {
 		"use strict";
 
-		var oBaseController;
+		var oViewModel = new JSONModel({});
 
 		return Base.extend("lookfood.resources.main.controllers.ProductManagement", {
 
 			onInit: function(){
-				oBaseController = this;
+				var oViewModel = this.getOwnerComponent().getModel("products");								
+				this.showGlobalLoader();
+
+				$.when(this.fnGetProducts())
+					.done(function(data, textStatus, oResponse){
+						if(data){
+							oViewModel.setData(data);
+							this.setModel(oViewModel, "productList");							
+						}
+					}.bind(this))
+					.fail(function(a,b,c){
+						console.log(a,b,c);
+					})
+					.always(function(){
+						this.hideGlobalLoader();
+					}.bind(this)
+				);
 			},
 
 			onNavBack: function (oEvent) {
@@ -111,7 +128,7 @@ sap.ui.define([
 				let productImage = sap.ui.core.Fragment.byId('prdDetailsFragment', 'imgProductPicture');
 				productImage.setSrc(oBaseController.getBucketApi()+'product'+oModel.id+'.jpg');
 				productImage.attachError(function(){
-					productImage.setSrc('imgs/food-tray.png');
+					productImage.setSrc('../imgs/food-tray.svg');
 				});
 
 				prdDetails.attachAfterClose(function(dialogCloseEvent){

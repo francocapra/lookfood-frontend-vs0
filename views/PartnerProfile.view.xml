@@ -5,87 +5,18 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
 
-    <Page id="pagePartnerProfile" title="{i18n>partnerProfileTitle}" showNavButton="true" navButtonPress="onNavBack">
-        <content>
-            <VBox class="sapUiSmallMargin">
-                <items>
-                    <f:SimpleForm id="SimpleFormChange354wideDual"
-                        editable="true"
-                        layout="ResponsiveGridLayout"
-                        title="{i18n>partnerFormHeader}"
-                        labelSpanXL="4"
-                        labelSpanL="3"
-                        labelSpanM="4"
-                        labelSpanS="12"
-                        adjustLabelSpan="false"
-                        emptySpanXL="0"
-                        emptySpanL="4"
-                        emptySpanM="0"
-                        emptySpanS="0"
-                        columnsXL="2"
-                        columnsL="1"
-                        columnsM="1"
-                        singleContainerFullSize="false" >
-                        <f:toolbar>
-                            <Toolbar id="TB1">
-                                <Title id="Title1" text="{i18n>partnerFormHeader}" level="H2" titleStyle="H2"/>
-                                <ToolbarSpacer />
-                                <Button icon="sap-icon://camera" type="Emphasized" press="setPartnerPicture" />
-                            </Toolbar>
-                        </f:toolbar>
-                        <f:content>
-                            <core:Title text="{i18n>partnerGenDataHeader}" />
-                            <Label text="{i18n>partnerFullName}" />
-                            <Input value="{PartnerProfile>/name}" />
-                            <Label text="{i18n>partnerDocNumber}" />
-                            <Input value="{PartnerProfile>/cnpj}" />
-                            <core:Title text="{i18n>partnerContactHeader}" />
-                            <Label text="{i18n>partnerEmail}" />
-                            <Input value="{PartnerProfile>/email}" />
-                            <Label text="{i18n>partnerWebsite}" />
-                            <Input value="{PartnerProfile>/website}" />
-                            <Label text="{i18n>partnerPhoneOne}" />
-                            <Input value="{PartnerProfile>/phones/0}" />
-                            <Label text="{i18n>partnerPhoneTwo}" />
-                            <Input value="{PartnerProfile>/phones/1}" />
-                            <core:Title text="{i18n>partnerAddressHeader}" />
-                            <Label text="{i18n>partnerStrtAndNumber}" />
-                            <Input value="{PartnerProfile>/addresses/0/street}">
-                            </Input>
-                            <Input value="{PartnerProfile>/addresses/0/number}">
-                                <layoutData>
-                                    <l:GridData span="XL2 L1 M3 S4" />
-                                </layoutData>
-                            </Input>
-                            <Label text="{i18n>partnerZipCity}" />
-                            <Input value="{PartnerProfile>/addresses/0/postcode}">
-                                <layoutData>
-                                    <l:GridData span="XL2 L1 M3 S4" />
-                                </layoutData>
-                            </Input>
-                            <Input value="{PartnerProfile>/addresses/0/city/name}" />
-                            <Label text="{i18n>partnerCountry}" />
-                            <Input value="{PartnerProfile>/addresses/0/city/region/name}" />
-                            <Select id="country" selectedKey="{Country}">
-                                <items>
-                                    <core:Item text="Brasil" key="Brasil"/>
-                                </items>
-                                <layoutData>
-                                    <l:GridData span="XL4 L2 M3 S4" />
-                                </layoutData>
-                            </Select>
-                        </f:content>
-                    </f:SimpleForm>
-                </items>
-            </VBox>
-        </content>
+    <Page id="pagePartnerProfile" 
+        title="{i18n>partnerProfileTitle}" 
+        showNavButton="true" 
+        navButtonPress="onNavBack">
         <footer>
-            <Toolbar>
-                <content>
-                    <ToolbarSpacer />
-                    <Button text="{i18n>btnSave}" type="Emphasized" />
-                </content>
-            </Toolbar>
+            <Bar>
+				<contentRight>
+					<Button id="edit"   text="{i18n>btnEdit}"   enabled="false" press="handleEditPress" />
+					<Button id="save"   text="{i18n>btnSave}"   visible="false" press="handleSavePress" type="Emphasized" />
+					<Button id="cancel" text="{i18n>btnCancel}" visible="false" press="handleCancelPress" />
+				</contentRight>
+			</Bar>            
         </footer>
     </Page> 
 

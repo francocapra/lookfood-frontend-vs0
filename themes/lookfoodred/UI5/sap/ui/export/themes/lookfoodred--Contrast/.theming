@@ -1,0 +1,16 @@
+{
+	"mVersionDependency": {
+		"UI5.sap/ui/export.sap_belize_plus": "1.54.7",
+		"UI5.sap/ui/export": "1.54.7",
+		"UI5": "1.54.8"
+	},
+	"sEntity": "Theme",
+	"sId": "lookfoodred--Contrast",
+	"oExtends": "UI5.sap/ui/export.sap_belize_plus",
+	"aBundled": [
+		"lookfoodred"
+	],
+	"sBuildOptions": "SKIP",
+	"sType": "ABSTRACT",
+	"sThemability": "PRIVATE"
+}

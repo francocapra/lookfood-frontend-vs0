@@ -1,0 +1,53 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <VBox class="sapUiSmallMargin">        
+        <f:SimpleForm id="SimpleFormDisplay"
+            editable="false"
+            layout="ResponsiveGridLayout"
+            title="{i18n>partnerFormHeader}"
+            labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+            singleContainerFullSize="false" >
+            <f:toolbar>
+            </f:toolbar>
+            <f:content>
+                <core:Title text="{i18n>partnerGenDataHeader}" />
+                    <Label text="{i18n>partnerFullName}" />
+                    <Text text="{modelPartnerProfile>/name}" />
+                    <Label text="{i18n>partnerDocNumber}" />
+                    <Text text="{modelPartnerProfile>/cnpj}" />
+                <core:Title text="{i18n>partnerContactHeader}" />
+                    <Label text="{i18n>partnerEmail}" />
+                    <Text text="{modelPartnerProfile>/email}" />
+                    <Label text="{i18n>partnerWebsite}" />
+                    <Text text="{modelPartnerProfile>/website}" />
+                    <Label text="{i18n>partnerPhoneOne}" />
+                    <Text text="{modelPartnerProfile>/phones/0}" />
+                    <Label text="{i18n>partnerPhoneTwo}" />
+                    <Text text="{modelPartnerProfile>/phones/1}" />
+                <core:Title text="{i18n>partnerAddressHeader}" />
+                    <Label text="{i18n>partnerStrtAndNumber}" />
+                    <Text text="{modelPartnerProfile>/addresses/0/street} {modelPartnerProfile>/addresses/0/number}">
+                    </Text>
+                    <Label text="{i18n>partnerZipCity}" />
+                    <Text text="{modelPartnerProfile>/addresses/0/postcode} {modelPartnerProfile>/addresses/0/city/name}">
+                    </Text>
+                    <Label text="{i18n>partnerCountry}" />
+                    <Text text=""/>
+            </f:content>
+        </f:SimpleForm>        
+    </VBox>
+</core:FragmentDefinition>    

@@ -1,0 +1,48 @@
+{
+	"mVersionDependency": {
+		"Base.baseLib.sap_belize": "11.0.19",
+		"Base.baseLib": "11.0.19",
+		"Base": "11.0.19"
+	},
+	"sEntity": "Theme",
+	"sId": "lookfood",
+	"sLabel": "Lookfood",
+	"oExtends": "Base.baseLib.sap_belize",
+	"aFiles": [
+		"base",
+		"preview",
+		"custom"
+	],
+	"aBundled": [
+		"lookfood--Contrast"
+	],
+	"sTextDirections": "LTR",
+	"sType": "STANDARD",
+	"sThemability": "PUBLIC",
+	"mData": {
+		"mThemeMasterState": {
+			"mSourceInfo": {
+				"sCreated": "2018-06-23T22:06:15.574Z",
+				"sLastModified": "2018-06-23T22:08:18.957Z",
+				"aVersionHistory": [
+					{
+						"sDate": "2018-06-23T22:06:15.574Z",
+						"mVersion": {
+							"Base": "11.0.19",
+							"UR": "10.30.7.303325.0",
+							"UI5": "1.54.8"
+						}
+					}
+				]
+			},
+			"mBuildInfo": {
+				"sLastBuilt": "2018-06-23T22:08:32.097Z",
+				"mVersion": {
+					"Base": "11.0.19",
+					"UR": "10.30.7.303325.0",
+					"UI5": "1.54.8"
+				}
+			}
+		}
+	}
+}

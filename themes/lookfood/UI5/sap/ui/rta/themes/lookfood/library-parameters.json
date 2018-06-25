@@ -1,0 +1,14 @@
+{
+	"default": {
+		"_sap_ui_rta_Overlay_ActiveBG": "rgba(179,67,80,0.1)",
+		"_sap_ui_rta_Overlay_BaseBG": "#fafafa",
+		"_sap_ui_rta_Overlay_Border": "#B34350",
+		"_sap_ui_rta_Overlay_HoverBG": "rgba(0,0,0,0.108)",
+		"_sap_ui_rta_Overlay_ActiveHoverBG": "rgba(179,67,80,0.2)"
+	},
+	"scopes": {
+		"sapContrast": {
+			"_sap_ui_rta_Overlay_BaseBG": "#873445"
+		}
+	}
+}

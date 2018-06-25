@@ -3,8 +3,6 @@ sap.ui.define([
 	], function (Controller) {
 		"use strict";
 
-		var oBaseController;
-
 		return Controller.extend("lookfood.resources.main.controllers.Base", {
 
 			getRouter : function () {
@@ -32,25 +30,68 @@ sap.ui.define([
 			},
 
 			getModel:function(sName){
-				return this.getOwnerComponent().getModel(sName);
+				return this.getView().getModel(sName);
 			},
 
 			setModel:function(oModel, sName){
-				return this.getOwnerComponent().setModel(oModel, sName);
+				return this.getView().setModel(oModel, sName);
 			},
 
-			getPartnerProducts: function(){
+			fnGetProducts: function(){
 
-				let serviceApi = this.getServiceApi();
+				var uri = this.getServiceApi(),
+					token = window.sessionStorage.getItem('Authorization');
+
+				// var oViewModel =  this.getOwnerComponent().getModel("products");
+				// var oHeaders = {
+				// 	"Authorization": token
+				// };
+
+				// oViewModel.loadData(uri, null, true, "GET", null, false, oHeaders);
 
 				return $.ajax({
-					type:'GET',
-					url:serviceApi+'products',
+					type:	'GET',
+					url:	uri + 'products',
 					beforeSend:function(oRequest){
-						oRequest.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
+						oRequest.setRequestHeader('Authorization', token);
 					}
 				});
+			},
+			
+			fnPartnerDetails:function(){
+				var serviceApi = this.getServiceApi(),
+					email = window.sessionStorage.getItem('PartnerEmail'),
+					token = window.sessionStorage.getItem('Authorization');
+
+				return jQuery.ajax({
+					type:	'GET',
+					url:	serviceApi + 'partners/email?value='+ email,
+					beforeSend:function(requestHeader){
+						requestHeader.setRequestHeader('Authorization', token);
+					},
+				});
+			},
+
+			fnLogin: function(oData){	
+				var serviceApi = this.getServiceApi();
+
+				return jQuery.ajax({
+					type: 	'POST',
+					url: 	serviceApi + 'login',
+					contentType: 'application/json',
+					data: JSON.stringify(oData),
+					success: function(data, textStatus, jqXHR){					
+							window.sessionStorage.setItem('Authorization', jqXHR.getResponseHeader('Authorization'))
+							window.sessionStorage.setItem('PartnerEmail', oData.email);
+						}
+					});
+			},
+
+			fnLogOff: function(){
+				window.sessionStorage.removeItem('Authorization')
+				window.sessionStorage.removeItem('PartnerEmail');
 			}
+
 		});
 
 	});

@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html 
+    xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+            <meta http-equiv="pragma" content="no-cache" />
+        </head>
+        <body style="background-color:#FFFFFF">
+    <h1>Unauthorized</h1>
+        <HR size="1" noshade="noshade">
+            <p>
+                <b>type</b> Status report
+            </p>
+            <p>
+                <b>message</b>
+                <u>Unauthorized</u>
+            </p>
+            <p>
+                <b>description</b>
+                <u>This request requires HTTP authentication.</u>
+            </p>
+        </body>
+    </html>

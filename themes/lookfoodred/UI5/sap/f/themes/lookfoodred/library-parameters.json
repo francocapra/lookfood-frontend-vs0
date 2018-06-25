@@ -1,0 +1,13 @@
+{
+	"default": {
+		"_sap_f_Avatar_Color": "#fff",
+		"_sap_f_FlexibleColumnLayout_ButtonBackground": "#f5ece4",
+		"_sap_f_FlexibleColumnLayout_ButtonHoverBackground": "#eee0d1"
+	},
+	"scopes": {
+		"sapContrast": {
+			"_sap_f_FlexibleColumnLayout_ButtonBackground": "#533230",
+			"_sap_f_FlexibleColumnLayout_ButtonHoverBackground": "#633c39"
+		}
+	}
+}

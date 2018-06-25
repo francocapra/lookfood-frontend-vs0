@@ -1,0 +1,15 @@
+{
+	"mVersionDependency": {
+		"UI5.sap/viz.sap_belize_plus": "1.54.7",
+		"UI5.sap/viz": "1.54.7",
+		"UI5": "1.54.8"
+	},
+	"sEntity": "Theme",
+	"sId": "lookfood--Contrast",
+	"oExtends": "UI5.sap/viz.sap_belize_plus",
+	"aBundled": [
+		"lookfood"
+	],
+	"sType": "ABSTRACT",
+	"sThemability": "PRIVATE"
+}

@@ -1,0 +1,13 @@
+{
+	"default": {
+		"_sap_ui_dt_Overlay_FocusColor": "#000",
+		"_sap_ui_dt_Overlay_TargetZoneColor": "#B34350",
+		"_sap_ui_dt_Overlay_SelectionColor": "#35F",
+		"_sap_ui_dt_Overlay_CuttedColor": "white"
+	},
+	"scopes": {
+		"sapContrast": {
+			"_sap_ui_dt_Overlay_FocusColor": "#fff"
+		}
+	}
+}

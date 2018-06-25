@@ -1,50 +1,48 @@
-sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+sap.ui.define([	
 	"lookfood/resources/main/controllers/Base",
-	"sap/ui/model/json/JSONModel"
-	], function (Controller, Base) {
+	"sap/ui/model/json/JSONModel",
+	"sap/m/MessageToast",
+	'jquery.sap.global'
+	], function (BaseController, JSONModel, MessageToast, jQuery) {
 		"use strict";
 
-		var oBaseController;
+		var oThisController;
 
-		return Base.extend("lookfood.resources.main.controllers.Login", {
-
+		var oViewModel = new JSONModel({
+			email : null,
+			password : null
+		});
+		 	
+		return BaseController.extend("lookfood.resources.main.controllers.Login", {
+			
 			onInit: function(){
-				oBaseController = this;
+				this.setModel(oViewModel, "modelLogin");
 			},
 
 			onNavBack : function() {
 				history.go(-1);
 			},
 
-			performLogin: function(email, password){
-				
-				let oData = {
-					email: email,
-					password: password,
+			onChangedEmail: function(oEvent){
+				if (oEvent.getParameters("value")){
+					oViewModel.setProperty("/email", oEvent.getParameters("value").value );	
+				}else{
+					MessageToast.show(this.getResourceBundle()
+					.getText("userInputPlaceholder"));
 				}
-
-				return $.ajax({
-					type: 'POST',
-					url: oBaseController.getServiceApi()+'login',
-					contentType: 'application/json',
-					data: JSON.stringify(oData)
-				});
 			},
 
-			getPartnerDetails:function(email){
-
-				return $.ajax({
-					type:'GET',
-					url:oBaseController.getServiceApi()+'partners/email?value='+email,
-					beforeSend:function(request){
-						request.setRequestHeader('Authorization', window.sessionStorage.getItem('Authorization'));
-					}
-				});
+			onChangedPassword: function(oEvent){
+				if (oEvent.getParameters("value")){
+					oViewModel.setProperty("/password", oEvent.getParameters("value").value );
+				}else{
+					MessageToast.show(this.getResourceBundle()
+					.getText("passwordInputPlaceholder"));
+				}
 			},
 
 			onExit:function(){
-				oBaseController = null;
+
 			},
 
 			closeDialog:function(event){
@@ -57,48 +55,34 @@ sap.ui.define([
 
 			onLoginBtnPress: function (event) {
 
-				oBaseController.showGlobalLoader();
-
-				let email = this.byId('txtUserId').getValue();
-				let password = this.byId('txtPassword').getValue();
-
-				$.when(oBaseController.performLogin(email, password)).done(function(data, textStatus, jqXHR){
-					
-					if(jqXHR.status == 200){
-
-						window.sessionStorage.setItem('Authorization', jqXHR.getResponseHeader('Authorization'))
-						window.sessionStorage.setItem('PartnerEmail', oBaseController.byId('txtUserId').getValue());
-
-						oBaseController.byId('txtUserId').setValue(null);
-						oBaseController.byId('txtPassword').setValue(null);
-
-						$.when(oBaseController.getPartnerDetails(email)).done(function(data, textStatus, jqXHR){
-
-							if(jqXHR.status == 200)
-							{
-								let partnerModel = new sap.ui.model.json.JSONModel(data);
-
-								oBaseController.setModel(partnerModel, 'PartnerProfile');
-							}
-
-							oBaseController.getRouter().navTo('appCockpit'); 
-
-						}).fail(function(a,b,c){
-							console.log(a,b,c);
-							sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('loginErrPartnerDetails'));
-							oBaseController.getRouter().navTo('appCockpit'); 
-						}).always(function(){
-							oBaseController.hideGlobalLoader();
-						});
-					}
-
-				}).fail(function(a,b,c){
-					oBaseController.hideGlobalLoader();
-					sap.m.MessageToast.show(oBaseController.getResourceBundle().getText('loginErrInvalidLogin'));
-					console.log(a,b,c);
-				});
+				this.showGlobalLoader();				
+				
+				jQuery.when(this.fnLogin(oViewModel.oData))
+					.done(function(){
+						this.getRouter().navTo('appCockpit');	
+					}.bind(this))										
+					.fail(function(){
+						MessageToast.show(this.getResourceBundle().getText('loginErrInvalidLogin'));						
+					}.bind(this))
+					.always(function(){
+						this.hideGlobalLoader();
+					}.bind(this));
 
 			},
+			
+			// _fnLoginCompleted: function(){	
+
+			// 	jQuery.when(this.fnPartnerDetails())	
+			// 		.done(function(oData){
+			// 			var oViewModel = new JSONModel(oData);
+			// 			this.getOwnerComponent().setModel(oViewModel, 'modelPartnerProfile');
+			// 			this.getRouter().navTo('appCockpit')
+			// 		}.bind(this))				
+			// 		.fail(function(){
+			// 			MessageToast.show(this.getResourceBundle().getText('loginErrPartnerDetails'));
+			// 		}.bind(this));
+			// },
+			
 
 			onNewUserLinkPress: function () {
 
@@ -122,7 +106,7 @@ sap.ui.define([
 
 			onPressCreateUser:function(){
 
-				oBaseController.showGlobalLoader();
+				oThisController.showGlobalLoader();
 
 				let oData = {
 					email:this.byId('txtNewUserEmail').getValue(),
@@ -131,23 +115,23 @@ sap.ui.define([
 
 				$.ajax({
 					type:'POST',
-					url:oBaseController.getServiceApi()+'partners',
+					url:oThisController.getServiceApi()+'partners',
 					contentType:'application/json',
 					data:JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){
 
-						oBaseController.hideGlobalLoader();
+						oThisController.hideGlobalLoader();
 
 						if(jqXHR.status == 200 || jqXHR.status == 201){
 							let succDialog = new sap.m.Dialog({
-								title: oBaseController.getResourceBundle().getText('createUserSuccTitle'),
+								title: oThisController.getResourceBundle().getText('createUserSuccTitle'),
 								content:[
 								new sap.m.HBox({
 									justifyContent:'Center',
 									alignItems:'Center',
 									items:[
 									new sap.m.Text({
-										text: oBaseController.getResourceBundle().getText('createUserSuccText')
+										text: oThisController.getResourceBundle().getText('createUserSuccText')
 									})
 									]
 								}).addStyleClass('sapUiSmallMarginTop')
@@ -165,7 +149,7 @@ sap.ui.define([
 						}
 					},
 					error:function(jqXHR, textStatus, errorThrown){
-						oBaseController.hideGlobalLoader();
+						oThisController.hideGlobalLoader();
 						console.log(jqXHR, textStatus, errorThrown);
 					}
 				});
@@ -173,7 +157,7 @@ sap.ui.define([
 
 			onRecoverPass:function(){
 
-				oBaseController.showGlobalLoader()
+				oThisController.showGlobalLoader()
 
 				let email = this.byId('txtForgotEmail').getValue();
 
@@ -183,17 +167,17 @@ sap.ui.define([
 
 				$.ajax({
 					type:'POST',
-					url:oBaseController.getServiceApi()+'auth/forgot',
+					url:oThisController.getServiceApi()+'auth/forgot',
 					contentType:'application/json',
 					data:JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){
-						oBaseController.hideGlobalLoader()
+						oThisController.hideGlobalLoader()
 						if(jqXHR.status == 200 || jqXHR.status == 201){
 							alert('email recuperado')
 						}
 					},
 					error:function(jqXHR, textStatus, errorThrown){
-						oBaseController.hideGlobalLoader()
+						oThisController.hideGlobalLoader()
 						console.log(jqXHR, textStatus, errorThrown);
 					}
 				});

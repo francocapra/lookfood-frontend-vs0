@@ -40,7 +40,7 @@
 .reviewTileContent{
     width: 95% !important;
 }
-span.sapMBtnInner.sapMBtnEmphasized{
+/* span.sapMBtnInner.sapMBtnEmphasized{
     background-color: #d52941 !important;
     border-color: #d52941 !important;
     color: white !important;
@@ -71,8 +71,8 @@ div.sapMIBar > button > span.sapMBtnInner.sapMBtnDefault:active{
     background-color: #d3416a !important;
     border-color: #d3416a !important;
     color: white !important;
-}
-span[id*="pause-play-icon"]{
+} */
+/* span[id*="pause-play-icon"]{
     line-height: unset !important;
 }
 .sapMTileCnt.News{
@@ -80,7 +80,7 @@ span[id*="pause-play-icon"]{
 }
 .sapMDialog>header.sapMDialogTitle .sapMTitle{
     color: #333 !important;
-}
+} */
 .sapUiLocalBusyIndicatorAnimation>div::before{
     background: #9c2727 !important;
 }

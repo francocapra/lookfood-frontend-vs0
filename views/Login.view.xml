@@ -7,20 +7,18 @@
 	xmlns:html="http://www.w3.org/1999/xhtml">
 
 	<Page 
-		id="pageLogin" 
-		title="{i18n>loginPageTitle}" 
+		id="pageLogin" 		
 		class="sapUiResponsiveContentPadding"
-		showHeader="false"
-		showFooter="true"
+		showHeader="true"
 		showSubHeader="false"
-		backgroundDesign="Solid">
+		>
 		<content id="loginForm">
 
 			<HBox id="HBoxLogo"
 				class="sapUiLargeMarginTopBottom"				
 				justifyContent="Center">
 				<items>
-					<Image src="imgs/brand/logo.png" class="logoImage">
+					<Image src="imgs/brand/logo.svg" class="logoImage">
 						<layoutData>
 							<FlexItemData growFactor="0.1"  />
 						</layoutData>
@@ -35,7 +33,7 @@
 
 				<f:SimpleForm 
 					id="SimpleFormLoginTop"
-					editable="false"				
+					editable="true"				
 					layout="ResponsiveGridLayout"			
 					labelSpanXL="12"
 					labelSpanL="12"
@@ -46,19 +44,20 @@
 					columnsL="1"
 					columnsM="1"
 					columnsS="1"				
-					singleContainerFullSize="false" >
-						<f:content>
-							
-							<Label labelFor="txtUserId" text="{i18n>loginUserLabel}"  design="Bold" class="sapUiLargeMarginTop" />
+					singleContainerFullSize="false" 					
+					>
+						<f:content>							
+							<Label text="{i18n>loginUserLabel}" design="Bold" class="sapUiLargeMarginTop" />
 							<Input id="txtUserId" 
 								placeholder="{i18n>userInputPlaceholder}" 
-								submit="onLoginBtnPress"/>
+								type="Email"
+								change="onChangedEmail"/>
 
-							<Label labelFor="txtPassword" text="{i18n>loginUserPassword}" design="Bold"/>
-							<Input id="txtPassword"	
+							<Label text="{i18n>loginUserPassword}" design="Bold"/>
+							<Input id="txtPassword"
 								placeholder="{i18n>passwordInputPlaceholder}" 
 								type="Password" 
-								submit="onLoginBtnPress"/>
+								change="onChangedPassword"/>
 							
 							<Label labelFor="submitLogin"/> 
 							<Button id="submitLogin"

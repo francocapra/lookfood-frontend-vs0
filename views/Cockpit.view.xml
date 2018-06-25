@@ -5,40 +5,137 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
 
-	<Page title="{i18n>cockpitPageTitle}" id="pageCockpit" class="sapUiResponsiveContentPadding">
-		<headerContent>
-			<Button text="{i18n>logoffBtn}" icon="sap-icon://log" press="onLogoffBtnPress" />
+	<Page 
+		id="pageCockpit" 
+		title="{i18n>cockpitPageTitle}" 
+		
+		class="sapUiResponsiveContentPadding">
+		<headerContent>						
+			<Button 
+				id="btLogoff" 
+				icon="sap-icon://log" 
+				tooltip="Logoff"
+				type="Transparent"
+				press="onLogoffBtnPress">
+					<layoutData>
+						<OverflowToolbarLayoutData closeOverflowOnInteraction="false"/>											
+					</layoutData>
+			</Button> 
 		</headerContent>
 		<content>
+		<l:BlockLayout
+			id="BlockLayout"
+			background="Default">
+			<l:BlockLayoutRow>
+				<l:BlockLayoutCell class="sapUiNoContentPadding">
+					<Image
+						src="{
+							path: 'view>/isPhone',
+							formatter: '.formatter.srcImageValue'
+						}"
+						width="100%"/>
+				</l:BlockLayoutCell>
+			</l:BlockLayoutRow>
+			<l:BlockLayoutRow>
+				<l:BlockLayoutCell
+					class="sapUiResponsiveContentPadding"
+					title="{i18n>shopAdminTitle}"
+					backgroundColorSet="ColorSet9"
+					backgroundColorShade="ShadeA"
+					titleAlignment="Left"/>
+			</l:BlockLayoutRow>
+			<l:BlockLayoutRow>
+				<l:BlockLayoutCell
+					backgroundColorSet="ColorSet11"
+					backgroundColorShade="ShadeD">
+					<l:VerticalLayout>
+						<core:Icon
+							src="sap-icon://role"
+							size="2.5rem"
+							color="Default"
+							press="onPressAdminProfile"/>
+						<Title
+							text="{i18n>administrationTitle}"
+							titleStyle="H2"
+							class="sapUiTinyMarginTopBottom"
+							/>
+						<Text
+							text="{i18n>administrationContent}"
+							class="sapUiTinyMarginBottom"/>
+						<Link text="{i18n>accessLink}" press="onPressAdminProfile"/>						
+					</l:VerticalLayout>
+				</l:BlockLayoutCell>
+				<l:BlockLayoutCell
+					backgroundColorSet="ColorSet11"
+					backgroundColorShade="ShadeB">
+					<l:VerticalLayout>
+						<core:Icon
+							src="sap-icon://add-product"
+							size="2.5rem"
+							color="Default"
+							press="onPressProducts" />
+						<Title
+							text="{i18n>productTitle}"
+							titleStyle="H2"
+							class="sapUiTinyMarginTopBottom"/>
+						<Text
+							text="{i18n>productContent}"
+							class="sapUiTinyMarginBottom"/>
+						<Link text="{i18n>accessLink}" press="onPressProducts" />						
+					</l:VerticalLayout>
+				</l:BlockLayoutCell>
+				<l:BlockLayoutCell
+					backgroundColorSet="ColorSet11"
+					backgroundColorShade="ShadeD">
+					<l:VerticalLayout>
+						<core:Icon
+							src="sap-icon://create"
+							size="2.5rem"
+							color="Default"/>
+						<Title
+							text="{i18n>reviewTitle}"
+							titleStyle="H2"
+							class="sapUiTinyMarginTopBottom"/>
+						<Text
+							text="{i18n>reviewContent}"
+							class="sapUiTinyMarginBottom"/>
+						<Link text="{i18n>accessLink}"/>
 						
-			<GenericTile header="{i18n>tileItemsMgmt}" press="onTileItemMgmtPress" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
-				<tileContent>
-					<TileContent>
-						<content>
-							<ImageContent src="sap-icon://product" />
-						</content>
-					</TileContent>
-				</tileContent>
+					</l:VerticalLayout>
+				</l:BlockLayoutCell>
+			</l:BlockLayoutRow>
+		</l:BlockLayout>
+			<!-- <GenericTile 
+				header="{i18n>administrationTitle}" 
+				subheader="{i18n>administrationContent}" 
+				press="onPressAdminProfile" 				
+				class="sapUiTinyMargin">
+				<TileContent>					
+					<ImageContent src="sap-icon://role" />					
+				</TileContent>
 			</GenericTile>
-			<GenericTile header="{i18n>tileUserProfile}" subheader="{i18n>tileUserProfSubheader}" press="onTilePartProfPress" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
-				<tileContent>
-					<TileContent>
-						<content>
-							<ImageContent src="sap-icon://business-card" />
-						</content>
-					</TileContent>
-				</tileContent>
+			<GenericTile 
+				header="{i18n>productTitle}" 
+				subheader="{i18n>productContent}" 
+				press="onPressProducts" 
+				class="sapUiTinyMargin">				
+				<TileContent>
+					<ImageContent src="sap-icon://add-product" />
+				</TileContent>
 			</GenericTile>
-			<GenericTile header="{i18n>tileCreateReview}" press="onTileCreateReviewPress" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
-				<tileContent>
-					<TileContent>
-						<content>
-							<ImageContent src="sap-icon://action" />
-						</content>
-					</TileContent>
-				</tileContent>
+			<GenericTile 
+				header="{i18n>reviewTitle}" 
+				subheader="{i18n>reviewContent}" 
+				press="onTileCreateReviewPress" 
+				class="sapUiTinyMargin">
+				<TileContent>
+					<ImageContent src="sap-icon://action" />
+				</TileContent>
 			</GenericTile>
-			<GenericTile header="{i18n>tileReviewMode}" press="onTileReviewModePress" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+			<GenericTile 
+				header="{i18n>tileReviewMode}" 
+				press="onTileReviewModePress" 
+				class="sapUiTinyMargin">
 				<tileContent>
 					<TileContent>
 						<content>
@@ -46,7 +143,7 @@
 						</content>
 					</TileContent>
 				</tileContent>
-			</GenericTile>
+			</GenericTile> -->
 		</content>
 	</Page>
 

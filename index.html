@@ -2,47 +2,54 @@
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>LookFood</title>
 
 	<script
-		id="sap-ui-bootstrap"
-		src="js/openui5-runtime-1.52.9/resources/sap-ui-core.js"
-		data-sap-ui-theme="gourmeo"
+		id="sap-ui-bootstrap" type="text/javascript"
+		src="resources/sap-ui-core.js"
+		data-sap-ui-theme="lookfoodred"
 		data-sap-ui-libs="sap.m,sap.tnt,sap.ui.layout,sap.ui.unified"
 		data-sap-ui-compatVersion="edge"
 		data-sap-ui-preload="async"
-		data-sap-ui-resourceroots='{
-			"lookfood.resources.main": "./",
-			"lookfood.xml.fragments": "./views/fragments/",
-			"lookfood.mockdata":"./mockdata" }'>
+		data-sap-ui-resourceroots='{"lookfood.resources.main": "./"}'
+		data-sap-ui-theme-roots='{"lookfoodred": "/themes/lookfoodred/UI5/"}'>
 	</script>
 
 	<script>
 		sap.ui.getCore().attachInit(function () {
-			new sap.m.Shell({
-					app: new sap.ui.core.ComponentContainer({
-						name: "lookfood.resources.main",
-						settings:{
-							id : "lookfoodNav"
-						}
-					})
-				}).placeAt("content");		
+			sap.ui.require([
+				"sap/m/Shell",
+				"sap/ui/core/ComponentContainer"
+				], function (Shell, ComponentContainer) {
+					// initialize the UI component
+					new Shell({
+						showLogout: false,
+						app: new sap.ui.core.ComponentContainer({
+							height: "100%",
+							name: "lookfood.resources.main",
+							settings:{
+								id : "lookfoodApp"
+							}
+						})
+					}).placeAt("content");
+				});
 		});
 	</script>
 
-	<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" 
+	<!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" 
 		integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe"
 		crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="css/lookfood.css">
-	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-	<title>LookFood</title>
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
+	
 </head>
 
 <body class="sapUiBody" id="content">
 	<script type="text/javascript" src="js/third-parties/specialfunctions.js"></script>
 	<script type="text/javascript" src="js/third-parties/instascan.min.js"></script>
-	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> -->
 </body>
 
 </html>

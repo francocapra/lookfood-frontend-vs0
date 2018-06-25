@@ -2,5 +2,8 @@
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     displayBlock="true">
-    <App id="lookfoodApp" />
+    <App id="lookfoodApp" >
+        <pages>
+        </pages>
+    </App>
 </mvc:View>
