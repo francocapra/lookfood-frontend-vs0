@@ -1,20 +1,20 @@
+<!DOCTYPE html>
 <html>
-
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="UTF-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<title>LookFood</title>
 
-	<script
-		id="sap-ui-bootstrap" type="text/javascript"
-		src="resources/sap-ui-core.js"
-		data-sap-ui-theme="lookfoodred"
-		data-sap-ui-libs="sap.m,sap.tnt,sap.ui.layout,sap.ui.unified"
-		data-sap-ui-compatVersion="edge"
-		data-sap-ui-preload="async"
-		data-sap-ui-resourceroots='{"lookfood.resources.main": "./"}'
-		data-sap-ui-theme-roots='{"lookfoodred": "/themes/lookfoodred/UI5/"}'>
+	<!-- Bootstrapping UI5 -->
+	<script	id="sap-ui-bootstrap" 
+			src="resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m, sap.f"
+			data-sap-ui-theme="lookfoodred"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-preload="async"
+			data-sap-ui-resourceroots='{"lookfood.resources.Lookfood": "."}'
+			data-sap-ui-theme-roots='{"lookfoodred": "/themes/lookfoodred/UI5/"}'>
 	</script>
 
 	<script>
@@ -24,13 +24,13 @@
 				"sap/ui/core/ComponentContainer"
 				], function (Shell, ComponentContainer) {
 					// initialize the UI component
-					new Shell({
-						showLogout: false,
-						app: new sap.ui.core.ComponentContainer({
+					new Shell({						
+						app: new ComponentContainer({
 							height: "100%",
-							name: "lookfood.resources.main",
+							name: "lookfood.resources.Lookfood",
+							manifest: true,
 							settings:{
-								id : "lookfoodApp"
+								id : "Lookfood"
 							}
 						})
 					}).placeAt("content");
@@ -46,6 +46,7 @@
 	
 </head>
 
+<!-- UI Content -->
 <body class="sapUiBody" id="content">
 	<script type="text/javascript" src="js/third-parties/specialfunctions.js"></script>
 	<script type="text/javascript" src="js/third-parties/instascan.min.js"></script>

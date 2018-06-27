@@ -1,22 +1,18 @@
 sap.ui.define([	
-	"lookfood/resources/main/controllers/Base",
+	"lookfood/resources/Lookfood/controllers/Base",
 	"sap/ui/model/json/JSONModel",
-	"sap/m/MessageToast",
-	'jquery.sap.global'
-	], function (BaseController, JSONModel, MessageToast, jQuery) {
+	"sap/m/MessageToast"
+	], function (BaseController, JSONModel, MessageToast) {
 		"use strict";
 
-		var oThisController;
-
-		var oViewModel = new JSONModel({
-			email : null,
-			password : null
-		});
-		 	
-		return BaseController.extend("lookfood.resources.main.controllers.Login", {
+		return BaseController.extend("lookfood.resources.Lookfood.controllers.Login", {
 			
 			onInit: function(){
-				this.setModel(oViewModel, "modelLogin");
+				var oViewModel = new JSONModel({
+					email : null,
+					password : null
+				});
+				this.setModel(oViewModel, "loginView")
 			},
 
 			onNavBack : function() {
@@ -24,26 +20,23 @@ sap.ui.define([
 			},
 
 			onChangedEmail: function(oEvent){
+				var oViewModel = this.getModel("loginView");
 				if (oEvent.getParameters("value")){
 					oViewModel.setProperty("/email", oEvent.getParameters("value").value );	
 				}else{
-					MessageToast.show(this.getResourceBundle()
-					.getText("userInputPlaceholder"));
+					MessageToast.show(this.getResourceBundle().getText("userInputPlaceholder"));
 				}
 			},
 
 			onChangedPassword: function(oEvent){
+				var oViewModel = this.getModel("loginView");
 				if (oEvent.getParameters("value")){
 					oViewModel.setProperty("/password", oEvent.getParameters("value").value );
 				}else{
-					MessageToast.show(this.getResourceBundle()
-					.getText("passwordInputPlaceholder"));
+					MessageToast.show(this.getResourceBundle().getText("passwordInputPlaceholder"));
 				}
 			},
 
-			onExit:function(){
-
-			},
 
 			closeDialog:function(event){
 				event.getSource().getParent().close();
@@ -56,8 +49,9 @@ sap.ui.define([
 			onLoginBtnPress: function (event) {
 
 				this.showGlobalLoader();				
-				
-				jQuery.when(this.fnLogin(oViewModel.oData))
+				var oViewModel = this.getModel("loginView");
+
+				$.when(this.fnLogin(oViewModel.oData))
 					.done(function(){
 						this.getRouter().navTo('appCockpit');	
 					}.bind(this))										
@@ -86,8 +80,8 @@ sap.ui.define([
 
 			onNewUserLinkPress: function () {
 
-				let newUserDialog = sap.ui.xmlfragment(this.getView().getId(),
-					'lookfood.xml.fragments.NewUserDialog', this);
+				var newUserDialog = sap.ui.xmlfragment(this.getView().getId(),
+					'lookfood.resources.Lookfood.views.NewUserDialog', this);
 
 				this.getView().addDependent(newUserDialog);
 
@@ -96,8 +90,8 @@ sap.ui.define([
 
 			onForgotPassLinkPress: function () {
 
-				let forgotPassDialog = sap.ui.xmlfragment(this.getView().getId(),
-					'lookfood.xml.fragments.ForgotPassword', this);
+				var forgotPassDialog = sap.ui.xmlfragment(this.getView().getId(),
+					'lookfood.resources.Lookfood.views.ForgotPassword', this);
 
 				this.getView().addDependent(forgotPassDialog);
 
@@ -106,80 +100,78 @@ sap.ui.define([
 
 			onPressCreateUser:function(){
 
-				oThisController.showGlobalLoader();
+				this.showGlobalLoader();
 
 				let oData = {
-					email:this.byId('txtNewUserEmail').getValue(),
-					password:this.byId('txtNewUserPass').getValue()
+					email:	this.byId('txtNewUserEmail').getValue(),
+					password:	this.byId('txtNewUserPass').getValue()
 				}
 
 				$.ajax({
-					type:'POST',
-					url:oThisController.getServiceApi()+'partners',
-					contentType:'application/json',
-					data:JSON.stringify(oData),
+					type:	'POST',
+					url:	this.getServiceApi()+'partners',
+					contentType:	'application/json',
+					data:	JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){
 
-						oThisController.hideGlobalLoader();
+						this.hideGlobalLoader();
 
 						if(jqXHR.status == 200 || jqXHR.status == 201){
+
 							let succDialog = new sap.m.Dialog({
-								title: oThisController.getResourceBundle().getText('createUserSuccTitle'),
-								content:[
-								new sap.m.HBox({
-									justifyContent:'Center',
-									alignItems:'Center',
-									items:[
-									new sap.m.Text({
-										text: oThisController.getResourceBundle().getText('createUserSuccText')
-									})
-									]
-								}).addStyleClass('sapUiSmallMarginTop')
-								],
+								title: this.getResourceBundle().getText('createUserSuccTitle'),
+								content:[	new sap.m.HBox({
+												justifyContent:'Center',
+												alignItems:'Center',
+												items:[	new sap.m.Text({
+																text: this.getResourceBundle().getText('createUserSuccText')})
+													]
+											}).addStyleClass('sapUiSmallMarginTop')
+									],
 								beginButton: new sap.m.Button({
-									text:'OK',
-									press:function(){
-										succDialog.close();
-									}
-								}),
+												text:'OK',
+												press:function(){
+													succDialog.close();
+												}
+									}),
 								afterClose:function(){
 									succDialog.destroy();
-								}
+									}
 							}).open();
 						}
-					},
+					}.bind(this),
 					error:function(jqXHR, textStatus, errorThrown){
-						oThisController.hideGlobalLoader();
+						this.hideGlobalLoader();
 						console.log(jqXHR, textStatus, errorThrown);
-					}
+					}.bind(this)
 				});
 			},
 
 			onRecoverPass:function(){
 
-				oThisController.showGlobalLoader()
+				this.showGlobalLoader()
 
-				let email = this.byId('txtForgotEmail').getValue();
+				var email = this.byId('txtForgotEmail').getValue();
 
 				var oData = {
-					email:email
+					email: email
 				}
 
 				$.ajax({
 					type:'POST',
-					url:oThisController.getServiceApi()+'auth/forgot',
+					url:this.getServiceApi()+'auth/forgot',
 					contentType:'application/json',
 					data:JSON.stringify(oData),
 					success:function(data, textStatus, jqXHR){
-						oThisController.hideGlobalLoader()
+						this.hideGlobalLoader()
 						if(jqXHR.status == 200 || jqXHR.status == 201){
 							alert('email recuperado')
 						}
-					},
+					}.bind(this),
 					error:function(jqXHR, textStatus, errorThrown){
-						oThisController.hideGlobalLoader()
+						this.hideGlobalLoader()
 						console.log(jqXHR, textStatus, errorThrown);
-					}
+					}.bind(this)
 				});
 
 			}

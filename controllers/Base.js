@@ -3,7 +3,7 @@ sap.ui.define([
 	], function (Controller) {
 		"use strict";
 
-		return Controller.extend("lookfood.resources.main.controllers.Base", {
+		return Controller.extend("lookfood.resources.Lookfood.controllers.Base", {
 
 			getRouter : function () {
 				return sap.ui.core.UIComponent.getRouterFor(this);
@@ -39,23 +39,16 @@ sap.ui.define([
 
 			fnGetProducts: function(){
 
-				var uri = this.getServiceApi(),
+				var uri = this.getServiceApi() + "products",
 					token = window.sessionStorage.getItem('Authorization');
 
-				// var oViewModel =  this.getOwnerComponent().getModel("products");
-				// var oHeaders = {
-				// 	"Authorization": token
-				// };
+				var oViewModel =  this.getOwnerComponent().getModel("products");
+				var oHeaders = {
+					"Authorization": token
+				};
 
-				// oViewModel.loadData(uri, null, true, "GET", null, false, oHeaders);
+				return oViewModel.loadData(uri, null, true, "GET", null, false, oHeaders);
 
-				return $.ajax({
-					type:	'GET',
-					url:	uri + 'products',
-					beforeSend:function(oRequest){
-						oRequest.setRequestHeader('Authorization', token);
-					}
-				});
 			},
 			
 			fnPartnerDetails:function(){

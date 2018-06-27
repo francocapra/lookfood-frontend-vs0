@@ -1,4 +1,4 @@
-<mvc:View controllerName="lookfood.resources.main.controllers.Cockpit" 
+<mvc:View controllerName="lookfood.resources.Lookfood.controllers.Cockpit" 
 	xmlns="sap.m" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:l="sap.ui.layout" 
@@ -7,104 +7,108 @@
 
 	<Page 
 		id="pageCockpit" 
-		title="{i18n>cockpitPageTitle}" 
-		
+		title="{i18n>cockpitPageTitle}" 		
 		class="sapUiResponsiveContentPadding">
-		<headerContent>						
+		
+		<headerContent>	
 			<Button 
 				id="btLogoff" 
 				icon="sap-icon://log" 
 				tooltip="Logoff"
 				type="Transparent"
 				press="onLogoffBtnPress">
-					<layoutData>
-						<OverflowToolbarLayoutData closeOverflowOnInteraction="false"/>											
-					</layoutData>
-			</Button> 
+				<layoutData>
+					<OverflowToolbarLayoutData closeOverflowOnInteraction="false"/>											
+				</layoutData>
+			</Button> 			
 		</headerContent>
+
 		<content>
-		<l:BlockLayout
-			id="BlockLayout"
-			background="Default">
-			<l:BlockLayoutRow>
-				<l:BlockLayoutCell class="sapUiNoContentPadding">
-					<Image
-						src="{
-							path: 'view>/isPhone',
-							formatter: '.formatter.srcImageValue'
-						}"
-						width="100%"/>
-				</l:BlockLayoutCell>
-			</l:BlockLayoutRow>
-			<l:BlockLayoutRow>
-				<l:BlockLayoutCell
-					class="sapUiResponsiveContentPadding"
-					title="{i18n>shopAdminTitle}"
-					backgroundColorSet="ColorSet9"
-					backgroundColorShade="ShadeA"
-					titleAlignment="Left"/>
-			</l:BlockLayoutRow>
-			<l:BlockLayoutRow>
-				<l:BlockLayoutCell
-					backgroundColorSet="ColorSet11"
-					backgroundColorShade="ShadeD">
-					<l:VerticalLayout>
-						<core:Icon
-							src="sap-icon://role"
-							size="2.5rem"
-							color="Default"
-							press="onPressAdminProfile"/>
-						<Title
-							text="{i18n>administrationTitle}"
-							titleStyle="H2"
-							class="sapUiTinyMarginTopBottom"
-							/>
-						<Text
-							text="{i18n>administrationContent}"
-							class="sapUiTinyMarginBottom"/>
-						<Link text="{i18n>accessLink}" press="onPressAdminProfile"/>						
-					</l:VerticalLayout>
-				</l:BlockLayoutCell>
-				<l:BlockLayoutCell
-					backgroundColorSet="ColorSet11"
-					backgroundColorShade="ShadeB">
-					<l:VerticalLayout>
-						<core:Icon
-							src="sap-icon://add-product"
-							size="2.5rem"
-							color="Default"
-							press="onPressProducts" />
-						<Title
-							text="{i18n>productTitle}"
-							titleStyle="H2"
-							class="sapUiTinyMarginTopBottom"/>
-						<Text
-							text="{i18n>productContent}"
-							class="sapUiTinyMarginBottom"/>
-						<Link text="{i18n>accessLink}" press="onPressProducts" />						
-					</l:VerticalLayout>
-				</l:BlockLayoutCell>
-				<l:BlockLayoutCell
-					backgroundColorSet="ColorSet11"
-					backgroundColorShade="ShadeD">
-					<l:VerticalLayout>
-						<core:Icon
-							src="sap-icon://create"
-							size="2.5rem"
-							color="Default"/>
-						<Title
-							text="{i18n>reviewTitle}"
-							titleStyle="H2"
-							class="sapUiTinyMarginTopBottom"/>
-						<Text
-							text="{i18n>reviewContent}"
-							class="sapUiTinyMarginBottom"/>
-						<Link text="{i18n>accessLink}"/>
-						
-					</l:VerticalLayout>
-				</l:BlockLayoutCell>
-			</l:BlockLayoutRow>
-		</l:BlockLayout>
+			<l:BlockLayout
+				id="BlockLayout"
+				background="Default">
+
+				<l:BlockLayoutRow>
+					<l:BlockLayoutCell class="sapUiNoContentPadding">
+						<Image
+							src="{
+								path: 'view>/isPhone',
+								formatter: '.formatter.srcImageValue'
+							}"
+							width="100%"/>
+					</l:BlockLayoutCell>
+				</l:BlockLayoutRow>
+
+				<l:BlockLayoutRow>
+					<l:BlockLayoutCell
+						class="sapUiResponsiveContentPadding"
+						title="{i18n>shopAdminTitle}"
+						backgroundColorSet="ColorSet9"
+						backgroundColorShade="ShadeA"
+						titleAlignment="Left"/>
+				</l:BlockLayoutRow>
+
+				<l:BlockLayoutRow>
+					<l:BlockLayoutCell
+						backgroundColorSet="ColorSet11"
+						backgroundColorShade="ShadeD">
+						<l:VerticalLayout>
+							<core:Icon
+								src="sap-icon://role"
+								size="2.5rem"
+								color="Default"
+								press="onPressAdminProfile"/>
+							<Title
+								text="{i18n>administrationTitle}"
+								titleStyle="H2"
+								class="sapUiTinyMarginTopBottom"
+								/>
+							<Text
+								text="{i18n>administrationContent}"
+								class="sapUiTinyMarginBottom"/>
+							<Link text="{i18n>accessLink}" press="onPressAdminProfile"/>						
+						</l:VerticalLayout>
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell
+						backgroundColorSet="ColorSet11"
+						backgroundColorShade="ShadeB">
+						<l:VerticalLayout>
+							<core:Icon
+								src="sap-icon://add-product"
+								size="2.5rem"
+								color="Default"
+								press="onPressProducts" />
+							<Title
+								text="{i18n>productTitle}"
+								titleStyle="H2"
+								class="sapUiTinyMarginTopBottom"/>
+							<Text
+								text="{i18n>productContent}"
+								class="sapUiTinyMarginBottom"/>
+							<Link text="{i18n>accessLink}" press="onPressProducts" />						
+						</l:VerticalLayout>
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell
+						backgroundColorSet="ColorSet11"
+						backgroundColorShade="ShadeD">
+						<l:VerticalLayout>
+							<core:Icon
+								src="sap-icon://create"
+								size="2.5rem"
+								color="Default"/>
+							<Title
+								text="{i18n>reviewTitle}"
+								titleStyle="H2"
+								class="sapUiTinyMarginTopBottom"/>
+							<Text
+								text="{i18n>reviewContent}"
+								class="sapUiTinyMarginBottom"/>
+							<Link text="{i18n>accessLink}"/>
+							
+						</l:VerticalLayout>
+					</l:BlockLayoutCell>
+				</l:BlockLayoutRow>
+			</l:BlockLayout>
 			<!-- <GenericTile 
 				header="{i18n>administrationTitle}" 
 				subheader="{i18n>administrationContent}" 

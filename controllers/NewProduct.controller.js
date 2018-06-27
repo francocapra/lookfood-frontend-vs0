@@ -1,5 +1,5 @@
 sap.ui.define([
-	"lookfood/resources/main/controllers/Base",
+	"lookfood/resources/Lookfood/controllers/Base",
 	"sap/m/MessageToast",
 	"sap/ui/core/routing/History"
 	], function (Base,MessageToast,History) {
@@ -8,7 +8,7 @@ sap.ui.define([
 		var oBaseController;
 		var oFile;
 
-		return Base.extend("lookfood.resources.main.controllers.NewProduct", {
+		return Base.extend("lookfood.resources.Lookfood.controllers.NewProduct", {
 
 			onInit: function(){
 				oBaseController = this;

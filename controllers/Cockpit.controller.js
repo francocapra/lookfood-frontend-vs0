@@ -1,16 +1,24 @@
 sap.ui.define([
-	"lookfood/resources/main/controllers/Base",
+	"lookfood/resources/Lookfood/controllers/Base",
+	'lookfood/resources/Lookfood/model/formatter',
 	"sap/ui/core/routing/History",
 	"sap/ui/model/json/JSONModel",
-	"sap/m/MessageToast",
-	'lookfood/resources/main/model/formatter',
 	'sap/ui/Device',
+	"sap/m/MessageToast",
 	'sap/m/ActionSheet',
 	'sap/m/Button'
-	], function (Base, History, JSONModel, MessageToast, formatter, Device, ActionSheet, Button) {
+	], function (
+		Base, 
+		formatter, 
+		History, 
+		JSONModel, 
+		Device, 
+		MessageToast, 
+		ActionSheet, 
+		Button) {
 		"use strict";
 
-		return Base.extend("lookfood.resources.main.controllers.Cockpit", {
+		return Base.extend("lookfood.resources.Lookfood.controllers.Cockpit", {
 			
 			formatter: formatter,
 
@@ -66,118 +74,120 @@ sap.ui.define([
 			},
 
 			onPressProducts: function(){
+				
 				this.getRouter().navTo('appProductManagement');
-			},
-
-			onTileCreateReviewPress: function(){
-
-				this.showGlobalLoader();
-
-				$.when(this.getPartnerProducts())
-					.done(function(data, textStatus, oResponse){
-						if(data){
-							let prdModel = new JSONModel(data);
-
-							if (!this._oDialog) {
-								this._oDialog = sap.ui.xmlfragment("lookfood.xml.fragments.ProductsForReview", this);
-								this._oDialog.setModel(prdModel, 'mProductsForReview');
-
-								this._oDialog.setTitle(this.getResourceBundle().getText('prdsForReviewTitle'));
-								this._oDialog.setNoDataText(this.getResourceBundle().getText('prdsForReviewNoData'));
-							}
-
-							this._oDialog.open();
-						}
-					}.bind(this))
-					.fail(function(a,b,c){
-						console.log(a,b,c);
-					})
-					.always(function(){
-						this.hideGlobalLoader();
-					}.bind(this)
-				);
-
-			},
-
-			handleSearch: function(oEvent) {
-				var sValue = oEvent.getParameter("value");
-				var oFilter = new sap.ui.model.Filter("description", sap.ui.model.FilterOperator.Contains, sValue);
-				var oBinding = oEvent.getSource().getBinding("items");
-				oBinding.filter([oFilter]);
-			},
-
-			handleConfirm:function(oEvent){
-				var aContexts = oEvent.getParameter("selectedContexts");
-
-				let oProducts = {
-					itemsReviewDTO:[]
-				};
-
-				aContexts.forEach(function(oContext){
-					oProducts.itemsReviewDTO.push(oContext.getObject());
-				});
-
-				this.showGlobalLoader();
-
-				$.when(this.startNewReview(oProducts))
-					.done(function(data,textStatus,oResponse){
-						console.log(data,textStatus,oResponse);
-					})
-					.fail(function(error,textStatus,oResponse){
-						console.log(error,textStatus,oResponse);
-					})
-					.always(function(){
-						this.hideGlobalLoader();
-					}.bind(this)
-				);
-			},
-
-			startNewReview:function(oProducts){
-				return $.ajax({
-					type:'POST',
-					url:this.getServiceApi()+'reviews',
-					contentType:'application/json',
-					data:JSON.stringify(oProducts),
-					beforeSend:function(oRequest){
-						let authToken = window.sessionStorage.getItem('Authorization');
-						oRequest.setRequestHeader('Authorization', authToken);
-					}
-				});
 			},
 
 			onPressAdminProfile: function(){
 				this.getRouter().navTo('appPartnerProfile');
-			},
-
-			getTopProducts:function(){
-				return $.ajax({
-					type:'GET',
-					url:this.getServiceApi()+'products/top',
-					beforeSend:function(oRequest){
-						oRequest.setRequestHeader('Authorization',
-							window.sessionStorage.getItem('Authorization'));
-					}
-				});
-			},
-
-			onTileReviewModePress: function(){
-
-				this.showGlobalLoader();
-
-				$.when(this.getTopProducts())
-					.done(function(data,textStatus,oResponse){
-						let oModel = new JSONModel(data);
-						this.setModel(oModel, 'TopProducts');
-						this.getRouter().navTo('appReviewMode');
-					}.bind(this))
-					.fail(function(error,textStatus,oResponse){
-						MessageToast.show(this.getResourceBundle().getText('topProductsError'));
-					}.bind(this))
-					.always(function(){
-						this.hideGlobalLoader();
-					}.bind(this)
-				);
 			}
+
+			// onTileCreateReviewPress: function(){
+
+			// 	this.showGlobalLoader();
+
+			// 	$.when(this.getPartnerProducts())
+			// 		.done(function(data, textStatus, oResponse){
+			// 			if(data){
+			// 				let prdModel = new JSONModel(data);
+
+			// 				if (!this._oDialog) {
+			// 					this._oDialog = sap.ui.xmlfragment("lookfood.xml.fragments.ProductsForReview", this);
+			// 					this._oDialog.setModel(prdModel, 'mProductsForReview');
+
+			// 					this._oDialog.setTitle(this.getResourceBundle().getText('prdsForReviewTitle'));
+			// 					this._oDialog.setNoDataText(this.getResourceBundle().getText('prdsForReviewNoData'));
+			// 				}
+
+			// 				this._oDialog.open();
+			// 			}
+			// 		}.bind(this))
+			// 		.fail(function(a,b,c){
+			// 			console.log(a,b,c);
+			// 		})
+			// 		.always(function(){
+			// 			this.hideGlobalLoader();
+			// 		}.bind(this)
+			// 	);
+
+			// },
+
+			// handleSearch: function(oEvent) {
+			// 	var sValue = oEvent.getParameter("value");
+			// 	var oFilter = new sap.ui.model.Filter("description", sap.ui.model.FilterOperator.Contains, sValue);
+			// 	var oBinding = oEvent.getSource().getBinding("items");
+			// 	oBinding.filter([oFilter]);
+			// },
+
+			// handleConfirm:function(oEvent){
+			// 	var aContexts = oEvent.getParameter("selectedContexts");
+
+			// 	let oProducts = {
+			// 		itemsReviewDTO:[]
+			// 	};
+
+			// 	aContexts.forEach(function(oContext){
+			// 		oProducts.itemsReviewDTO.push(oContext.getObject());
+			// 	});
+
+			// 	this.showGlobalLoader();
+
+			// 	$.when(this.startNewReview(oProducts))
+			// 		.done(function(data,textStatus,oResponse){
+			// 			console.log(data,textStatus,oResponse);
+			// 		})
+			// 		.fail(function(error,textStatus,oResponse){
+			// 			console.log(error,textStatus,oResponse);
+			// 		})
+			// 		.always(function(){
+			// 			this.hideGlobalLoader();
+			// 		}.bind(this)
+			// 	);
+			// },
+
+			// startNewReview:function(oProducts){
+			// 	return $.ajax({
+			// 		type:'POST',
+			// 		url:this.getServiceApi()+'reviews',
+			// 		contentType:'application/json',
+			// 		data:JSON.stringify(oProducts),
+			// 		beforeSend:function(oRequest){
+			// 			let authToken = window.sessionStorage.getItem('Authorization');
+			// 			oRequest.setRequestHeader('Authorization', authToken);
+			// 		}
+			// 	});
+			// },
+
+
+			// getTopProducts:function(){
+			// 	return $.ajax({
+			// 		type:'GET',
+			// 		url:this.getServiceApi()+'products/top',
+			// 		beforeSend:function(oRequest){
+			// 			oRequest.setRequestHeader('Authorization',
+			// 				window.sessionStorage.getItem('Authorization'));
+			// 		}
+			// 	});
+			// },
+
+			// onTileReviewModePress: function(){
+
+			// 	this.showGlobalLoader();
+
+			// 	$.when(this.getTopProducts())
+			// 		.done(function(data,textStatus,oResponse){
+			// 			let oModel = new JSONModel(data);
+			// 			this.setModel(oModel, 'TopProducts');
+			// 			this.getRouter().navTo('appReviewMode');
+			// 		}.bind(this))
+			// 		.fail(function(error,textStatus,oResponse){
+			// 			MessageToast.show(this.getResourceBundle().getText('topProductsError'));
+			// 		}.bind(this))
+			// 		.always(function(){
+			// 			this.hideGlobalLoader();
+			// 		}.bind(this)
+			// 	);
+			// }
 
 		});
 

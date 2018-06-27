@@ -1,9 +1,7 @@
-<mvc:View controllerName="lookfood.resources.main.controllers.App" 
+<mvc:View controllerName="lookfood.resources.Lookfood.controllers.App" 
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     displayBlock="true">
-    <App id="lookfoodApp" >
-        <pages>
-        </pages>
+    <App id="app" >
     </App>
 </mvc:View>

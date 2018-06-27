@@ -1,4 +1,4 @@
-<mvc:View controllerName="lookfood.resources.main.controllers.NewProduct" 
+<mvc:View controllerName="lookfood.resources.Lookfood.controllers.NewProduct" 
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:l="sap.ui.layout" 

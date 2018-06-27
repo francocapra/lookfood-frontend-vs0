@@ -1,5 +1,5 @@
 sap.ui.define([	
-	"lookfood/resources/main/controllers/Base",
+	"lookfood/resources/Lookfood/controllers/Base",
 	"sap/ui/core/routing/History",
 	'jquery.sap.global',
 	"sap/ui/model/json/JSONModel",
@@ -9,7 +9,7 @@ sap.ui.define([
 
 		var oViewModel = new JSONModel({});
 
-		return Base.extend("lookfood.resources.main.controllers.PartnerProfile", {
+		return Base.extend("lookfood.resources.Lookfood.controllers.PartnerProfile", {
 
 			onInit: function(){
 				
@@ -207,7 +207,7 @@ sap.ui.define([
 					return oFormFragment;
 				}
 	
-				oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "lookfood.resources.main.views." + sFragmentName);
+				oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "lookfood.resources.Lookfood.views." + sFragmentName);
 	
 				this._formFragments[sFragmentName] = oFormFragment;
 				return this._formFragments[sFragmentName];

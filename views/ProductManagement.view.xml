@@ -1,4 +1,4 @@
-<mvc:View controllerName="lookfood.resources.main.controllers.ProductManagement" 
+<mvc:View controllerName="lookfood.resources.Lookfood.controllers.ProductManagement" 
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:l="sap.ui.layout" 
@@ -6,22 +6,29 @@
     xmlns:core="sap.ui.core">
 
     <Page 
-        title="{i18n>prdMgmtPageTitle}" 
         id="pageProductsMgmt" 
         showNavButton="true" 
         navButtonPress="onNavBack" 
         noDataText="{i18n>tableProductsNoData}">
         <headerContent>
-            <Button icon="sap-icon://add" press="onAddProductPress" />
-            <Button icon="sap-icon://refresh" press="onRefreshProductsPress" />
+            <Button id="btGrid" icon="sap-icon://grid" press="onGrid" />
         </headerContent>
         <content>
             <List
-                items="{productList>/}"
-                headerText="{i18n>listHeader}">
+                id="list"
+                items="{    
+                        path: 'productList>/',
+                        sorter: { path: 'description', descending: false } 
+                        }"                
+                noDataText="{i18n>listNoDataText}"
+                growing="true"
+                growingThreshold="4"
+                growingScrollToLoad="false"
+                busyIndicatorDelay="{productView>/listBusyDelay}"
+                updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <Toolbar>
-                        <Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
+                        <Title id="listHeader" text="{productView>/listTitle}"/>
                         <ToolbarSpacer />
                         <SearchField
                             id="searchField"
@@ -30,12 +37,16 @@
                             width="auto">
                         </SearchField>
                         <Button id="addButton" icon="sap-icon://add" press="onAdd" />
+                        <Button id="btRefresh" icon="sap-icon://refresh" press="onRefresh" />
                     </Toolbar>
                 </headerToolbar>
                 <items>
                     <ObjectListItem
                         title="{productList>description}"
+                        description="{productList>id}"
                         icon="../imgs/food-tray.svg"
+                        iconDensityAware="false"
+                        iconInset="false" 
                         type="Active"
                         press="onListItemPress"
                         number="{   

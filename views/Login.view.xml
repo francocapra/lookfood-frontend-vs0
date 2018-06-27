@@ -1,16 +1,17 @@
-<mvc:View controllerName="lookfood.resources.main.controllers.Login" 
+<mvc:View controllerName="lookfood.resources.Lookfood.controllers.Login" 
 	xmlns="sap.m" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:l="sap.ui.layout" 
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"
 	xmlns:html="http://www.w3.org/1999/xhtml">
-
 	<Page 
 		id="pageLogin" 		
 		class="sapUiResponsiveContentPadding"
 		showHeader="true"
 		showSubHeader="false"
+						busy="{loginView>/busy}"
+				busyIndicatorDelay="{loginView>/delay}" 
 		>
 		<content id="loginForm">
 

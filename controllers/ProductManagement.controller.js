@@ -1,32 +1,113 @@
 sap.ui.define([
-	"lookfood/resources/main/controllers/Base",
+	"lookfood/resources/Lookfood/controllers/Base",
 	"sap/ui/core/routing/History",
-	"sap/ui/model/json/JSONModel"
-	], function (Base, History, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
+	], function (Base, History, JSONModel, Filter, FilterOperator) {
 		"use strict";
 
-		var oViewModel = new JSONModel({});
-
-		return Base.extend("lookfood.resources.main.controllers.ProductManagement", {
+		return Base.extend("lookfood.resources.Lookfood.controllers.ProductManagement", {
 
 			onInit: function(){
-				var oViewModel = this.getOwnerComponent().getModel("products");								
-				this.showGlobalLoader();
+											
+				var oViewModel,
+					iOriginalBusyDelay,
+					uri,
+					token,
+					oHeaders,
+					oListModel,
+					oList;
+				
+				oList = this.byId("list");
+				iOriginalBusyDelay = oList.getBusyIndicatorDelay();
 
-				$.when(this.fnGetProducts())
-					.done(function(data, textStatus, oResponse){
-						if(data){
-							oViewModel.setData(data);
-							this.setModel(oViewModel, "productList");							
-						}
-					}.bind(this))
-					.fail(function(a,b,c){
-						console.log(a,b,c);
-					})
-					.always(function(){
-						this.hideGlobalLoader();
-					}.bind(this)
-				);
+				oViewModel = new JSONModel({
+					listTitle: this.getResourceBundle().getText("listHeader"),
+					listBusyDelay: 0				
+					// busy: true,
+					// delay: 0
+				});	
+				this.setModel(oViewModel, "productView");	
+
+				uri = this.getServiceApi() + "products";
+				token = window.sessionStorage.getItem('Authorization');
+				oHeaders = {"Authorization": token};				
+
+				oListModel = new JSONModel();				
+				oListModel.loadData(uri, null, true, "GET", null, false, oHeaders);								
+				// oListModel.attachRequestCompleted( {} ,function(){
+				// 	// Restore original busy indicator delay for worklist's table
+				// 	// oViewModel.setProperty("/busy", false);
+				// 	// oViewModel.setProperty("/delay", iOriginalBusyDelay);
+				// 	oViewModel.setProperty("/listBusyDelay", iOriginalBusyDelay);
+
+				// }, this );				
+				this.setModel(oListModel, "productList");	
+
+				oList.attachEventOnce("updateFinished", function(){
+					// Restore original busy indicator delay for worklist's table
+					oViewModel.setProperty("/listBusyDelay", iOriginalBusyDelay);
+				});
+			},
+
+			/**
+			 * Triggered by the table's 'updateFinished' event: after new table
+			 * data is available, this handler method updates the table counter.
+			 * This should only happen if the update was successful, which is
+			 * why this handler is attached to 'updateFinished' and not to the
+			 * table's list binding's 'dataReceived' method.
+			 * @param {sap.ui.base.Event} oEvent the update finished event
+			 * @public
+			 */
+			onUpdateFinished : function (oEvent) {
+				// update the worklist's object counter after the table update
+				var sTitle,
+					oList = oEvent.getSource(),
+					// oModel = this.getModel(),
+					// oViewModel = this.getModel("productView"),
+					iTotalItems = oEvent.getParameters().total;
+				// only update the counter if the length is final and
+				// the table is not empty
+				if (iTotalItems && oList.getBinding("items").isLengthFinal()) {
+					sTitle = this.getResourceBundle().getText("listHeaderCount", [iTotalItems]);
+					// // iterate the filters and request the count from the server
+					// $.each(this._mFilters, function (sFilterKey, oFilter) {
+					// 	var sPath = "/" + sFilterKey;
+					// 	var sProperty = oViewModel.getProperty(sPath);
+					// 	if (!sProperty) {
+					// 		oModel.read("/ProductSet/$count", {
+					// 			filters: oFilter,
+					// 			success: function (oData) {
+					// 				oViewModel.setProperty(sPath, oData);
+					// 			}
+					// 		});
+					// 	}
+					// });
+
+				} else {
+					sTitle = this.getResourceBundle().getText("listHeader");
+				}
+				this.getModel("productView").setProperty("/listTitle", sTitle);
+			},
+
+			onSearch : function (oEvent) {
+				if (oEvent.getParameters().refreshButtonPressed) {
+					// Search field's 'refresh' button has been pressed.
+					// This is visible if you select any master list item.
+					// In this case no new search is triggered, we only
+					// refresh the list binding.
+					this.onRefresh();
+				} else {
+					var aTableSearchState = [];
+					var sQuery = oEvent.getParameter("query");
+
+					if (sQuery && sQuery.length > 0) {
+						aTableSearchState = [new Filter("description", FilterOperator.Contains, sQuery)];
+					}
+					this._applySearch(aTableSearchState);
+				}
+
 			},
 
 			onNavBack: function (oEvent) {
@@ -74,26 +155,33 @@ sap.ui.define([
 				});
 			},
 
-			onRefreshProductsPress: function(){
-
-				oBaseController.getView().setBusyIndicatorDelay(0).setBusy(true);
-
-				$.when(oBaseController.getPartnerProducts())
-				.done(function(data, textStatus, oResponse){
-					if(data){
-						let prdModel = new sap.ui.model.json.JSONModel({
-							ProductCollection: data
-						});
-						oBaseController.setModel(prdModel, 'PartnerPrdCollection');
-					}
-				})
-				.fail(function(a,b,c){
-					console.log(a,b,c);
-				})
-				.always(function(){
-					oBaseController.getView().setBusy(false);
-				});
+			/**
+			 * Event handler for refresh event. Keeps filter, sort
+			 * and group settings and refreshes the list binding.
+			 * @public
+			 */
+			onRefreshProductsPress: function(){			
+				var oList = this.byId("list");
+				oList.getBinding("items").refresh();
 			},
+				// oBaseController.getView().setBusyIndicatorDelay(0).setBusy(true);
+
+				// $.when(oBaseController.getPartnerProducts())
+				// .done(function(data, textStatus, oResponse){
+				// 	if(data){
+				// 		let prdModel = new sap.ui.model.json.JSONModel({
+				// 			ProductCollection: data
+				// 		});
+				// 		oBaseController.setModel(prdModel, 'PartnerPrdCollection');
+				// 	}
+				// })
+				// .fail(function(a,b,c){
+				// 	console.log(a,b,c);
+				// })
+				// .always(function(){
+				// 	oBaseController.getView().setBusy(false);
+				// });
+			// },
 
 			onSavePrdDetails: function(oEvent){
 				let oDialog = oEvent.getSource().getParent();
@@ -167,6 +255,21 @@ sap.ui.define([
 				});
 
 				_uploader.trigger('click');
+			},
+
+			/**
+			 * Internal helper method to apply both filter and search state together on the list binding
+			 * @param {sap.ui.model.Filter[]} aTableSearchState An array of filters for the search
+			 * @private
+			 */
+			_applySearch: function(aTableSearchState) {
+				var oList = this.byId("list"),
+					oViewModel = this.getModel("productListView");
+				oList.getBinding("items").filter(aTableSearchState, "Application");
+				// changes the noDataText of the list in case there are no filter results
+				// if (aTableSearchState.length !== 0) {
+				// 	oViewModel.setProperty("/tableNoDataText", this.getResourceBundle().getText("worklistNoDataWithSearchText"));
+				// }
 			}
 		});
 

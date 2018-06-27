@@ -1,12 +1,12 @@
 sap.ui.define([
-	"lookfood/resources/main/controllers/Base",
+	"lookfood/resources/Lookfood/controllers/Base",
 	"sap/ui/core/routing/History"
 	], function (Base,History) {
 		"use strict";
 
 		var oBaseController;
 
-		return Base.extend("lookfood.resources.main.controllers.Review", {
+		return Base.extend("lookfood.resources.Lookfood.controllers.Review", {
 
 			onInit: function(){
 				oBaseController = this;
