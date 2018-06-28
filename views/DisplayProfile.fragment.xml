@@ -3,7 +3,7 @@
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
-    <VBox class="sapUiSmallMargin">        
+    <!-- <VBox class="sapUiSmallMargin">         -->
         <f:SimpleForm id="SimpleFormDisplay"
             editable="false"
             layout="ResponsiveGridLayout"
@@ -21,8 +21,6 @@
 			columnsL="1"
 			columnsM="1"
             singleContainerFullSize="false" >
-            <f:toolbar>
-            </f:toolbar>
             <f:content>
                 <core:Title text="{i18n>partnerGenDataHeader}" />
                     <Label text="{i18n>partnerFullName}" />
@@ -49,5 +47,5 @@
                     <Text text=""/>
             </f:content>
         </f:SimpleForm>        
-    </VBox>
+    <!-- </VBox> -->
 </core:FragmentDefinition>    

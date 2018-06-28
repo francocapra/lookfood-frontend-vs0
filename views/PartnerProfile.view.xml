@@ -9,6 +9,9 @@
         title="{i18n>partnerProfileTitle}" 
         showNavButton="true" 
         navButtonPress="onNavBack">
+        <headerContent>
+            <Button id="btGrid" icon="sap-icon://grid" press="onGrid" />
+        </headerContent>
         <footer>
             <Bar>
 				<contentRight>

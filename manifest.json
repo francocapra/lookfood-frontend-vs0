@@ -100,6 +100,11 @@
 					"target":"partnerProfile"	
 				},
 				{
+					"pattern":"profileSettings",
+					"name":"appProfileSettings",
+					"target":"profileSettings"	
+				},
+				{
 					"pattern":"reviewMode",
 					"name":"appReviewMode",
 					"target":"reviewMode"	
@@ -123,8 +128,7 @@
 				"productManagement":{
 					"viewId": "productManagement",
 					"viewName": "ProductManagement",
-					"viewLevel" : 2,
-					"title": "{i18n>prdMgmtPageTitle}"
+					"viewLevel" : 2					
 				},
 				"newProduct":{
 					"viewId": "newProduct",
@@ -135,6 +139,11 @@
 					"viewId": "partnerProfile",
 					"viewName": "PartnerProfile",
 					"viewLevel" : 2
+				},				
+				"profileSettings":{
+					"viewId": "profileSettings",
+					"viewName": "ProfileSettings",
+					"viewLevel" : 2					
 				},
 				"reviewMode":{
 					"viewId": "reviewMode",

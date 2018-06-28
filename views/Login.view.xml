@@ -10,8 +10,8 @@
 		class="sapUiResponsiveContentPadding"
 		showHeader="true"
 		showSubHeader="false"
-						busy="{loginView>/busy}"
-				busyIndicatorDelay="{loginView>/delay}" 
+		busy="{loginView>/busy}"
+		busyIndicatorDelay="{loginView>/delay}" 
 		>
 		<content id="loginForm">
 

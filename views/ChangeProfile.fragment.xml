@@ -3,7 +3,7 @@
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
-    <VBox class="sapUiSmallMargin">        
+    <!-- <VBox class="sapUiSmallMargin">         -->
         <f:SimpleForm id="SimpleFormChange"
             editable="true"
             layout="ResponsiveGridLayout"
@@ -13,17 +13,17 @@
             labelSpanM="4"
             labelSpanS="12"
             adjustLabelSpan="false"
-            emptySpanXL="0"
+            emptySpanXL="4"
             emptySpanL="4"
-            emptySpanM="0"
+            emptySpanM="4"
             emptySpanS="0"
-            columnsXL="2"
+            columnsXL="1"
             columnsL="1"
             columnsM="1"
             singleContainerFullSize="false" >
             <f:toolbar>
                 <Toolbar id="TB1">
-                    <Title id="Title1" text="{i18n>partnerFormHeader}" level="H2" titleStyle="H2"/>
+                    <Title id="Title1" text="{i18n>partnerFormHeader}" />
                     <ToolbarSpacer />
                     <Button icon="sap-icon://camera" type="Emphasized" press="setPartnerPicture" />
                 </Toolbar>
@@ -71,5 +71,5 @@
                     </Select>
             </f:content>
         </f:SimpleForm>        
-    </VBox>
+    <!-- </VBox> -->
 </core:FragmentDefinition>    

@@ -18,10 +18,11 @@
 	</script>
 
 	<script>
-		sap.ui.getCore().attachInit(function () {
-			sap.ui.require([
-				"sap/m/Shell",
-				"sap/ui/core/ComponentContainer"
+		function appInit() {
+			sap.ui.getCore().attachInit(function () {
+				sap.ui.require([
+					"sap/m/Shell",
+					"sap/ui/core/ComponentContainer"
 				], function (Shell, ComponentContainer) {
 					// initialize the UI component
 					new Shell({						
@@ -35,7 +36,17 @@
 						})
 					}).placeAt("content");
 				});
-		});
+			});
+		}
+
+		function appReady() {
+			$("#load").remove();
+			appInit();
+		}
+
+		window.onload = function () {
+			appReady();
+		}
 	</script>
 
 	<!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" 

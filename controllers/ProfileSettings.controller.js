@@ -9,9 +9,15 @@ sap.ui.define([
 
 		var oViewModel = new JSONModel({});
 
-		return Base.extend("lookfood.resources.Lookfood.controllers.PartnerProfile", {
+		return Base.extend("lookfood.resources.Lookfood.controllers.ProfileSettings", {
 
 			onInit: function(){
+				var oSettingsModel = new JSONModel({
+					currentUser: "Administrator",
+					lastLogin: new Date(Date.now() - 86400000)
+				});
+
+				this.setModel(oSettingsModel, "view");
 				
 				var oOriginalViewModel = this.getModel('modelPartnerProfile');
 

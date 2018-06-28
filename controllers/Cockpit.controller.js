@@ -79,7 +79,8 @@ sap.ui.define([
 			},
 
 			onPressAdminProfile: function(){
-				this.getRouter().navTo('appPartnerProfile');
+				// this.getRouter().navTo('appPartnerProfile');
+				this.getRouter().navTo('appProfileSettings');
 			}
 
 			// onTileCreateReviewPress: function(){

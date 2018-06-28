@@ -4,9 +4,8 @@
     xmlns:l="sap.ui.layout" 
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-
-    <Page 
-        id="pageProductsMgmt" 
+    <Page id="pageProductsMgmt" 
+        title="{i18n>prdMgmtPageTitle}"
         showNavButton="true" 
         navButtonPress="onNavBack" 
         noDataText="{i18n>tableProductsNoData}">
