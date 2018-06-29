@@ -4,7 +4,9 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:m="sap.m"
 	xmlns:core="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc">
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.commons">
 	<m:Page id="pageAccountSettings"
 		title="{i18n>settingsPageTitle}"
 		showHeader="true"
@@ -20,7 +22,7 @@
 					objectImageURI=""	
 					objectImageShape="Circle"
 					objectTitle="{i18n>settingsHeaderTitle}"
-					objectSubtitle="{i18n>settingsHeaderSubtitle}">
+					objectSubTitle="{i18n>settingsHeaderSubTitle}">					
 					<actions>
 						<!-- <ObjectPageHeaderActionButton
 							id="save"
@@ -75,6 +77,34 @@
 												type="Email"
 												width="100%"
 												value="{modelPartnerProfile>/email}"/>
+											<m:Label
+												labelFor="passwordLastInput"
+												text="{i18n>password}"/>
+											<m:Input
+												id="passwordLastInput"
+												type="Password"
+												width="100%"
+												value="{modelPartnerProfile>/password}"/>
+											<m:Label
+												labelFor="passwordNewInput"
+												text="{i18n>passwordNew}"/>
+											<m:Input
+												id="passwordNewInput"
+												type="Password"
+												width="100%"
+												value="{modelPartnerProfile>/passwordNew}"/>
+											<m:Label
+												labelFor="passwordConfirmInput"
+												text="{i18n>passwordConfirm}"/>
+											<m:Input
+												id="passwordConfirmInput"
+												type="Password"
+												width="100%"
+												value="{modelPartnerProfile>/passwordConfirm}">
+												
+											</m:Input>
+											<m:Button text="i18n>btUpdateNewPassword"/>
+										<core:Title text="{i18n>ownerAddress}"/>	
 											<m:Label
 												text="{i18n>ownerFirstName}"
 												labelFor="firstNameInput"/>

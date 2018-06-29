@@ -7,25 +7,20 @@ sap.ui.define([
 		return BaseController.extend("lookfood.resources.Lookfood.controllers.App", {
 
 			onInit: function(){
-				var oViewModel,
-				fnSetAppNotBusy,
-				iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-
+				var oViewModel ;
 				oViewModel = new JSONModel({
 					busy : true,
 					delay : 0
 				});
 				this.setModel(oViewModel, "appView");
 
-				fnSetAppNotBusy = function() {
-					oViewModel.setProperty("/busy", false);
-					oViewModel.setProperty("/delay", iOriginalBusyDelay);
-				};
-
-				// // disable busy indication when the metadata is loaded and in case of errors
-				// this.getOwnerComponent().getModel().metadataLoaded().
-				// 	then(fnSetAppNotBusy);
-				// this.getOwnerComponent().getModel().attachMetadataFailed(fnSetAppNotBusy);
+				this.byId("appRoot").addEventDelegate({
+					"onAfterRendering": function () {
+						this.getView().loaded().then(function(){
+							this.getModel("appView").setProperty("/busy", false);					
+						}.bind(this));
+					}.bind(this)
+			   }, this);
 
 				// apply content density mode to root view
 				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());

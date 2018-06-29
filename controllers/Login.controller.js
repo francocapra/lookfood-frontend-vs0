@@ -8,19 +8,39 @@ sap.ui.define([
 		return BaseController.extend("lookfood.resources.Lookfood.controllers.Login", {
 			
 			onInit: function(){
-				var oViewModel = new JSONModel({
+				var oViewModel,
+					oSessionModel;
+				
+				oViewModel = new JSONModel({
+					busy: true,
+					delay: 0
+				});
+
+				this.setModel(oViewModel, "loginView");
+				
+				this.byId("pageLogin").addEventDelegate({
+					"onAfterRendering": function () {
+						this.getView().loaded().then(function(){
+							this.getModel("loginView").setProperty("/busy", false);					
+						}.bind(this));
+					}.bind(this)
+			   	}, this);
+
+			   	oSessionModel = new JSONModel({
 					email : null,
 					password : null
 				});
-				this.setModel(oViewModel, "loginView")
+				this.setModel(oSessionModel, "sessionModel");
+
 			},
+
 
 			onNavBack : function() {
 				history.go(-1);
 			},
 
 			onChangedEmail: function(oEvent){
-				var oViewModel = this.getModel("loginView");
+				var oViewModel = this.getModel("sessionModel");
 				if (oEvent.getParameters("value")){
 					oViewModel.setProperty("/email", oEvent.getParameters("value").value );	
 				}else{
@@ -29,7 +49,7 @@ sap.ui.define([
 			},
 
 			onChangedPassword: function(oEvent){
-				var oViewModel = this.getModel("loginView");
+				var oViewModel = this.getModel("sessionModel");
 				if (oEvent.getParameters("value")){
 					oViewModel.setProperty("/password", oEvent.getParameters("value").value );
 				}else{
@@ -49,7 +69,7 @@ sap.ui.define([
 			onLoginBtnPress: function (event) {
 
 				this.showGlobalLoader();				
-				var oViewModel = this.getModel("loginView");
+				var oViewModel = this.getModel("sessionModel");
 
 				$.when(this.fnLogin(oViewModel.oData))
 					.done(function(){
@@ -63,20 +83,6 @@ sap.ui.define([
 					}.bind(this));
 
 			},
-			
-			// _fnLoginCompleted: function(){	
-
-			// 	jQuery.when(this.fnPartnerDetails())	
-			// 		.done(function(oData){
-			// 			var oViewModel = new JSONModel(oData);
-			// 			this.getOwnerComponent().setModel(oViewModel, 'modelPartnerProfile');
-			// 			this.getRouter().navTo('appCockpit')
-			// 		}.bind(this))				
-			// 		.fail(function(){
-			// 			MessageToast.show(this.getResourceBundle().getText('loginErrPartnerDetails'));
-			// 		}.bind(this));
-			// },
-			
 
 			onNewUserLinkPress: function () {
 

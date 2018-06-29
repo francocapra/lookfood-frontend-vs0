@@ -28,7 +28,7 @@
 					<l:BlockLayoutCell class="sapUiNoContentPadding">
 						<Image
 							src="{
-								path: 'view>/isPhone',
+								path: 'cockpitView>/isPhone',
 								formatter: '.formatter.srcImageValue'
 							}"
 							width="100%"/>

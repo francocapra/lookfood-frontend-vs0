@@ -24,12 +24,22 @@ sap.ui.define([
 
 			onInit: function(){
 				var oViewModel = new JSONModel({
-					isPhone : Device.system.phone
+					isPhone : Device.system.phone,
+					busy: 0
 				});
-				this.setModel(oViewModel, "view");
+				this.setModel(oViewModel, "cockpitView");
+
 				Device.media.attachHandler(function (oDevice) {
 					this.getModel("view").setProperty("/isPhone", oDevice.name === "Phone");
 				}.bind(this));				
+
+				this.byId("pageCockpit").addEventDelegate({
+					"onAfterRendering": function () {
+						this.getView().loaded().then(function(){
+							this.getModel("cockpitView").setProperty("/busy", false);					
+						}.bind(this));
+					}.bind(this)
+			   }, this);
 			},
 
 			onNavBack: function (oEvent) {
@@ -54,13 +64,17 @@ sap.ui.define([
 					this.fnLogOff();
 					this.getRouter().navTo('appLogin');
 				}.bind(this);
-				var oActionSheet = new ActionSheet(this.getView().createId("userMessageActionSheet"), {
+
+				if (!this.getView().byId("userMessageActionSheet")){
+				
+					var oActionSheet = 
+					new ActionSheet(this.getView().createId("userMessageActionSheet"), {
 						title: oBundle.getText("userHeaderTitle"),
 						showCancelButton: false,
 						buttons: [
 							new Button({
 								text: 'Log Off',
-								type: sap.m.ButtonType.Transparent,
+								type: sap.m.ButtonType.Transparent,	
 								press: fnHandleUserMenuItemPress
 							}),
 						],
@@ -69,8 +83,9 @@ sap.ui.define([
 						}
 					});
 					// forward compact/cozy style into dialog
-					// jQuery.sap.syncStyleClass(this.getView().getController().getOwnerComponent().getContentDensityClass(), this.getView(), oActionSheet);
+					jQuery.sap.syncStyleClass(this.getView().getController().getOwnerComponent().getContentDensityClass(), this.getView(), oActionSheet);
 					oActionSheet.openBy(oEvent.getSource());
+				}
 			},
 
 			onPressProducts: function(){
