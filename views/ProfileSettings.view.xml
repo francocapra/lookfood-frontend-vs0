@@ -100,9 +100,9 @@
 												id="passwordConfirmInput"
 												type="Password"
 												width="100%"
-												value="{modelPartnerProfile>/passwordConfirm}">
-												
+												value="{modelPartnerProfile>/passwordConfirm}">												
 											</m:Input>
+											<m:Label/>								
 											<m:Button text="i18n>btUpdateNewPassword"/>
 										<core:Title text="{i18n>ownerAddress}"/>	
 											<m:Label
@@ -204,7 +204,7 @@
 												<m:Label
 													labelFor="storeCodeInput"
 													text="{i18n>storeCode}"/>
-												<m:Input
+												<m:Text
 													id="storeCodeInput"
 													type="Text"
 													width="100%"

@@ -13,7 +13,7 @@ sap.ui.define([
 				
 				oViewModel = new JSONModel({
 					busy: true,
-					delay: 0
+					delay: 0					
 				});
 
 				this.setModel(oViewModel, "loginView");
@@ -66,22 +66,35 @@ sap.ui.define([
 				event.getSource().destroy();
 			},
 
+			_fnValidData: function(oViewModel){				
+				if (!oViewModel.oData.email){
+					MessageToast.show(this.getResourceBundle().getText("userInputPlaceholder"));
+					return false;
+				}
+				if (!oViewModel.oData.password){
+					MessageToast.show(this.getResourceBundle().getText("passwordInputPlaceholder"));
+					return false;
+				}
+				return true;				
+			},
+
 			onLoginBtnPress: function (event) {
 
-				this.showGlobalLoader();				
 				var oViewModel = this.getModel("sessionModel");
-
-				$.when(this.fnLogin(oViewModel.oData))
-					.done(function(){
-						this.getRouter().navTo('appCockpit');	
-					}.bind(this))										
-					.fail(function(){
-						MessageToast.show(this.getResourceBundle().getText('loginErrInvalidLogin'));						
-					}.bind(this))
-					.always(function(){
-						this.hideGlobalLoader();
-					}.bind(this));
-
+				
+				if (this._fnValidData(oViewModel)){				
+					this.showGlobalLoader();				
+					$.when(this.fnLogin(oViewModel.oData))
+						.done(function(){
+							this.getRouter().navTo('appCockpit');	
+						}.bind(this))										
+						.fail(function(){
+							MessageToast.show(this.getResourceBundle().getText('loginErrInvalidLogin'));						
+						}.bind(this))
+						.always(function(){
+							this.hideGlobalLoader();
+						}.bind(this));
+				}
 			},
 
 			onNewUserLinkPress: function () {
