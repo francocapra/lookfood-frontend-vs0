@@ -6,9 +6,7 @@ sap.ui.define([
 	'sap/ui/core/Fragment'
 	], function (Base, History, jQuery, JSONModel, Fragment) {
 		"use strict";
-
-		var oViewModel = new JSONModel({});
-
+		
 		return Base.extend("lookfood.resources.Lookfood.controllers.ProfileSettings", {
 
 			onInit: function(){
@@ -16,7 +14,6 @@ sap.ui.define([
 					currentUser: "Administrator",
 					lastLogin: new Date(Date.now() - 86400000)
 				});
-
 				this.setModel(oSettingsModel, "view");
 				
 				var oOriginalViewModel = this.getModel('modelPartnerProfile');
@@ -25,8 +22,8 @@ sap.ui.define([
 					this.showGlobalLoader();
 					jQuery.when(this.fnPartnerDetails())
 						.done(function(data, textStatus, jqXHR){
-							oViewModel.setData(data);	
-							this.setModel(oViewModel,"modelPartnerProfile");						
+							oOriginalViewModel = new JSONModel(data);	
+							this.setModel(oOriginalViewModel,"modelPartnerProfile");						
 						}.bind(this))
 						.always(function(){
 							this.hideGlobalLoader();

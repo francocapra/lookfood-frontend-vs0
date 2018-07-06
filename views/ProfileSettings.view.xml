@@ -204,9 +204,10 @@
 												<m:Label
 													labelFor="storeCodeInput"
 													text="{i18n>storeCode}"/>
-												<m:Text
+												<m:Input
 													id="storeCodeInput"
 													type="Text"
+													editable="false"
 													width="100%"
 													value="{modelPartnerProfile>/id}"/>
 											<core:Title text="{i18n>StoreContact}" />

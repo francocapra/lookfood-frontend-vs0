@@ -32,7 +32,8 @@
 					"minVersion": "1.38.0"
 				},
 				"sap.m": {
-					"minVersion": "1.38.0"
+					"minVersion": "1.38.0",
+					"lazy": true
 				},
 				"sap.f": {},	
 				"sap.ui.layout": {
@@ -80,34 +81,39 @@
 					"target": "login"
 				},
 				{
-					"pattern": "cockpit",
+					"pattern": "Cockpit",
 					"name": "appCockpit",
 					"target": "cockpit"
 				},
 				{
-					"pattern":"productManagement",
+					"pattern":"ProductManagement",
 					"name":"appProductManagement",
 					"target":"productManagement"
 				},
 				{
-					"pattern":"newProduct",
+					"pattern":"NewProduct",
 					"name":"appNewProduct",
 					"target":"newProduct"
 				},
 				{
-					"pattern":"partnerProfile",
+					"pattern":"PartnerProfile",
 					"name":"appPartnerProfile",
 					"target":"partnerProfile"	
 				},
 				{
-					"pattern":"profileSettings",
+					"pattern":"ProfileSettings",
 					"name":"appProfileSettings",
 					"target":"profileSettings"	
 				},
 				{
-					"pattern":"reviewMode",
+					"pattern":"ReviewMode",
 					"name":"appReviewMode",
 					"target":"reviewMode"	
+				},
+				{
+					"pattern":"ProductDetails",
+					"name":"appProductDetails",
+					"target":"productDetails"	
 				}
 			],
 			"targets": {
@@ -133,6 +139,11 @@
 				"newProduct":{
 					"viewId": "newProduct",
 					"viewName": "NewProduct",
+					"viewLevel" : 2
+				},				
+				"productDetails":{
+					"viewId": "productDetails",
+					"viewName": "ProductDetails",
 					"viewLevel" : 2
 				},
 				"partnerProfile":{

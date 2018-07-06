@@ -30,7 +30,7 @@
 							src="{
 								path: 'cockpitView>/isPhone',
 								formatter: '.formatter.srcImageValue'
-							}"
+							}"							
 							width="100%"/>
 					</l:BlockLayoutCell>
 				</l:BlockLayoutRow>

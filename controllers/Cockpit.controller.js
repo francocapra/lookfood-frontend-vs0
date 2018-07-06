@@ -88,13 +88,11 @@ sap.ui.define([
 				}
 			},
 
-			onPressProducts: function(){
-				
+			onPressProducts: function(){				
 				this.getRouter().navTo('appProductManagement');
 			},
 
 			onPressAdminProfile: function(){
-				// this.getRouter().navTo('appPartnerProfile');
 				this.getRouter().navTo('appProfileSettings');
 			}
 

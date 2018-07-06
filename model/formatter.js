@@ -17,6 +17,7 @@ sap.ui.define([
             }
             return sImageSrc;
         }
+
     };
 }
 );

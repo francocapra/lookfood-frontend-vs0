@@ -3,7 +3,8 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
+	"sap/ui/model/FilterOperator",
+	
 	], function (Base, History, JSONModel, Filter, FilterOperator) {
 		"use strict";
 
@@ -20,35 +21,41 @@ sap.ui.define([
 					oList;
 				
 				oList = this.byId("list");
-				iOriginalBusyDelay = oList.getBusyIndicatorDelay();
-
+				
 				oViewModel = new JSONModel({
 					listTitle: this.getResourceBundle().getText("listHeader"),
+					listBusy: true,
 					listBusyDelay: 0				
-					// busy: true,
-					// delay: 0
 				});	
 				this.setModel(oViewModel, "productView");	
 
 				uri = this.getServiceApi() + "products";
-				token = window.sessionStorage.getItem('Authorization');
+				// token = window.sessionStorage.getItem('Authorization');
 				oHeaders = {"Authorization": token};				
 
 				oListModel = new JSONModel();				
-				oListModel.loadData(uri, null, true, "GET", null, false, oHeaders);								
-				// oListModel.attachRequestCompleted( {} ,function(){
-				// 	// Restore original busy indicator delay for worklist's table
-				// 	// oViewModel.setProperty("/busy", false);
-				// 	// oViewModel.setProperty("/delay", iOriginalBusyDelay);
-				// 	oViewModel.setProperty("/listBusyDelay", iOriginalBusyDelay);
-
-				// }, this );				
-				this.setModel(oListModel, "productList");	
-
-				oList.attachEventOnce("updateFinished", function(){
+				oListModel.attachRequestCompleted(function(oEvent){
+					var ok = oEvent.getParameters().success;					
 					// Restore original busy indicator delay for worklist's table
-					oViewModel.setProperty("/listBusyDelay", iOriginalBusyDelay);
-				});
+					oViewModel.setProperty("/listBusy", false);
+					//Restart APP
+					if (!ok) {
+						this.getRouter().navTo("appLogin", {}, true );
+					}
+				} );				
+				oListModel.attachRequestFailed(function(oEvent){
+					var status = oEvent.getParameters().statusCode;
+					// Restore original busy indicator delay for worklist's table
+					oViewModel.setProperty("/listBusy", false);
+				} );				
+				oListModel.loadData(uri, null, true, "GET", null, false, oHeaders);								
+				this.setModel(oListModel, "productList");	
+				
+
+				// oList.attachEventOnce("updateFinished", function(){
+				// 	// Restore original busy indicator delay for worklist's table
+				// 	oViewModel.setProperty("/listBusy", false);
+				// });
 			},
 
 			/**
@@ -206,22 +213,42 @@ sap.ui.define([
 
 			onListItemPress: function(oEvent) {
 
-				let oModel = oEvent.getSource().getBindingContext('PartnerPrdCollection').getObject();
-				let prdDetails = sap.ui.xmlfragment('prdDetailsFragment','lookfood.xml.fragments.ProductDetails', this);
+				// var oModel = oEvent.getSource().getBindingContext('PartnerPrdCollection').getObject();
+				// The source is the list item that got pressed
+				this._showDetails(oEvent.getSource());
+				// var prdDetails = sap.ui.xmlfragment('prdDetailsFragment','lookfood.xml.fragments.ProductDetails', this);
 
-				prdDetails.setModel(new sap.ui.model.json.JSONModel(oModel), 'mProductDetails')
+				// prdDetails.setModel(new JSONModel(oModel), 'mProductDetails')
 
-				this.getView().addDependent(prdDetails);
+				// this.getView().addDependent(prdDetails);
 
-				let productImage = sap.ui.core.Fragment.byId('prdDetailsFragment', 'imgProductPicture');
-				productImage.setSrc(oBaseController.getBucketApi()+'product'+oModel.id+'.jpg');
-				productImage.attachError(function(){
-					productImage.setSrc('../imgs/food-tray.svg');
+				// var productImage = sap.ui.core.Fragment.byId('prdDetailsFragment', 'imgProductPicture');
+				
+				// productImage.setSrc(oBaseController.getBucketApi()+'product'+oModel.id+'.jpg');
+				
+				// productImage.attachError(function(){
+				// 	productImage.setSrc('../imgs/food-tray.svg');
+				// });
+
+				// prdDetails.attachAfterClose(function(dialogCloseEvent){
+				// 	dialogCloseEvent.getSource().destroy();
+				// }).open();
+			},
+
+			/* =========================================================== */
+			/* internal methods                                            */
+			/* =========================================================== */
+
+			/**
+			 * Shows the selected item on the object page
+			 * On phones a additional history entry is created
+			 * @param {sap.m.ObjectListItem} oItem selected Item
+			 * @private
+			 */
+			_showDetails : function (oItem) {				
+				this.getRouter().navTo("appProductDetails", {
+					productId: oItem.getBindingContext("productList").getProperty("id")
 				});
-
-				prdDetails.attachAfterClose(function(dialogCloseEvent){
-					dialogCloseEvent.getSource().destroy();
-				}).open();
 			},
 
 			closeDialog:function(oEvent){

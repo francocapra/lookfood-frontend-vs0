@@ -1,0 +1,28 @@
+<mvc:View controllerName="lookfood.resources.Lookfood.controllers.ProductDetails" 
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<Page id="pageProductDetails"
+		title="{i18n>itemDialogHeader}" >		
+		<ObjectHeader
+			binding="{Product>/}"
+			intro="{ProductID}"
+			title="{Name}"
+			number="{
+				path: 'Price'				
+			}"
+			numberUnit="{CurrencyCode}"/>	
+							
+        <footer>
+            <Toolbar>
+                <content>
+                    <ToolbarSpacer />
+					<Button text="{i18n>btnSave}" type="Emphasized" press="onSavePrdDetails" />
+					<Button text="{i18n>btnCancel}" press="closeDialog" />
+                </content>
+            </Toolbar>
+        </footer>
+	</Page>
+</mvc:View>

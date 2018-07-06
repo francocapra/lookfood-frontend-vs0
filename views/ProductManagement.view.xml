@@ -8,6 +8,8 @@
         title="{i18n>prdMgmtPageTitle}"
         showNavButton="true" 
         navButtonPress="onNavBack" 
+        busy="{productView>/listBusy}"
+        busyIndicatorDelay="{productView>/listBusyDelay}"
         noDataText="{i18n>tableProductsNoData}">
         <headerContent>
             <Button id="btGrid" icon="sap-icon://grid" press="onGrid" />
@@ -17,13 +19,16 @@
                 id="list"
                 items="{    
                         path: 'productList>/',
-                        sorter: { path: 'description', descending: false } 
-                        }"                
+                        sorter: { 
+                            path: 'description', 
+                            descending: false, 
+                            group: true } 
+                        
+                    }"                
                 noDataText="{i18n>listNoDataText}"
                 growing="true"
                 growingThreshold="4"
                 growingScrollToLoad="false"
-                busyIndicatorDelay="{productView>/listBusyDelay}"
                 updateFinished="onUpdateFinished">
                 <headerToolbar>
                     <Toolbar>
@@ -35,34 +40,34 @@
                             search="onSearch"
                             width="auto">
                         </SearchField>
-                        <Button id="addButton" icon="sap-icon://add" press="onAdd" />
+                        <Button id="addButton" icon="sap-icon://add" press="onAddProductPress" />
                         <Button id="btRefresh" icon="sap-icon://refresh" press="onRefresh" />
                     </Toolbar>
                 </headerToolbar>
                 <items>
-                    <ObjectListItem
+                    <StandardListItem
                         title="{productList>description}"
                         description="{productList>id}"
                         icon="../imgs/food-tray.svg"
                         iconDensityAware="false"
                         iconInset="false" 
                         type="Active"
-                        press="onListItemPress"
-                        number="{   
+                        press="onListItemPress">
+                        <!-- number="{   
                             parts:[{path:'productList>price'},{path:'productList>currency'}],
                             type: 'sap.ui.model.type.Currency',
                             formatOptions: {showMeasure: false}}"
-                        numberUnit="{productList>currency}">
-                        <firstStatus>
+                        numberUnit="{productList>currency}"> -->
+                        <!-- <firstStatus>
                             <ObjectStatus
                                 text="Very Good"
                                 state="Success" />
-                        </firstStatus>
-                        <attributes>
+                        </firstStatus> -->
+                        <!-- <attributes>
                             <ObjectAttribute text="{i18n>listItemId}: {productList>id}" />
                             <ObjectAttribute text="{i18n>listItemExtId}: {productList>idExternal}" />
-                        </attributes>
-                    </ObjectListItem>
+                        </attributes> -->
+                    </StandardListItem>
                 </items>
             </List>
         </content>
