@@ -18,7 +18,7 @@
 	</script>
 
 	<script>
-		function appInit() {
+		// function appInit() {
 			sap.ui.getCore().attachInit(function () {
 				sap.ui.require([
 					"sap/m/Shell",
@@ -29,7 +29,6 @@
 						app: new ComponentContainer({
 							height: "100%",
 							name: "lookfood.resources.Lookfood",
-							manifest: true,
 							settings:{
 								id : "Lookfood"
 							}
@@ -37,16 +36,43 @@
 					}).placeAt("content");
 				});
 			});
-		}
+		// }
 
-		function appReady() {
-			$("#load").remove();
-			appInit();
-		}
+		// function appReady() {
+		// 	$("#load").remove();
+		// 	appInit();
+		// }
 
-		window.onload = function () {
-			appReady();
-		}
+		// window.onload = function () {
+		// 	appReady();
+		// }
+		// $(document).ready(function(){
+		// 	debugger;
+		// 	console.log("document ready");
+		// });
+		// $(window).load(function(){
+		// 	debugger;
+		// 	console.log("window load");
+		// });
+		// function onLoad(loading, loaded) {
+		//     if(document.readyState === 'complete'){
+		//         return loaded();
+		//     }
+		//     loading();
+		//     if (window.addEventListener) {
+		//         window.addEventListener('load', loaded, false);
+		//     }
+		//     else if (window.attachEvent) {
+		//         window.attachEvent('onload', loaded);
+		//     }
+		// };
+		
+		// onLoad(function(){
+		//   console.log('I am waiting for the page to be loaded');
+		// },
+		// function(){
+		//     console.log('The page is loaded');
+		// });
 	</script>
 
 	<!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" 
@@ -62,6 +88,7 @@
 	<script type="text/javascript" src="js/third-parties/specialfunctions.js"></script>
 	<script type="text/javascript" src="js/third-parties/instascan.min.js"></script>
 	<!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> -->
+	
 </body>
 
 </html>

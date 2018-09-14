@@ -1,30 +1,32 @@
-<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="lookfood.resources.Lookfood.controllers.Login">
-	<Page id="pageLogin" class="sapUiResponsiveContentPadding" showHeader="false" showSubHeader="false" busy="{loginView>/busy}" busyIndicatorDelay="{loginView>/delay}" showFooter="false">
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="lookfood.resources.Lookfood.controllers.Login"><Page id="pageLogin" class="sapUiResponsiveContentPadding" showHeader="false" showSubHeader="false" busy="{loginView>/busy}" busyIndicatorDelay="{loginView>/delay}" showFooter="false">
 		<content id="loginForm">
-			<Panel id="panel0">
-				<content>
-					<HBox xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" id="HBoxLogo" class="sapUiLargeMarginTopBottom" justifyContent="Center" alignItems="Center" alignContent="Center" direction="Column">
-						<items>
+			<l:BlockLayout id="BlockLayout" background="Default">
+				<l:BlockLayoutRow>
+					<l:BlockLayoutCell class="sapUiNoContentPadding">
 							<Image src="imgs/brand/logo.svg" class="logoImage" id="image1">
 								<layoutData>
 									<FlexItemData growFactor="0.1" id="data13"/>
 								</layoutData>
 							</Image>
-						</items>
-					</HBox>
-					<VBox xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" id="VBoxLogin" class="sapUiLargeMarginTopBottom" width="100%" alignItems="Center" justifyContent="Center" direction="Column" alignContent="Center">
+					</l:BlockLayoutCell>
+				</l:BlockLayoutRow>
+				<l:BlockLayoutRow>
+					<l:BlockLayoutCell backgroundColorSet="ColorSet11" backgroundColorShade="ShadeD">
+					</l:BlockLayoutCell>					
+					<l:BlockLayoutCell class="sapUiResponsiveContentPadding" backgroundColorSet="ColorSet9" backgroundColorShade="ShadeA">
+						
 						<f:Form xmlns:f="sap.ui.layout.form" id="form0" editable="true" width="auto">
 							<f:formContainers>
 								<f:FormContainer id="container2">
 									<f:formElements>
 										<f:FormElement label="{i18n>loginUserLabel}" id="element4">
 											<f:fields>
-												<Input id="inputUser" placeholder="{i18n>userInputPlaceholder}" type="Email" change="onChangedEmail" submit="onLoginBtnPress"/>
+												<Input id="txtUserId" placeholder="{i18n>userInputPlaceholder}" type="Email" change="onChangedEmail"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="{i18n>loginUserPassword}" id="element5">
 											<f:fields>
-												<Input id="inputPassword" placeholder="{i18n>passwordInputPlaceholder}" type="Password" change="onChangedPassword" submit="onLoginBtnPress"/>
+												<Input id="txtPassword" placeholder="{i18n>passwordInputPlaceholder}" type="Password" change="onChangedPassword"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement id="element6">
@@ -38,7 +40,17 @@
 							<f:layout>
 								<f:ResponsiveGridLayout id="layout0"/>
 							</f:layout>
-						</f:Form>
+						</f:Form>						
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell backgroundColorSet="ColorSet11" backgroundColorShade="ShadeD">
+					</l:BlockLayoutCell>					
+				</l:BlockLayoutRow>
+				<l:BlockLayoutRow>
+					<l:BlockLayoutCell backgroundColorSet="ColorSet11" backgroundColorShade="ShadeD">
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell backgroundColorSet="ColorSet11" backgroundColorShade="ShadeB">
+					<VBox xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" id="VBoxLogin" class="sapUiLargeMarginTopBottom" width="100%" alignItems="Center" justifyContent="Center" direction="Column" alignContent="Center">
+					
 						<HBox id="HBoxNewUser" displayInline="true">
 							<items>
 								<Label xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" text="{i18n>newUserLabel}" width="100%" id="label3"/>
@@ -57,9 +69,12 @@
 							</items>
 						</HBox>
 						<items/>
-					</VBox>
-				</content>
-			</Panel>
-		</content>
+					</VBox>						
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell backgroundColorSet="ColorSet11" backgroundColorShade="ShadeD">
+					</l:BlockLayoutCell>
+				</l:BlockLayoutRow>
+			</l:BlockLayout>
+			</content>
 	</Page>
 </mvc:View>

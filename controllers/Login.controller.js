@@ -8,30 +8,13 @@ sap.ui.define([
 		return BaseController.extend("lookfood.resources.Lookfood.controllers.Login", {
 			
 			onInit: function(){
-				var oViewModel,
-					oSessionModel;
-				
-				oViewModel = new JSONModel({
-					busy: true,
-					delay: 0					
-				});
 
-				this.setModel(oViewModel, "loginView");
-				
-				this.byId("pageLogin").addEventDelegate({
-					"onAfterRendering": function () {
-						this.getView().loaded().then(function(){
-							this.getModel("loginView").setProperty("/busy", false);					
-						}.bind(this));
-					}.bind(this)
-			   	}, this);
-
-			   	oSessionModel = new JSONModel({
+				this._oViewModel = new JSONModel({
 					email : null,
 					password : null
 				});
-				this.setModel(oSessionModel, "sessionModel");
 
+				this.setModel(this._oViewModel, "loginView");
 			},
 
 
@@ -40,18 +23,18 @@ sap.ui.define([
 			},
 
 			onChangedEmail: function(oEvent){
-				var oViewModel = this.getModel("sessionModel");
+				
 				if (oEvent.getParameters("value")){
-					oViewModel.setProperty("/email", oEvent.getParameters("value").value );	
+					this._oViewModel.setProperty("/email", oEvent.getParameters("value").value );	
 				}else{
 					MessageToast.show(this.getResourceBundle().getText("userInputPlaceholder"));
 				}
 			},
 
 			onChangedPassword: function(oEvent){
-				var oViewModel = this.getModel("sessionModel");
+				
 				if (oEvent.getParameters("value")){
-					oViewModel.setProperty("/password", oEvent.getParameters("value").value );
+					this._oViewModel.setProperty("/password", oEvent.getParameters("value").value );
 				}else{
 					MessageToast.show(this.getResourceBundle().getText("passwordInputPlaceholder"));
 				}
@@ -66,34 +49,36 @@ sap.ui.define([
 				event.getSource().destroy();
 			},
 
-			_fnValidData: function(oViewModel){				
-				if (!oViewModel.oData.email){
+			_fnValidData: function(oViewModel){	
+				var inputUser = this.byId("inputUser").getValue();
+				var inputPassword = this.byId("inputPassword").getValue();
+				
+				this._oViewModel.setProperty("/email", inputUser );
+				this._oViewModel.setProperty("/password", inputPassword );
+					
+				if (!this._oViewModel.oData.email){
 					MessageToast.show(this.getResourceBundle().getText("userInputPlaceholder"));
 					return false;
 				}
-				if (!oViewModel.oData.password){
+				if (!this._oViewModel.oData.password){
 					MessageToast.show(this.getResourceBundle().getText("passwordInputPlaceholder"));
 					return false;
 				}
 				return true;				
 			},
 
-			onLoginBtnPress: function (event) {
-
-				var oViewModel = this.getModel("sessionModel");
+			onLoginBtnPress: function (oEvent) {
 				
-				if (this._fnValidData(oViewModel)){				
+				if (this._fnValidData()){				
 					this.showGlobalLoader();				
-					$.when(this.fnLogin(oViewModel.oData))
+					$.when(this.fnLogin(this._oViewModel.oData))
 						.done(function(){
 							this.getRouter().navTo('appCockpit');	
 						}.bind(this))										
 						.fail(function(){
 							MessageToast.show(this.getResourceBundle().getText('loginErrInvalidLogin'));						
-						}.bind(this))
-						.always(function(){
 							this.hideGlobalLoader();
-						}.bind(this));
+						}.bind(this))
 				}
 			},
 
@@ -117,10 +102,10 @@ sap.ui.define([
 				forgotPassDialog.open();
 			},
 
-			onPressCreateUser:function(){
+			onPressCreateUser:function(oEvent){
 
 				this.showGlobalLoader();
-
+				
 				let oData = {
 					email:	this.byId('txtNewUserEmail').getValue(),
 					password:	this.byId('txtNewUserPass').getValue()

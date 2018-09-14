@@ -77,14 +77,14 @@ sap.ui.define([
 							oBaseController.hideGlobalLoader();
 						}
 					});
-				}
+				}.bind(this)
 				
 				let fnPostImg = function(response){
 
 					var oFileUploader = oBaseController.getView().byId("prdPictureUploader");
 
 					if(!oFileUploader.getValue()){ 
-						MessageToast.show(this.getResourceBundle().getText("newPrdMessageMissingFile"));								
+						// MessageToast.show(this.getResourceBundle().getText("newPrdMessageMissingFile"));								
 						return;
 					}
 					var formData = new FormData();
@@ -120,9 +120,12 @@ sap.ui.define([
 							oBaseController.hideGlobalLoader();
 						}
 					});
-				};
+				}.bind(this);
 
-				$.when(fnPostBody()).done(function(data,status,response){fnPostImg(response);});
+				$.when(fnPostBody())
+					.done(function(data,status,response){
+						fnPostImg(response);
+					});
 
 			}
 		});

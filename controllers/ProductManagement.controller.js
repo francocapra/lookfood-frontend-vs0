@@ -30,7 +30,7 @@ sap.ui.define([
 				this.setModel(oViewModel, "productView");	
 
 				uri = this.getServiceApi() + "products";
-				// token = window.sessionStorage.getItem('Authorization');
+				token = window.sessionStorage.getItem('Authorization');
 				oHeaders = {"Authorization": token};				
 
 				oListModel = new JSONModel();				

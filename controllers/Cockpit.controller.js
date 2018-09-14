@@ -23,6 +23,9 @@ sap.ui.define([
 			formatter: formatter,
 
 			onInit: function(){
+				
+				this.hideGlobalLoader();
+				
 				var oViewModel = new JSONModel({
 					isPhone : Device.system.phone,
 					busy: 0
@@ -33,13 +36,6 @@ sap.ui.define([
 					this.getModel("view").setProperty("/isPhone", oDevice.name === "Phone");
 				}.bind(this));				
 
-				this.byId("pageCockpit").addEventDelegate({
-					"onAfterRendering": function () {
-						this.getView().loaded().then(function(){
-							this.getModel("cockpitView").setProperty("/busy", false);					
-						}.bind(this));
-					}.bind(this)
-			   }, this);
 			},
 
 			onNavBack: function (oEvent) {

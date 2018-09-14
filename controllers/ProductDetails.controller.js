@@ -10,7 +10,7 @@ sap.ui.define([
 
             },
 
-            _onProductIDMatched: function(){
+            _onProductIDMatched: function(oEvent){
                 var sProductId =  oEvent.getParameter("arguments").productId;
                 
             }

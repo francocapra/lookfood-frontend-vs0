@@ -103,7 +103,7 @@
 												value="{modelPartnerProfile>/passwordConfirm}">												
 											</m:Input>
 											<m:Label/>								
-											<m:Button text="i18n>btUpdateNewPassword"/>
+											<m:Button text="{i18n>btUpdateNewPassword}"/>
 										<core:Title text="{i18n>ownerAddress}"/>	
 											<m:Label
 												text="{i18n>ownerFirstName}"

@@ -1,5 +1,5 @@
 {
-	"_version":"1.8.0",
+	"_version": "1.8.0",
 	"sap.app": {
 		"id": "lookfood.resources.main",
 		"type": "application",
@@ -28,17 +28,18 @@
 		"dependencies": {
 			"minUI5Version": "1.38.0",
 			"libs": {
-				"sap.ui.core": {
-					"minVersion": "1.38.0"
-				},
+				"sap.f": {},
 				"sap.m": {
 					"minVersion": "1.38.0",
 					"lazy": true
 				},
-				"sap.f": {},	
+				"sap.ui.core": {
+					"minVersion": "1.38.0",
+					"lazy": true
+				},
 				"sap.ui.layout": {
 					"minVersion": "1.38.0",
-					"lazy": true					
+					"lazy": true
 				}
 			}
 		},
@@ -86,80 +87,80 @@
 					"target": "cockpit"
 				},
 				{
-					"pattern":"ProductManagement",
-					"name":"appProductManagement",
-					"target":"productManagement"
+					"pattern": "ProductManagement",
+					"name": "appProductManagement",
+					"target": "productManagement"
 				},
 				{
-					"pattern":"NewProduct",
-					"name":"appNewProduct",
-					"target":"newProduct"
+					"pattern": "NewProduct",
+					"name": "appNewProduct",
+					"target": "newProduct"
 				},
 				{
-					"pattern":"PartnerProfile",
-					"name":"appPartnerProfile",
-					"target":"partnerProfile"	
+					"pattern": "PartnerProfile",
+					"name": "appPartnerProfile",
+					"target": "partnerProfile"
 				},
 				{
-					"pattern":"ProfileSettings",
-					"name":"appProfileSettings",
-					"target":"profileSettings"	
+					"pattern": "ProfileSettings",
+					"name": "appProfileSettings",
+					"target": "profileSettings"
 				},
 				{
-					"pattern":"ReviewMode",
-					"name":"appReviewMode",
-					"target":"reviewMode"	
+					"pattern": "ReviewMode",
+					"name": "appReviewMode",
+					"target": "reviewMode"
 				},
 				{
-					"pattern":"ProductDetails",
-					"name":"appProductDetails",
-					"target":"productDetails"	
+					"pattern": "ProductDetails",
+					"name": "appProductDetails",
+					"target": "productDetails"
 				}
 			],
 			"targets": {
 				"login": {
 					"viewId": "login",
 					"viewName": "Login",
-					"viewLevel" : 1
+					"viewLevel": 1
 				},
 				"notFound": {
 					"viewId": "notFound",
-					"viewName": "NotFound"					
+					"viewName": "NotFound"
 				},
 				"cockpit": {
 					"viewId": "cockpit",
 					"viewName": "Cockpit",
-					"viewLevel" : 2
+					"viewLevel": 2
 				},
-				"productManagement":{
+				"productManagement": {
 					"viewId": "productManagement",
 					"viewName": "ProductManagement",
-					"viewLevel" : 2					
+					"viewLevel": 2
 				},
-				"newProduct":{
+				"newProduct": {
 					"viewId": "newProduct",
 					"viewName": "NewProduct",
-					"viewLevel" : 2
-				},				
-				"productDetails":{
+					"viewLevel": 2
+				},
+				"productDetails": {
 					"viewId": "productDetails",
 					"viewName": "ProductDetails",
-					"viewLevel" : 2
+					"viewLevel": 2
 				},
-				"partnerProfile":{
+				"partnerProfile": {
 					"viewId": "partnerProfile",
 					"viewName": "PartnerProfile",
-					"viewLevel" : 2
-				},				
-				"profileSettings":{
+					"viewLevel": 2
+				},
+				"profileSettings": {
 					"viewId": "profileSettings",
 					"viewName": "ProfileSettings",
-					"viewLevel" : 2					
+					"viewLevel": 2
 				},
-				"reviewMode":{
+				"reviewMode": {
 					"viewId": "reviewMode",
 					"viewName": "Review",
-					"viewLevel" : 2
+					"viewLevel": 2
 				}
 			}
 		}
