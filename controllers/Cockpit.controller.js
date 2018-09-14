@@ -58,7 +58,7 @@ sap.ui.define([
 				var oBundle = this.getModel("i18n").getResourceBundle();
 				var fnHandleUserMenuItemPress = function (oEvent) {
 					this.fnLogOff();
-					this.getRouter().navTo('appLogin');
+					// this.getRouter().navTo('appLogin');
 				}.bind(this);
 
 				if (!this.getView().byId("userMessageActionSheet")){

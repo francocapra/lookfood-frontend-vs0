@@ -23,7 +23,7 @@
 			"viewName": "lookfood.resources.Lookfood.views.App",
 			"type": "XML",
 			"async": true,
-			"id": "rootView"
+			"id": "appRoot"
 		},
 		"dependencies": {
 			"minUI5Version": "1.38.0",

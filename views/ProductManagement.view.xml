@@ -21,13 +21,12 @@
                         path: 'productList>/',
                         sorter: { 
                             path: 'description', 
-                            descending: false, 
-                            group: true } 
+                            descending: false } 
                         
                     }"                
                 noDataText="{i18n>listNoDataText}"
                 growing="true"
-                growingThreshold="4"
+                growingThreshold="20"
                 growingScrollToLoad="false"
                 updateFinished="onUpdateFinished">
                 <headerToolbar>

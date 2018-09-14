@@ -76,6 +76,7 @@
 												id="emailInput"
 												type="Email"
 												width="100%"
+												editable="false"
 												value="{modelPartnerProfile>/email}"/>
 											<m:Label
 												labelFor="passwordLastInput"
@@ -104,7 +105,8 @@
 											</m:Input>
 											<m:Label/>								
 											<m:Button text="{i18n>btUpdateNewPassword}"/>
-										<core:Title text="{i18n>ownerAddress}"/>	
+										
+										<core:Title text="{i18n>ownerContact}" />
 											<m:Label
 												text="{i18n>ownerFirstName}"
 												labelFor="firstNameInput"/>
@@ -121,31 +123,6 @@
 												type="Text"
 												width="100%"
 												value="{modelPartnerProfile>/name}"/>
-											<m:Label
-												labelFor="addressStreetInput"
-												text="{i18n>ownerStreet}"/>
-											<m:Input
-												id="addressStreetInput"
-												type="Text"
-												width="100%"
-												value="{modelPartnerProfile>/addresses/0/street}"/>
-											<m:Label
-												labelFor="addressTownInput"
-												text="{i18n>ownerZipCode}"/>
-											<m:Input
-												id="addressTownInput"
-												type="Text"
-												width="100%"
-												value="{modelPartnerProfile>/addresses/0/postcode}"/>
-											<m:Label
-												labelFor="addressCountryInput"
-												text="{i18n>ownerCountry}"/>
-											<m:Input
-												id="addressCountryInput"
-												type="Text"
-												width="100%"
-												value=""/>
-										<core:Title text="{i18n>ownerContact}" />
 											<m:Label
 												labelFor="phoneNumberInput"
 												text="{i18n>ownerMobile}"/>
@@ -186,6 +163,15 @@
 										<f:content>
 											<core:Title text="{i18n>storeSettings}" />
 												<m:Label
+													labelFor="storeCodeInput"
+													text="{i18n>storeCode}"/>
+												<m:Input
+													id="storeCodeInput"
+													type="Text"
+													editable="false"
+													width="100%"
+													value="{modelPartnerProfile>/id}"/>
+												<m:Label
 													labelFor="storeNameInput"
 													text="{i18n>storeName}"/>
 												<m:Input
@@ -202,16 +188,6 @@
 													width="100%"
 													value=""/>
 												<m:Label
-													labelFor="storeCodeInput"
-													text="{i18n>storeCode}"/>
-												<m:Input
-													id="storeCodeInput"
-													type="Text"
-													editable="false"
-													width="100%"
-													value="{modelPartnerProfile>/id}"/>
-											<core:Title text="{i18n>StoreContact}" />
-												<m:Label
 													labelFor="storeWebsiteInput"
 													text="{i18n>storeWebSite}"/>
 												<m:Input
@@ -219,6 +195,33 @@
 													type="Url"
 													width="100%"
 													value="{modelPartnerProfile>/website}"/>
+											<core:Title text="{i18n>ownerAddress}"/>	
+												
+												<m:Label
+													labelFor="addressStreetInput"
+													text="{i18n>ownerStreet}"/>
+												<m:Input
+													id="addressStreetInput"
+													type="Text"
+													width="100%"
+													value="{modelPartnerProfile>/addresses/0/street}"/>
+												<m:Label
+													labelFor="addressTownInput"
+													text="{i18n>ownerZipCode}"/>
+												<m:Input
+													id="addressTownInput"
+													type="Text"
+													width="100%"
+													value="{modelPartnerProfile>/addresses/0/postcode}"/>
+												<m:Label
+													labelFor="addressCountryInput"
+													text="{i18n>ownerCountry}"/>
+												<m:Input
+													id="addressCountryInput"
+													type="Text"
+													width="100%"
+													value=""/>
+											<core:Title text="{i18n>StoreContact}" />
 												<m:Label
 													labelFor="storePhoneNumberInput"
 													text="{i18n>storePhone}"/>

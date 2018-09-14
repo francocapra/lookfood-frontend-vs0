@@ -1,3 +1,4 @@
+/// <reference path="../../typings/globals/jquery/index.d.ts" />
 sap.ui.define([	
 	"lookfood/resources/Lookfood/controllers/Base",
 	"sap/ui/core/routing/History",
@@ -20,10 +21,13 @@ sap.ui.define([
 
 				if(!oOriginalViewModel){
 					this.showGlobalLoader();
-					jQuery.when(this.fnPartnerDetails())
+					$.when(this.fnPartnerDetails())
 						.done(function(data, textStatus, jqXHR){
 							oOriginalViewModel = new JSONModel(data);	
 							this.setModel(oOriginalViewModel,"modelPartnerProfile");						
+						}.bind(this))
+						.fail(function(){
+							this.fnLogOff();
 						}.bind(this))
 						.always(function(){
 							this.hideGlobalLoader();

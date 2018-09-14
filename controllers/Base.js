@@ -83,6 +83,7 @@ sap.ui.define([
 			fnLogOff: function(){
 				window.sessionStorage.removeItem('Authorization')
 				window.sessionStorage.removeItem('PartnerEmail');
+				this.getRouter().navTo('appLogin');
 			}
 
 		});
